@@ -1,8 +1,15 @@
-**Customer** ( *customer_id*, name, gender, birthday, authentication.certification_type, authentication.id_number, last_login_date, last_login_time, login_history, password)
+**Customer** ( *customer_id*, name, gender, birthday, authentication.certification_type, authentication.id_number, password)
 
 foreign key: none
 
 <img src="C:\Users\Jiarui\AppData\Roaming\Typora\typora-user-images\image-20210914205829784.png" style="zoom:25%;" /><img src="C:\Users\Jiarui\AppData\Roaming\Typora\typora-user-images\image-20210914210224669.png" alt="image-20210914210224669" style="zoom:25%;" />
+
+**CustomerHistory** ( *customer_id*, login_date, login_time)
+
+foreign key: 
+
+  *customer_id* REFERENCES **Customer**[from]
+
 
 **Frequent_contact** ( *customer_id*, *customer_id*, last_transfer_date)
 
