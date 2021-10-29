@@ -67,13 +67,13 @@ CREATE TABLE Transaction(
     transaction_id VARCHAR(10) NOT NULL PRIMARY KEY,
     in_account_id VARCHAR(10) NOT NULL,
     out_account_id VARCHAR(10) NOT NULL,
-    in_consumer_id VARCHAR(10) NOT NULL,
-    out_consumer_id VARCHAR(10) NOT NULL,
+    in_customer_id VARCHAR(10) NOT NULL,
+    out_customer_id VARCHAR(10) NOT NULL,
     amount INT NOT NULL,
     timepoint_date DATE NOT NULL,
     timepoint_time TIME NOT NULL,
-    FOREIGN KEY (in_consumer_id) REFERENCES Customer(customer_id),
-    FOREIGN KEY (out_consumer_id) REFERENCES Customer(customer_id),
+    FOREIGN KEY (in_customer_id) REFERENCES Customer(customer_id),
+    FOREIGN KEY (out_customer_id) REFERENCES Customer(customer_id),
     FOREIGN KEY (in_account_id) REFERENCES Account(account_id),
     FOREIGN KEY (out_account_id) REFERENCES Account(account_id)
 );
