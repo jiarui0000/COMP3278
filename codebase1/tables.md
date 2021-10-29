@@ -2,7 +2,6 @@
 
 foreign key: none
 
-<img src="C:\Users\Jiarui\AppData\Roaming\Typora\typora-user-images\image-20210914205829784.png" style="zoom:25%;" /><img src="C:\Users\Jiarui\AppData\Roaming\Typora\typora-user-images\image-20210914210224669.png" alt="image-20210914210224669" style="zoom:25%;" />
 
 **CustomerHistory** ( *customer_id*, login_date, login_time)
 
@@ -43,13 +42,13 @@ foreign key:
 
 ​	*customer_id* REFERENCES **Customer **
 
-**Transaction** ( *account_id (in)*, *account_id (out)*, *consumer_id (in)*, *consumer_id (out)*, *transaction_id*, amount, timepoint.date, timepoint.time)
+**Transaction** ( *account_id (in)*, *account_id (out)*, *customer_id (in)*, *customer_id (out)*, *transaction_id*, amount, timepoint.date, timepoint.time)
 
 foreign key: 
 
-​	*consumer_id (in)* REFERENCES **Customer**[form]
+​	*customer_id (in)* REFERENCES **Customer**[form]
 
-​	*consumer_id (our)* REFERENCES **Customer**[to]
+​	*customer_id (our)* REFERENCES **Customer**[to]
 
 ​	*account_id (in)* REFERENCES **Account**[from]
 
@@ -63,11 +62,11 @@ foreign key: none
 
 foreign key: none
 
-**Product_contain** ( *product_id*, *account_id*, holdings,values)
+**Product_contain** ( *product_id*, *account_id*, holdings, values)
 
 foreign key:
 
-​	*product_id* REFERENCES **Production**
+​	*product_id* REFERENCES **Product**
 
 ​	*account_id* REFERENCES **Investment_account**
 
