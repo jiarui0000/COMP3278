@@ -134,7 +134,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "iKYC Login"))
         self.label_loginText.setText(_translate("MainWindow", "Welcome to the iKYC system!"))
-        self.label_username.setText(_translate("MainWindow", "Username"))
+        self.label_username.setText(_translate("MainWindow", "CustomerID"))
         self.label_password.setText(_translate("MainWindow", "Password"))
         self.commandlink_loginbutton.setText(_translate("MainWindow", "Login"))
         self.commandlink_loginWithFaceID.setText(_translate("MainWindow", "Login with FaceID"))
