@@ -7,7 +7,7 @@ CREATE TABLE Customer (
     name VARCHAR(50) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     birthday DATE NOT NULL,
-    certification_type VARCHAR(10) NOT NULL,
+    certification_type VARCHAR(20) NOT NULL,
     id_number INT NOT NULL,
     password VARCHAR(20) NOT NULL
 );
