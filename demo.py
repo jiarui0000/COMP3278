@@ -22,6 +22,18 @@ def passwdLogin(customer_id, password):
     else:
         return False
 
+def passwdRetrieve(email_account):
+    cursor = my_cursor()
+
+def updateInfo(customer_id, update_type, update_value):
+    cursor = my_cursor()
+    sql_command = "UPDATE Customer SET "+update_type+" = '"+update_value+"' WHERE customer_id='"+customer_id+"';"
+    try:
+        cursor.do(sql_command)
+        return True
+    except:
+        return False
+
 # createAccount('015', '007', 'Pound')
-print(passwdLogin('001', 'iamjack'))
-print(passwdLogin('002', 'iamjack'))
+# print(passwdLogin('001', 'iamjack'))
+print(updateInfo('002', 'name', 'rose'))
