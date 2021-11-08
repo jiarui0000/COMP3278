@@ -3,10 +3,6 @@
 
 
 import pandas as pd
-import pymysql
-import logging
-import sshtunnel
-from sshtunnel import SSHTunnelForwarder
 import os
 import mysql.connector as mysql
 import mysql
