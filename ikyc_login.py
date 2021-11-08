@@ -153,12 +153,25 @@ class IKYC_Login(object):
 
     def showErrorPopUpWindow(self, messageText: str):
         popUp = QMessageBox()
-        popUp.setWindowTitle("Authentication failed!")
+        popUp.setWindowTitle("Error...")
         popUp.setText(messageText)
         popUp.show()
         popUp.setIcon(QMessageBox.Critical)
         popUp.setStandardButtons(QMessageBox.Ok)
         popUp.exec_()
+
+    def showFaceRecognizingWindow(self):
+        self.faceRecogPopUp = QMessageBox()
+        self.faceRecogPopUp.setWindowTitle("Recognizing your face...")
+        self.faceRecogPopUp.setText("Recognizing your face...")
+        self.faceRecogPopUp.show()
+        self.faceRecogPopUp.setIcon(QMessageBox.Information)
+        self.faceRecogPopUp.setStandardButtons(None)
+        self.faceRecogPopUp.exec_()
+
+    def closeFaceRecognizingWindow(self):
+        self.faceRecogPopUp.done(1)
+
 
 
 
