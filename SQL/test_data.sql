@@ -1,4 +1,4 @@
-USE 'COMP3278_G12';
+USE COMP3278_G12;
 
 INSERT INTO  Customer (customer_id ,name,gender,birthday, certification_type,id_number,password) VALUES
  ('001','Jack','male','2020-11-01','student card',0000011111,'iamjack'),
