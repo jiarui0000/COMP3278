@@ -5,6 +5,8 @@ import cv2
 import pyttsx3
 import pickle
 import datetime, time
+import train
+import faceCapture
 import sys
 
 global customer_id
@@ -109,6 +111,19 @@ def autoSignIn():
     cv2.destroyAllWindows()
     
     return login_flag
+
+
+def regFaceID(user_id):
+    faceCapture(user_id)
+    train()
+
+def signIn_idAndpwd(customer_id, pwd):
+    myconn = mysql.connector.connect(host="localhost", user="root", passwd="u3563782", database="COMP3278_G12")
+    cursor = myconn.cursor()
+    select = "SELECT password FROM Customer WHERE customer_id='%s'" % (customer_id)
+    password = cursor.execute(select)
+    result = cursor.fetchall()
+    return (result[0][0]==pwd)
 
 
 
