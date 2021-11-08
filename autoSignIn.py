@@ -107,6 +107,8 @@ def autoSignIn():
                 
     cap.release()
     cv2.destroyAllWindows()
+    
+    return login_flag
 
 
 
