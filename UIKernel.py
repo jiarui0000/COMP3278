@@ -12,7 +12,6 @@ class UIKernel(QtWidgets.QMainWindow):
     #Potential Variables
     #self.loginUI: The GUI of login window.
     #self.username: The username of the customer.
-    #self.password: The password provided by the customer.
     #self.signUpUsername: The username prompted by the customer in order to sign up
     #self.signUpPassword: The password provided by the customer to sign up
 
@@ -34,7 +33,19 @@ class UIKernel(QtWidgets.QMainWindow):
         self.loginUI.commandlink_signUp.clicked.connect(self.loginUI_toRegisterPage)
 
     def loginUI_onClickLogin(self):
-        self.loginUI_captureUsernameAndPassword()
+        u = self.loginUI.lineedit_username.text()
+        p = self.loginUI.lineedit_password.text()
+        print("UIKernel: captured username: " + u)
+        print("UIKernel: captured password: " + p)
+        if (len(u) == 0 or len(p) == 0):
+            self.loginUI.showErrorPopUpWindow("Please input your user id or password!")
+            return
+        checkingResult = self.loginUI_checkUsernameAndPassword(u, p)
+        if (checkingResult == True):
+            self.username = u
+            print("UIKernel: Successfully login with user id: " + self.username)
+        elif(checkingResult == False):
+            self.loginUI.showErrorPopUpWindow("Your user id or password is incorrect, try again!")
         
 
 
@@ -42,14 +53,9 @@ class UIKernel(QtWidgets.QMainWindow):
         self.loginUI_initiateFaceID()
 
 
-    def loginUI_captureUsernameAndPassword(self):
-        self.username = self.loginUI.lineedit_username.text()
-        self.password = self.loginUI.lineedit_password.text()
-        print("UIKernel: captured username: " + self.username)
-        print("UIKernel: captured password: " + self.password)
-    
-    #def loginUI_checkUsernameAndPassword(self, username: str, password: str) -> bool:
-        #return autoSignIn.autoSignIn()
+
+    def loginUI_checkUsernameAndPassword(self, username: str, password: str) -> bool:
+        return autoSignIn.signIn_idAndpwd(username, password)
 
     def loginUI_initiateFaceID(self):
         print("UI Kernel: Initiating FaceID program...")

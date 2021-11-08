@@ -123,6 +123,9 @@ def signIn_idAndpwd(customer_id, pwd):
     select = "SELECT password FROM Customer WHERE customer_id='%s'" % (customer_id)
     password = cursor.execute(select)
     result = cursor.fetchall()
+    if (len(result)==0):
+        return False
+    
     return (result[0][0]==pwd)
 
 
