@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 
-class Ui_MainWindow(object):
+class IKYC_Login(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(960, 600)
@@ -27,28 +27,28 @@ class Ui_MainWindow(object):
         self.label_right_pic = QtWidgets.QLabel(self.centralwidget)
         self.label_right_pic.setGeometry(QtCore.QRect(260, 0, 700, 600))
         self.label_right_pic.setText("")
-        self.label_right_pic.setPixmap(QtGui.QPixmap("right_background.png"))
+        self.label_right_pic.setPixmap(QtGui.QPixmap("GUI_Login_Page_Pic/right_background.png"))
         self.label_right_pic.setScaledContents(True)
         self.label_right_pic.setObjectName("label_right_pic")
 
         self.login_frame_label = QtWidgets.QLabel(self.centralwidget)
         self.login_frame_label.setGeometry(QtCore.QRect(70, 120, 561, 351))
         self.login_frame_label.setText("")
-        self.login_frame_label.setPixmap(QtGui.QPixmap("rounded_rectangle.png"))
+        self.login_frame_label.setPixmap(QtGui.QPixmap("GUI_Login_Page_Pic/rounded_rectangle.png"))
         self.login_frame_label.setScaledContents(True)
         self.login_frame_label.setObjectName("login_frame_label")
 
         self.label_logo = QtWidgets.QLabel(self.centralwidget)
         self.label_logo.setGeometry(QtCore.QRect(10, 10, 241, 101))
         self.label_logo.setText("")
-        self.label_logo.setPixmap(QtGui.QPixmap("ikyc_logo_transparent.png"))
+        self.label_logo.setPixmap(QtGui.QPixmap("GUI_Login_Page_Pic/ikyc_logo_transparent.png"))
         self.label_logo.setScaledContents(True)
         self.label_logo.setObjectName("label_logo")
 
         self.label_background = QtWidgets.QLabel(self.centralwidget)
         self.label_background.setGeometry(QtCore.QRect(-10, -10, 971, 611))
         self.label_background.setText("")
-        self.label_background.setPixmap(QtGui.QPixmap("solidwhite.png"))
+        self.label_background.setPixmap(QtGui.QPixmap("GUI_Login_Page_Pic/solidwhite.png"))
         self.label_background.setScaledContents(True)
         self.label_background.setObjectName("label_background")
 
@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
         self.commandlink_loginbutton.setFont(font)
         self.commandlink_loginbutton.setIconSize(QtCore.QSize(30, 30))
         self.commandlink_loginbutton.setObjectName("commandlink_loginbutton")
-        self.commandlink_loginbutton.clicked.connect(self.loginButtonClicked) #Connect to function
+        #self.commandlink_loginbutton.clicked.connect(self.loginButtonClicked)
 
         self.commandlink_loginWithFaceID = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.commandlink_loginWithFaceID.setGeometry(QtCore.QRect(360, 380, 201, 51))
@@ -97,14 +97,23 @@ class Ui_MainWindow(object):
         self.commandlink_loginWithFaceID.setFont(font)
         self.commandlink_loginWithFaceID.setIconSize(QtCore.QSize(30, 30))
         self.commandlink_loginWithFaceID.setObjectName("commandlink_loginWithFaceID")
-        self.commandlink_loginWithFaceID.clicked.connect(self.loginWithFaceIDClicked) #Connect to function
+        #self.commandlink_loginWithFaceID.clicked.connect(self.loginWithFaceIDClicked)
 
-        self.linedit_username = QtWidgets.QLineEdit(self.centralwidget)
-        self.linedit_username.setGeometry(QtCore.QRect(260, 260, 251, 21))
+        self.commandlink_signUp = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandlink_signUp.setGeometry(QtCore.QRect(20, 530, 231, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        self.commandlink_signUp.setFont(font)
+        self.commandlink_signUp.setIconSize(QtCore.QSize(30, 30))
+        self.commandlink_signUp.setObjectName("commandlink_signUp")
+
+        self.lineedit_username = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineedit_username.setGeometry(QtCore.QRect(260, 260, 251, 21))
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI Light")
-        self.linedit_username.setFont(font)
-        self.linedit_username.setObjectName("linedit_username")
+        self.lineedit_username.setFont(font)
+        self.lineedit_username.setObjectName("linedit_username")
 
         self.lineedit_password = QtWidgets.QLineEdit(self.centralwidget)
         self.lineedit_password.setGeometry(QtCore.QRect(260, 320, 251, 21))
@@ -123,7 +132,8 @@ class Ui_MainWindow(object):
         self.label_password.raise_()
         self.commandlink_loginbutton.raise_()
         self.commandlink_loginWithFaceID.raise_()
-        self.linedit_username.raise_()
+        self.commandlink_signUp.raise_()
+        self.lineedit_username.raise_()
         self.lineedit_password.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -138,27 +148,8 @@ class Ui_MainWindow(object):
         self.label_password.setText(_translate("MainWindow", "Password"))
         self.commandlink_loginbutton.setText(_translate("MainWindow", "Login"))
         self.commandlink_loginWithFaceID.setText(_translate("MainWindow", "Login with FaceID"))
+        self.commandlink_signUp.setText(_translate("MainWindow", "Create a new account!"))
     
-
-
-    def loginButtonClicked(self):
-        username = self.linedit_username.text()
-        password = self.lineedit_password.text()
-        print("Captured username: " + username)
-        print("Captured password: " + password)
-        self.checkUsernamePasswordCorrectness(username, password)
-    
-
-    def loginWithFaceIDClicked(self):
-        print("iKYC login GUI: Attempting to login through FaceID...\n")
-        #Function call for calling OpenCV should be written here
-
-
-    def checkUsernamePasswordCorrectness(self, username:str, password:str) -> bool:
-        #Dummy test here.
-        if(username == "errtest" and password == "1"):
-            self.showErrorPopUpWindow()
-
 
     def showErrorPopUpWindow(self):
         popUp = QMessageBox()
@@ -170,18 +161,13 @@ class Ui_MainWindow(object):
         popUp.exec_()
 
 
-    def authenticationSuccess():
-        print("Authentication success, directing to main window")
-        #Functions about directing to main window
-
-
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = IKYC_Login()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
