@@ -25,6 +25,12 @@ def passwdLogin(customer_id, password):
 def passwdRetrieve(email_account):
     cursor = my_cursor()
 
+def loadInfo(customer_id):
+    cursor = my_cursor()
+    sql_command = "SELECT * FROM Customer WHERE customer_id = '"+ customer_id + "'"
+    print(sql_command)
+    return cursor.do(sql_command)
+
 def updateInfo(customer_id, update_type, update_value):
     cursor = my_cursor()
     sql_command = "UPDATE Customer SET "+update_type+" = '"+update_value+"' WHERE customer_id='"+customer_id+"';"
@@ -43,4 +49,4 @@ def checkGender(customer_id):
 # createAccount('015', '007', 'Pound')
 # print(passwdLogin('001', 'iamjack'))
 # print(updateInfo('002', 'name', 'rosy'))
-print(checkGender('002'))
+# print(checkGender('002'))
