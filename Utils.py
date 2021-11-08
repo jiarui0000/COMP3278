@@ -27,10 +27,13 @@ class my_cursor():
                 print ("Command skipped: "+msg)
     def do(self,command):
         self.cursor.execute(command)
+        response = []
         try:
-            return self.cursor.fetchall()
+            response = self.cursor.fetchall()
         except:
             return
+        self.myconn.commit()
+        return response
     def setup(self):
         self.execute_file('SQL/table.sql')
         self.execute_file('SQL/test_data.sql')
