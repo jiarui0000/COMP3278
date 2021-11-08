@@ -2,6 +2,8 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ikyc_login import IKYC_Login
 from ikyc_signup import IKYC_SignUp
+import autoSignIn #Initiating auto sign-in sys.
+
 
 class UIKernel(QtWidgets.QMainWindow):
     #Potential Variables
@@ -30,9 +32,7 @@ class UIKernel(QtWidgets.QMainWindow):
 
     def loginUI_onClickLogin(self):
         self.loginUI_captureUsernameAndPassword()
-        #Dummy test
-        if(self.username == "errtest" and self.password == "1"):
-            self.loginUI.showErrorPopUpWindow()
+        
 
 
     def loginUI_onClickLoginWithFaceID(self):
@@ -44,11 +44,19 @@ class UIKernel(QtWidgets.QMainWindow):
         self.password = self.loginUI.lineedit_password.text()
         print("UIKernel: captured username: " + self.username)
         print("UIKernel: captured password: " + self.password)
-        
+    
+    #def loginUI_checkUsernameAndPassword(self, username: str, password: str) -> bool:
+        #return autoSignIn.autoSignIn()
 
     def loginUI_initiateFaceID(self):
         print("UI Kernel: Initiating FaceID program...")
         #Sequences for initiating face ID recognition
+        faceRecognitionResult = autoSignIn.autoSignIn()
+        if (faceRecognitionResult == True):
+            self.username = autoSignIn.customer_id
+            print("UIKernel: Face recognition successful, user login as: " + self.username)
+        elif (faceRecognitionResult == False):
+            self.loginUI.showErrorPopUpWindow("Face ID login failed, try again!")
 
     def loginUI_toRegisterPage(self):
         print("UI kernel: change to register page.")

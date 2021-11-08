@@ -151,10 +151,10 @@ class IKYC_Login(object):
         self.commandlink_signUp.setText(_translate("MainWindow", "Create a new account!"))
     
 
-    def showErrorPopUpWindow(self):
+    def showErrorPopUpWindow(self, messageText: str):
         popUp = QMessageBox()
         popUp.setWindowTitle("Authentication failed!")
-        popUp.setText("Your username or password is incorrect, try again!")
+        popUp.setText(messageText)
         popUp.show()
         popUp.setIcon(QMessageBox.Critical)
         popUp.setStandardButtons(QMessageBox.Ok)
