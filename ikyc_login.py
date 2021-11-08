@@ -170,7 +170,10 @@ class IKYC_Login(object):
         self.faceRecogPopUp.exec_()
 
     def closeFaceRecognizingWindow(self):
-        self.faceRecogPopUp.done(1)
+        try:
+            self.faceRecogPopUp.done(1)
+        except NameError:
+            print("Face recognition popup doesn't exist. ", file = sys.stderr)
 
 
 
