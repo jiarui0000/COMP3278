@@ -7,6 +7,7 @@ import pickle
 import datetime, time
 import train
 import faceCapture
+import Utils_copy
 import sys
 
 global customer_id
@@ -118,11 +119,13 @@ def regFaceID(user_id):
     train()
 
 def signIn_idAndpwd(customer_id, pwd):
-    myconn = mysql.connector.connect(host="localhost", user="root", passwd="u3563782", database="COMP3278_G12")
-    cursor = myconn.cursor()
+    #myconn = mysql.connector.connect(host="localhost", user="root", passwd="u3563782", database="COMP3278_G12")
+    #cursor = myconn.cursor()
     select = "SELECT password FROM Customer WHERE customer_id='%s'" % (customer_id)
-    password = cursor.execute(select)
-    result = cursor.fetchall()
+    cursor = Utils_copy.my_cursor()
+    result = cursor.do(select)
+    #password = cursor.execute(select)
+    #result = cursor.fetchall()
     if (len(result)==0):
         return False
     
