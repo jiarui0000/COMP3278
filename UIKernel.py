@@ -5,6 +5,9 @@ from ikyc_signup import IKYC_SignUp
 import autoSignIn #Initiating auto sign-in sys.
 
 
+###IMPORTANT###
+###The "username" variable in the UI System refers to the user id###
+
 class UIKernel(QtWidgets.QMainWindow):
     #Potential Variables
     #self.loginUI: The GUI of login window.
@@ -55,7 +58,6 @@ class UIKernel(QtWidgets.QMainWindow):
         if (faceRecognitionResult == True):
             self.username = autoSignIn.customer_id
             print("UIKernel: Face recognition successful, user login as: " + self.username)
-            self.loginUI.label_loginText.text = "WELCOME, " + self.username
         elif (faceRecognitionResult == False):
             self.loginUI.showErrorPopUpWindow("Face ID login failed, try again!")
 
