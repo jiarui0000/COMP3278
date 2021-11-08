@@ -144,11 +144,15 @@ class IKYC_Login(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "iKYC Login"))
         self.label_loginText.setText(_translate("MainWindow", "Welcome to the iKYC system!"))
+        #self.label_loginText.adjustSize()
         self.label_username.setText(_translate("MainWindow", "CustomerID"))
+        #self.label_username.adjustSize()
         self.label_password.setText(_translate("MainWindow", "Password"))
+        #self.label_password.adjustSize()
         self.commandlink_loginbutton.setText(_translate("MainWindow", "Login"))
         self.commandlink_loginWithFaceID.setText(_translate("MainWindow", "Login with FaceID"))
         self.commandlink_signUp.setText(_translate("MainWindow", "Create a new account!"))
+        #self.commandlink_signUp.adjustSize()
     
 
     def showErrorPopUpWindow(self, messageText: str):
@@ -166,11 +170,14 @@ class IKYC_Login(object):
         self.faceRecogPopUp.setText("Recognizing your face...")
         self.faceRecogPopUp.show()
         self.faceRecogPopUp.setIcon(QMessageBox.Information)
-        self.faceRecogPopUp.setStandardButtons(None)
-        self.faceRecogPopUp.exec_()
+        self.faceRecogPopUp.setStandardButtons(QMessageBox.NoButton)
+        
 
     def closeFaceRecognizingWindow(self):
-        self.faceRecogPopUp.done(1)
+        try:
+            self.faceRecogPopUp.done(1)
+        except NameError:
+            print("Face recognition popup doesn't exist. ", file = sys.stderr)
 
 
 

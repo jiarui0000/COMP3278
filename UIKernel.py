@@ -59,8 +59,10 @@ class UIKernel(QtWidgets.QMainWindow):
 
     def loginUI_initiateFaceID(self):
         print("UI Kernel: Initiating FaceID program...")
+        self.loginUI.showFaceRecognizingWindow()
         #Sequences for initiating face ID recognition
         faceRecognitionResult = autoSignIn.autoSignIn()
+        self.loginUI.closeFaceRecognizingWindow()
         if (faceRecognitionResult == True):
             self.username = autoSignIn.customer_id
             print("UIKernel: Face recognition successful, user login as: " + self.username)
