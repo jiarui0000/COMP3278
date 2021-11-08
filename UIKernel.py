@@ -55,6 +55,7 @@ class UIKernel(QtWidgets.QMainWindow):
         if (faceRecognitionResult == True):
             self.username = autoSignIn.customer_id
             print("UIKernel: Face recognition successful, user login as: " + self.username)
+            self.loginUI.label_loginText.text = "WELCOME, " + self.username
         elif (faceRecognitionResult == False):
             self.loginUI.showErrorPopUpWindow("Face ID login failed, try again!")
 
