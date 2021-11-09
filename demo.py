@@ -4,7 +4,7 @@ from datetime import datetime
 
 def createCustomer(customer_id,name,gender,password,birthday,certification_type,id_number,email,telephone,address,accept_promo):
     variables=locals()
-    cursor = my_cursor(passwd='20211030')
+    cursor = my_cursor()
     sql_command = "INSERT INTO Customer VALUES ('"
     for i in variables.keys():
         sql_command=sql_command+str(variables[i])+"','"
