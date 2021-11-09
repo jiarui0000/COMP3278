@@ -14,28 +14,18 @@ class my_cursor():
         if not ((('COMP3278_G12',) in self.do("show databases")) or (('comp3278_g12',) in self.do('show databases'))):
             self.setup()
         self.do('use COMP3278_G12')
-    def execute_file(filename):
-        fd = open(filename, 'r')
-        sqlFile = fd.read()
-        fd.close()
-        sqlCommands = sqlFile.split(';')
-        for command in sqlCommands:
-            try:
-                if command.strip() != '':
-                    self.do(command)
-            except:
-                print ("Command skipped: "+command)
-#     def execute_file(self,filename):#cannot use
-#         fd = open(filename, 'r')
-#         sqlFile = fd.read()
-#         fd.close()
-#         sqlCommands = sqlFile.split(';')
-#         for command in sqlCommands:
-#             try:
-#                 if command.strip() != '':
-#                     self.cursor.execute(command)
-#             except IOError:
-#                 print ("Command skipped: "+msg)
+    def execute_file(self,filename):
+            fd = open(filename, 'r')
+            sqlFile = fd.read()
+            fd.close()
+            sqlCommands = sqlFile.split(';')
+            for command in sqlCommands:
+                try:
+                    if command.strip() != '':
+                        self.cursor.execute(command+";")
+                except Exception as e: # work on python 3.x
+                    logger.error('The following is the error message '+ str(e))
+
     def do(self,command):
         self.cursor.execute(command)
         response = []
