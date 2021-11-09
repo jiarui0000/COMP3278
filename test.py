@@ -26,7 +26,7 @@ def init_page_profile():
     dlg.lineEdit_id.setReadOnly(True)
     dlg.lineEdit_certi.setReadOnly(True)
     dlg.lineEdit_cid.setReadOnly(True)
-    
+
 
 
 def setPage(page):
