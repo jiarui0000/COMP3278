@@ -14,14 +14,14 @@ class UIKernel(QtWidgets.QMainWindow):
     #Potential Variables
     #self.loginUI: The GUI of login window.
     #self.username: The username of the customer.
-    #self.signUpUsername: The username prompted by the customer in order to sign up
-    #self.signUpPassword: The password provided by the customer to sign up
+    #self.regInfo: The information the customer inputs to register an account.
 
 
     def __init__(self):
         super().__init__()
         self.loginUI = IKYC_Login()
         self.signupUI = IKYC_SignUp_v2()
+        self.regInfo = UserInfo()
         self.loginUI.setupUi(self)
         self.loginUI_connectionInit()
         self.show()
@@ -89,10 +89,38 @@ class UIKernel(QtWidgets.QMainWindow):
 
 
     def signupUI_captureInfo(self):
-        self.signUpUsername = self.signupUI.lineedit_username.text()
-        self.signUpPassword = self.signupUI.lineedit_password.text()
-        print("UIKernel: captured signup username: " + self.signUpUsername)
-        print("UIKernel: captured signup password: " + self.signUpPassword)
+        self.regInfo.firstName = self.signupUI.lineEdit_firstName.text()
+        self.regInfo.lastName = self.signupUI.lineEdit_lastName.text()
+        self.regInfo.gender = self.signupUI.comboBox_gender.currentText()
+
+        #Handle birthday
+        raw_QDate_birthday = self.signupUI.dateEdit_birthday.date() #QDate-Type return
+        self.regInfo.birthday = raw_QDate_birthday.toString(QtCore.Qt.ISODate)
+
+        self.regInfo.certification_type = self.signupUI.comboBox_personalIDType.currentText()
+        self.regInfo.id_number = self.signupUI.lineEdit_idNumber.text()
+
+        #Handle password
+        if(self.signupUI.lineEdit_password.text() != self.signupUI.lineEdit_password_confirm.text()):
+            self.signupUI.showErrorPopUpWindow("The confirming password is different from the password you input for the first time, try again!")
+        else:
+            self.regInfo.password = self.signupUI.lineEdit_password.text()
+
+        self.regInfo.email = self.signupUI.lineEdit_email.text()
+        self.regInfo.phoneNumber = self.signupUI.lineEdit_phone_num.text()
+        
+        print("UIKernel: Captured reg info:\n")
+        print(self.regInfo.firstName + "\n")
+        print(self.regInfo.lastName + "\n")
+        print(self.regInfo.gender + "\n")
+        print(self.regInfo.birthday + "\n")
+        print(self.regInfo.certification_type + "\n")
+        print(self.regInfo.id_number + "\n")
+        print(self.regInfo.password + "\n")
+        print(self.regInfo.email + "\n")
+        print(self.regInfo.phoneNumber + "\n")
+
+
 
     def signupUI_toLoginPage(self):
         print("UI kernel: change to login page.")

@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
 
 class IKYC_SignUp_v2(object):
@@ -83,9 +84,14 @@ class IKYC_SignUp_v2(object):
         self.comboBox_gender = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_gender.setGeometry(QtCore.QRect(40, 240, 151, 31))
         self.comboBox_gender.setObjectName("comboBox_gender")
+        self.comboBox_gender.addItem("Male")
+        self.comboBox_gender.addItem("Female")
         self.comboBox_personalIDType = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_personalIDType.setGeometry(QtCore.QRect(40, 340, 151, 31))
         self.comboBox_personalIDType.setObjectName("comboBox_personalIDType")
+        self.comboBox_personalIDType.addItem("HKID")
+        self.comboBox_personalIDType.addItem("PRC Resident ID")
+        self.comboBox_personalIDType.addItem("Passport ID")
         self.label_password = QtWidgets.QLabel(self.centralwidget)
         self.label_password.setGeometry(QtCore.QRect(40, 410, 181, 31))
         font = QtGui.QFont()
@@ -103,6 +109,7 @@ class IKYC_SignUp_v2(object):
         self.lineEdit_password = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_password.setGeometry(QtCore.QRect(40, 450, 171, 31))
         self.lineEdit_password.setObjectName("lineEdit_password")
+        self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Password) #Mask the password.
         self.dateEdit_birthday = QtWidgets.QDateEdit(self.centralwidget)
         self.dateEdit_birthday.setGeometry(QtCore.QRect(250, 240, 151, 31))
         self.dateEdit_birthday.setObjectName("dateEdit_birthday")
@@ -126,6 +133,7 @@ class IKYC_SignUp_v2(object):
         self.lineEdit_password_confirm = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_password_confirm.setGeometry(QtCore.QRect(250, 450, 171, 31))
         self.lineEdit_password_confirm.setObjectName("lineEdit_password_confirm")
+        self.lineEdit_password_confirm.setEchoMode(QtWidgets.QLineEdit.Password) #Mask the password.
         self.commandLinkButton_back = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.commandLinkButton_back.setGeometry(QtCore.QRect(30, 620, 71, 48))
         font = QtGui.QFont()
@@ -172,6 +180,15 @@ class IKYC_SignUp_v2(object):
         self.commandLinkButton_back.setText(_translate("MainWindow", "Back"))
         self.commandLinkButton_signupAndCaptureFaceID.setText(_translate("MainWindow", "Sign up and capture FaceID"))
         self.label_phone_num.setText(_translate("MainWindow", "Phone No."))
+
+    def showErrorPopUpWindow(self, messageText: str):
+        popUp = QMessageBox()
+        popUp.setWindowTitle("Error...")
+        popUp.setText(messageText)
+        popUp.show()
+        popUp.setIcon(QMessageBox.Critical)
+        popUp.setStandardButtons(QMessageBox.Ok)
+        popUp.exec_()
 
 
 if __name__ == "__main__":

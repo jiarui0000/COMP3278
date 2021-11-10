@@ -1,14 +1,14 @@
 class UserInfo:
-    def __init__(self) -> None:
-        self.firstName = None
-        self.lastName = None
-        self.gender = None
-        self.birthday = None
-        self.certification_type = None
-        self.id_number = None
-        self.password = None
-        self.email = None
-        self.phoneNumber = None
+    def __init__(self):
+        self.firstName = ""
+        self.lastName = ""
+        self.gender = ""
+        self.birthday = ""
+        self.certification_type = ""
+        self.id_number = ""
+        self.password = ""
+        self.email = ""
+        self.phoneNumber = ""
 
     def setInfo(self, firstName, lastName, gender, birthday, certification_type, id_number, password, email, phoneNumber):
         self.firstName = firstName
