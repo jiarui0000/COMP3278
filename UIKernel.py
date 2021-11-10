@@ -1,7 +1,9 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ikyc_login import IKYC_Login
-from ikyc_signup import IKYC_SignUp
+#from ikyc_signup import IKYC_SignUp
+from ikyc_signup_v2 import IKYC_SignUp_v2
+from UserInfo import UserInfo
 import autoSignIn #Initiating auto sign-in sys.
 
 
@@ -19,7 +21,7 @@ class UIKernel(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.loginUI = IKYC_Login()
-        self.signupUI = IKYC_SignUp()
+        self.signupUI = IKYC_SignUp_v2()
         self.loginUI.setupUi(self)
         self.loginUI_connectionInit()
         self.show()
@@ -79,14 +81,14 @@ class UIKernel(QtWidgets.QMainWindow):
     #Logic functions related to signup page
     ############################################################################
     def signupUI_connectionInit(self):
-        self.signupUI.commandlink_signUpButton.clicked.connect(self.signupUI_onClickSignUpButton)
-        self.signupUI.commandlink_backButton.clicked.connect(self.signupUI_toLoginPage)
+        self.signupUI.commandLinkButton_signupAndCaptureFaceID.clicked.connect(self.signupUI_onClickSignUpButton)
+        self.signupUI.commandLinkButton_back.clicked.connect(self.signupUI_toLoginPage)
 
     def signupUI_onClickSignUpButton(self):
-        self.signupUI_captureUsernameAndPassword()
+        self.signupUI_captureInfo()
 
 
-    def signupUI_captureUsernameAndPassword(self):
+    def signupUI_captureInfo(self):
         self.signUpUsername = self.signupUI.lineedit_username.text()
         self.signUpPassword = self.signupUI.lineedit_password.text()
         print("UIKernel: captured signup username: " + self.signUpUsername)
