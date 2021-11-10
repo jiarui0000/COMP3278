@@ -33,6 +33,7 @@ class UIKernel(QtWidgets.QMainWindow):
         self.loginUI.commandlink_loginbutton.clicked.connect(self.loginUI_onClickLogin)
         self.loginUI.commandlink_loginWithFaceID.clicked.connect(self.loginUI_initiateFaceID)
         self.loginUI.commandlink_signUp.clicked.connect(self.loginUI_toRegisterPage)
+        self.loginUI.commandlink_forgotPwd.clicked.connect(self.loginUI_forgotPwdSequence)
 
     def loginUI_onClickLogin(self):
         u = self.loginUI.lineedit_username.text()
@@ -70,6 +71,16 @@ class UIKernel(QtWidgets.QMainWindow):
             print("UIKernel: Face recognition successful, user login as: " + self.username)
         elif (faceRecognitionResult == False):
             self.loginUI.showErrorPopUpWindow("Face ID login failed, try again!")
+
+    def loginUI_forgotPwdSequence(self):
+        customer_id = self.loginUI.lineedit_username.text()
+        if(len(customer_id) == 0):
+            self.loginUI.showErrorPopUpWindow("Please enter your Customer ID for password recovery!")
+            return
+        print("UIKernel: Initiating password find-back sequence for user_id " + customer_id + " ...")
+
+
+
 
     def loginUI_toRegisterPage(self):
         print("UI kernel: change to register page.")

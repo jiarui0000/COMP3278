@@ -123,6 +123,18 @@ class IKYC_Login(object):
         self.lineedit_password.setObjectName("lineedit_password")
         self.lineedit_password.setEchoMode(QtWidgets.QLineEdit.Password) #Mask the password.
 
+
+        #Forgot password functions
+        self.commandlink_forgotPwd = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandlink_forgotPwd.setGeometry(QtCore.QRect(360, 350, 231, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        self.commandlink_forgotPwd.setFont(font)
+        self.commandlink_forgotPwd.setIconSize(QtCore.QSize(30, 30))
+        self.commandlink_forgotPwd.setObjectName("commandlink_signUp")
+
+
         self.label_background.raise_()
         self.label_right_pic.raise_()
         self.login_frame_label.raise_()
@@ -135,6 +147,7 @@ class IKYC_Login(object):
         self.commandlink_signUp.raise_()
         self.lineedit_username.raise_()
         self.lineedit_password.raise_()
+        self.commandlink_forgotPwd.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -152,6 +165,8 @@ class IKYC_Login(object):
         self.commandlink_loginbutton.setText(_translate("MainWindow", "Login"))
         self.commandlink_loginWithFaceID.setText(_translate("MainWindow", "Login with FaceID"))
         self.commandlink_signUp.setText(_translate("MainWindow", "Create a new account!"))
+        self.commandlink_forgotPwd.setText(_translate("MainWindow", "Forgot?"))
+        self.commandlink_forgotPwd.adjustSize()
         #self.commandlink_signUp.adjustSize()
     
 
