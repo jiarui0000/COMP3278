@@ -1,13 +1,13 @@
 USE COMP3278_G12;
 
-INSERT INTO  Customer (customer_id ,name,gender,birthday, certification_type,id_number,password) VALUES
- ('001','Jack','male','2020-11-01','student card',0000011111,'iamjack'),
- ('002','Rose','female','2020-11-17','student card',1111100000,'iamjacks'),
- ('003','Yan Zipeng','male','2000-10-17','student card',0000011111,'password1'),
- ('004','Zhu Jiarui','female','2020-11-01','student card',0000011111,'password2'),
- ('005','Huang Haoyu','male','2020-11-01','student card',0000011111,'password3'),
- ('006','Ye Mao','male','2020-11-01','student card',0000011111,'password4'),
- ('007','Bai Qingyu','female','2020-11-01','student card',0000011111,'password5');
+INSERT INTO  Customer (customer_id,lastname,firstname,gender,birthday,email,phone,certification_type,id_number,password) VALUES
+ ('001','Ma','Jack','male','2020-11-01','@gmail.com','12345678','student card',0000011111,'iamjack'),
+ ('002','Richeal','Rose','female','2020-11-17','@gmail.com','12345678','student card',1111100000,'iamjacks'),
+ ('003','Yan','Zipeng','male','2000-10-17','@gmail.com','12345678','student card',0000011111,'password1'),
+ ('004','Zhu','Jiarui','female','2020-11-01','@gmail.com','12345678','student card',0000011111,'password2'),
+ ('005','Huang','Haoyu','male','2020-11-01','@gmail.com','12345678','student card',0000011111,'password3'),
+ ('006','Ye','Mao','male','2020-11-01','@gmail.com','12345678','student card',0000011111,'password4'),
+ ('007','Bai','Qingyu','female','2020-11-01','@gmail.com','12345678','student card',0000011111,'password5');
 
  INSERT INTO CustomerHistory (from_customer_id, login_date, login_time) VALUES
  ('001','2021-10-30', '23:59:59'),

@@ -4,9 +4,12 @@ USE `COMP3278_G12`;
 
 CREATE TABLE Customer (
     customer_id VARCHAR(10) NOT NULL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
     gender VARCHAR(10) NOT NULL,
     birthday DATE NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
     certification_type VARCHAR(20) NOT NULL,
     id_number INT NOT NULL,
     password VARCHAR(20) NOT NULL
