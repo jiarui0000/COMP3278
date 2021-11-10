@@ -35,6 +35,12 @@ class my_cursor():
             return
         self.myconn.commit()
         return response
+
+    def edit(self,command, updates):
+        self.cursor.execute(command, updates)
+        self.myconn.commit()
+        return
+
     def setup(self):
         self.execute_file('SQL/table.sql')
         self.execute_file('SQL/test_data.sql')

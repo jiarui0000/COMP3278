@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
 from demo import *
 from Utils import *
+import datetime
 
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("p_main.ui")
@@ -13,16 +14,22 @@ edit = False
 #functions
 def init_page_profile():
     result = loadInfo(customer_id)[0]
-    dlg.lineEdit_name.setText(result[1])
-    dlg.lineEdit_gender.setText(result[2])
-    dlg.lineEdit_birthday.setText(str(result[3]))
+    dlg.lineEdit_lastname.setText(result[1])
+    dlg.lineEdit_firstname.setText(result[2])
+    dlg.lineEdit_gender.setText(result[3])
+    dlg.lineEdit_birthday.setText(str(result[4]))
+    dlg.lineEdit_email.setText(result[5])
+    dlg.lineEdit_phone.setText(result[6])
     dlg.lineEdit_id.setText(result[0])
-    dlg.lineEdit_certi.setText(result[4])
-    dlg.lineEdit_cid.setText(str(result[5]))
+    dlg.lineEdit_certi.setText(result[7])
+    dlg.lineEdit_cid.setText(str(result[8]))
     # for i in range(dlg.groupBox)
-    dlg.lineEdit_name.setReadOnly(True)
+    dlg.lineEdit_lastname.setReadOnly(True)
+    dlg.lineEdit_firstname.setReadOnly(True)
     dlg.lineEdit_gender.setReadOnly(True)
     dlg.lineEdit_birthday.setReadOnly(True)
+    dlg.lineEdit_email.setReadOnly(True)
+    dlg.lineEdit_phone.setReadOnly(True)
     dlg.lineEdit_id.setReadOnly(True)
     dlg.lineEdit_certi.setReadOnly(True)
     dlg.lineEdit_cid.setReadOnly(True)
@@ -37,17 +44,38 @@ def setPage(page):
         print("hi")
 
 def edit_profile():
+    global edit
     if edit == False:
-        dlg.lineEdit_name.setReadOnly(False)
+        dlg.lineEdit_lastname.setReadOnly(False)
+        dlg.lineEdit_firstname.setReadOnly(False)
         dlg.lineEdit_gender.setReadOnly(False)
         dlg.lineEdit_birthday.setReadOnly(False)
+        dlg.lineEdit_email.setReadOnly(False)
+        dlg.lineEdit_phone.setReadOnly(False)
         # dlg.lineEdit_id.setReadOnly(False)
-        dlg.lineEdit_certi.setReadOnly(False)
-        dlg.lineEdit_cid.setReadOnly(False)
+        # dlg.lineEdit_certi.setReadOnly(False)
+        # dlg.lineEdit_cid.setReadOnly(False)
         dlg.pushButton_edit_profile.setText("Update")
+        edit = True
     else:
-        name = dlg.lineEdit_name.text()
+        lastname = dlg.lineEdit_lastname.text()
+        firstname = dlg.lineEdit_firstname.text()
+        gender = dlg.lineEdit_gender.text()
+        birthday = dlg.lineEdit_birthday.text().split('-')
+        birthday2 = dlg.lineEdit_birthday.text()
+        # for d in birthday:
+        dateobj = datetime.date(int(birthday[0]),int(birthday[1]),int(birthday[2]))
+        print()
+        email = dlg.lineEdit_email.text()
+        phone = dlg.lineEdit_phone.text()
+        # if (lastname != "")
+        user = (lastname, firstname, gender, birthday2, email, phone)
+        cursor = my_cursor()
+        cursor.edit("UPDATE Customer SET lastname=%s, firstname=%s, gender=%s, birthday=%s , email=%s, phone=%s WHERE customer_id="+customer_id, user)
+
         #update database
+        dlg.pushButton_edit_profile.setText("Edit")
+        edit = False
 
 
 
