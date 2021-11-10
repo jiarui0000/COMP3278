@@ -52,6 +52,12 @@ def checkGender(customer_id):
     response = cursor.do(sql_command)
     return response[0][0]
 
+def getSurname(customer_id):
+    cursor = my_cursor()
+    sql_command = "SELECT lastname FROM Customer WHERE customer_id='"+customer_id+"';"
+    response = cursor.do(sql_command)
+    return response[0][0]
+
 # createAccount('015', '007', 'Pound')
 # print(passwdLogin('001', 'iamjack'))
 # print(updateInfo('002', 'name', 'rosy'))

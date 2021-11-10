@@ -12,6 +12,29 @@ edit = False
 
 
 #functions
+
+def timecheck():
+    d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'6:00', '%Y-%m-%d%H:%M')
+    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'12:00', '%Y-%m-%d%H:%M')
+    d_time2 = datetime.datetime.strptime(str(datetime.datetime.now().date())+'18:00', '%Y-%m-%d%H:%M')
+    n_time = datetime.datetime.now()
+    if n_time > d_time and n_time<d_time1:
+        return 1
+    elif n_time > d_time1 and n_time < d_time2:
+        return 2
+    else:
+        return 3
+
+def greeting():
+    dlg.label_surname.setText(("Mr. " if checkGender(customer_id) == "male" else "Ms. ") + getSurname(customer_id))
+    if timecheck() == 1:
+        dlg.label.setText("Good morning,")
+    elif timecheck() == 2:
+        dlg.label.setText("Good afternoon,")
+    else:
+        dlg.label.setText("Good evening,")
+
+
 def init_page_profile():
     result = loadInfo(customer_id)[0]
     dlg.lineEdit_lastname.setText(result[1])
@@ -91,7 +114,7 @@ dlg.pushButton_home.clicked.connect(lambda:setPage(1))
 dlg.pushButton_wallet.clicked.connect(lambda:setPage(2))
 # dlg.pushButton_profile.clicked.connect(setPage())
 dlg.pushButton_edit_profile.clicked.connect(edit_profile)
-
+greeting()
 
 
 dlg.show()

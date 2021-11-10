@@ -100,7 +100,7 @@ font: bold italic 11pt &quot;Calibri&quot;;</string>
            <string>Good evening,</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="label_surname">
           <property name="geometry">
            <rect>
             <x>50</x>
