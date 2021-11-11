@@ -159,7 +159,20 @@ def accountBalance(account_id):
 
 
 def recentContect(customer_id):
-    sql_command=""
+    sql_command="SELECT in_account_id, in_customer_id FROM ( \
+                SELECT DISTINCT in_account_id, in_customer_id FROM Transaction WHERE out_customer_id='"\
+                +customer_id+"') T LIMIT 3;"
+    return cursor.do(sql_command)
+
+
+def transactionHistory(customer_id):
+    history = []
+    sql_command = "SELECT * FROM Transaction WHERE in_customer_id='"+customer_id+"';"
+    history += cursor.do(sql_command)
+    sql_command = "SELECT * FROM Transaction WHERE out_customer_id='" + customer_id + "';"
+    history += cursor.do(sql_command)
+    history.sort(key=lambda s:(s[7], s[8], s[0]))
+    return history
 
 
 def getType(account_id):
@@ -182,6 +195,7 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
 
     # verify
     valid = True
+    valid = valid and (in_account_id != out_account_id)
     sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
     valid = valid and (currency_type==cursor.do(sql_command)[0][0])
     sql_command = "SELECT customer_id FROM Account WHERE account_id='" + in_account_id + "';"
@@ -229,10 +243,20 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
     sql_command="INSERT INTO Transaction VALUES ('"+trandactionID+"','"+str(in_account_id)+"','"+str(out_account_id)+ \
                 "','"+str(in_customer_id)+"','"+str(out_customer_id)+"',"+str(amount)+",'"+str(currency_type)+ \
                 "','"+str(timepoint_date)+"','"+str(timepoint_time)+"');"
-    print(sql_command)
     cursor.do(sql_command)
     return trandactionID
 
 
+def searchTransaction(customer_id, find_type, find_param):
+    if find_type != 'account_id':
+        sql_command="SELECT * FROM Transaction WHERE (in_customer_id='"+customer_id+"' OR out_customer_id='"\
+                    +customer_id+"' )AND "+str(find_type)+"='"+str(find_param)+"';"
+    else:
+        sql_command="SELECT * FROM Transaction WHERE (in_customer_id='"+customer_id+"' OR out_customer_id='"\
+                    +customer_id+"' ) AND (in_account_id='"+str(find_param)+"' OR out_account_id='"+str(find_param)+"');"
+    return cursor.do(sql_command)
+
+
+
 cursor = my_cursor()
-# print(makeTransaction('004','001','002','001',370,'Pound'))
+print(searchTransaction('001', 'account_id', '001'))
