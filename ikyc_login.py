@@ -179,12 +179,12 @@ class IKYC_Login(object):
         popUp.setStandardButtons(QMessageBox.Ok)
         popUp.exec_()
 
-    def showInfoPopUpWindow(self, messageText: str) -> None:
+    def showInfoPopUpWindow(self, messageText: str):
         popUp = QMessageBox()
         popUp.setWindowTitle("Info")
         popUp.setText(messageText)
         popUp.show()
-        popUp.setIcon(QMessageBox.information)
+        popUp.setIcon(QMessageBox.Information)
         popUp.setStandardButtons(QMessageBox.Ok)
         popUp.exec_()
 
