@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b76f17b7-bbd0-4c34-8812-d249a6d7eaa6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/FaceRecognition/data/.placeholder" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FaceRecognition/faces.py" beforeDir="false" afterPath="$PROJECT_DIR$/FaceRecognition/faces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FaceRecognition/faces_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/FaceRecognition/faces_gui.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1xtGCiTjw3mRcvw3szJSaD2SJ46" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
+  </component>
+  <component name="RunManager" selected="Python.demo (1)">
+    <configuration name="demo (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="codebase1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="codebase1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/FaceRecognition" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/FaceRecognition/demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.demo (1)" />
+        <item itemvalue="Python.demo" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b76f17b7-bbd0-4c34-8812-d249a6d7eaa6" name="Default Changelist" comment="" />
+      <created>1631166845536</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1631166845536</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="454" y="261" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1631541321678">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state x="454" y="261" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.920@0.0.1440.920" timestamp="1631541321678" />
+    <state width="1419" height="344" key="GridCell.Tab.0.bottom" timestamp="1635603557661">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1419" height="344" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1635603557661" />
+    <state width="1419" height="344" key="GridCell.Tab.0.center" timestamp="1635603557660">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1419" height="344" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1635603557660" />
+    <state width="1419" height="344" key="GridCell.Tab.0.left" timestamp="1635603557660">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1419" height="344" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1635603557660" />
+    <state width="1419" height="344" key="GridCell.Tab.0.right" timestamp="1635603557660">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1419" height="344" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1635603557660" />
+    <state x="222" y="105" key="SettingsEditor" timestamp="1631179280694">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state x="222" y="105" key="SettingsEditor/0.0.1440.920@0.0.1440.920" timestamp="1631179280694" />
+  </component>
+</project>

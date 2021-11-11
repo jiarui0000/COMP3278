@@ -35,7 +35,7 @@ CREATE TABLE Account(
     account_id VARCHAR(10) NOT NULL PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,
     create_time DATE NOT NULL,
-    currenct_type VARCHAR(20) NOT NULL,
+    currency_type VARCHAR(20) NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 

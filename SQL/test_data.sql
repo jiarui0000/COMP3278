@@ -27,7 +27,7 @@ INSERT INTO  Customer (customer_id,lastname,firstname,gender,birthday,email,phon
  ('006','002','2021-09-30'),
  ('007','002','2021-09-30');
 
- INSERT INTO Account (account_id, customer_id, create_time, currenct_type) VALUES
+ INSERT INTO Account (account_id, customer_id, create_time, currency_type) VALUES
  ('001','001','1900-10-10','Pound'),
  ('002','001','1910-10-10','Pound'),
  ('003','002','1910-10-10','Pound'),
