@@ -174,7 +174,7 @@ QPushButton:hover{
 }</string>
                </property>
                <property name="text">
-                <string>Profile</string>
+                <string>Profile    </string>
                </property>
                <property name="icon">
                 <iconset>
@@ -235,7 +235,7 @@ QPushButton:hover{
 }</string>
                </property>
                <property name="text">
-                <string> Home</string>
+                <string> Home    </string>
                </property>
                <property name="icon">
                 <iconset>
@@ -296,7 +296,7 @@ QPushButton:hover{
 }</string>
                </property>
                <property name="text">
-                <string>Wallet</string>
+                <string>Wallet    </string>
                </property>
                <property name="icon">
                 <iconset>
@@ -357,7 +357,7 @@ QPushButton:hover{
 }</string>
                </property>
                <property name="text">
-                <string>Transactions</string>
+                <string>Transfer </string>
                </property>
                <property name="icon">
                 <iconset>
@@ -395,7 +395,7 @@ QPushButton:hover{
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="pushButton_logout">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -490,8 +490,8 @@ QPushButton:hover{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>554</width>
-             <height>485</height>
+             <width>621</width>
+             <height>571</height>
             </rect>
            </property>
            <property name="styleSheet">

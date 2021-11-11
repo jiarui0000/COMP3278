@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QMessageBox
 from demo import *
 from Utils import *
 import datetime
@@ -9,9 +10,13 @@ dlg = uic.loadUi("p_main.ui")
 ###
 #default value
 edit = False
+poptype = "logout"
 
 
 #functions
+def show_message(title= "Message", message="text"):
+    msg = QMessageBox()
+    msg.information(None, title, message)
 
 def timecheck():
     d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'6:00', '%Y-%m-%d%H:%M')
@@ -34,6 +39,24 @@ def greeting():
     else:
         dlg.label.setText("Good evening,")
 
+def show_popup(type="logout",title= "Test", message="message"):
+    msg = QMessageBox()
+    msg.setWindowTitle(title)
+    msg.setText(message)
+    msg.setIcon(QMessageBox.Question)
+    msg.setStandardButtons(QMessageBox.No|QMessageBox.Yes)
+    msg.buttonClicked.connect(popup_button)
+    x = msg.exec_()
+
+def popup_button(i):
+    global poptype
+    if poptype == "logout":
+        if i.text() == "&Yes":
+            print("excute logout")
+    elif poptype == "delete1":
+        print("not")
+
+    
 
 def init_page_profile():
     result = loadInfo(customer_id)[0]
@@ -114,8 +137,11 @@ dlg.pushButton_home.clicked.connect(lambda:setPage(1))
 dlg.pushButton_wallet.clicked.connect(lambda:setPage(2))
 # dlg.pushButton_profile.clicked.connect(setPage())
 dlg.pushButton_edit_profile.clicked.connect(edit_profile)
+poptype="logout"
+dlg.pushButton_logout.clicked.connect(lambda:show_popup())
 greeting()
-
+if isBirthday(customer_id):
+    show_message("","Happy birthday! "+ ("Mr. " if checkGender(customer_id) == "male" else "Ms. ") + getSurname(customer_id))
 
 dlg.show()
 app.exec()
