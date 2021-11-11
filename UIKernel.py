@@ -80,6 +80,7 @@ class UIKernel(QtWidgets.QMainWindow):
             return
         print("UIKernel: Initiating password find-back sequence for user_id " + customer_id + " ...")
         demo.passwdRetrieve(customer_id)
+        self.loginUI.showInfoPopUpWindow("The new password has been sent to your email, please check your inbox :)")
 
 
 

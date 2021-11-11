@@ -179,6 +179,15 @@ class IKYC_Login(object):
         popUp.setStandardButtons(QMessageBox.Ok)
         popUp.exec_()
 
+    def showInfoPopUpWindow(self, messageText: str) -> None:
+        popUp = QMessageBox()
+        popUp.setWindowTitle("Info")
+        popUp.setText(messageText)
+        popUp.show()
+        popUp.setIcon(QMessageBox.information)
+        popUp.setStandardButtons(QMessageBox.Ok)
+        popUp.exec_()
+
     def showFaceRecognizingWindow(self):
         self.faceRecogPopUp = QMessageBox()
         self.faceRecogPopUp.setWindowTitle("Recognizing your face...")
