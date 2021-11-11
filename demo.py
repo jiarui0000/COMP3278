@@ -6,6 +6,11 @@ from email.mime.text import MIMEText
 import random
 
 
+def newCustomerID():
+    sql_command = "SELECT MAX(customer_id) FROM Customer;"
+    return str(int(cursor.do(sql_command)[0][0])+1).zfill(3)
+
+
 def createCustomer(customer_id, lastname, firstname, gender, birthday, email, phone, certification_type, id_number,
                    password):
     variables = locals()
@@ -64,16 +69,17 @@ def updatePassword(customer_id, old_passwd, new_passwd):
     else:
         return False
 
-def passwdRetrieve(customer_id):  # send secret key to registered email
-    sender = ''
-    sender_pass = '' #在这里写你的邮箱密码和邮箱
+
+def passwdRetrieve(customer_id):  # set new password and send by email
+    sender = 'jiaruiz@'
+    sender_pass = ''  # 在这里写你的邮箱密码和邮箱
     receiver = cursor.do("SELECT email FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     customer_name = cursor.do("SELECT firstname FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     title = '[COMP3278G12] Password Retrieve'
     # secret key generate
     secret_key = ""
     for _ in range(8):
-        secret_key += chr(random.randint(97,122))
+        secret_key += chr(random.randint(97, 122))
 
     # Setup the MIME
     message = MIMEMultipart()
@@ -97,8 +103,10 @@ def passwdRetrieve(customer_id):  # send secret key to registered email
     sql_command = "UPDATE Customer SET password='" + new_passwd + "' WHERE customer_id='" + customer_id + "';"
     cursor.do(sql_command)
 
-def passwdRetrievel2(customer_id, new_passwd):  # set new password
+
+def passwdRetrieve2(customer_id, new_passwd):
     return
+
 
 def loadInfo(customer_id):
     sql_command = "SELECT * FROM Customer WHERE customer_id = '" + customer_id + "'"
@@ -134,8 +142,12 @@ def getSurname(customer_id):
     return response[0][0]
 
 
-cursor = my_cursor()
-print(updatePassword('004', 'iamjiarui', 'password2'))
-updateInfo('004', 'email', 'jiaruiz@connect.hku.hk')
-passwdRetrieve('004')
+def accountList(customer_id):
+    return
 
+
+cursor = my_cursor()
+# print(updatePassword('004', 'iamjiarui', 'password2'))
+# updateInfo('004', 'email', 'jiaruiz@connect.hku.hk')
+# passwdRetrieve('004')
+newCustomerID()
