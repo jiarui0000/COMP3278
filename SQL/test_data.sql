@@ -57,13 +57,13 @@ INSERT INTO  Customer (customer_id,lastname,firstname,gender,birthday,email,phon
  ('010','001','Pound','1915-10-10',10000),
  ('011','002','Pound','1920-11-11',10000);
 
-INSERT INTO Transaction (transaction_id, in_account_id, out_account_id, in_customer_id, out_customer_id, amount, timepoint_date, timepoint_time) VALUES
-('001','001','004','001','002',520,'1952-05-20','00:00:01'),
-('002','001','004','001','002',1000,'1960-05-20','00:10:01'),
-('003','001','004','001','002',520,'1970-05-20','10:10:01'),
-('004','004','001','002','001',520,'1952-05-20','00:30:01'),
-('005','004','001','002','001',520,'1960-05-20','00:30:01'),
-('006','004','001','002','001',520,'1970-05-20','01:30:01');
+INSERT INTO Transaction (transaction_id, in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type, timepoint_date, timepoint_time) VALUES
+('001','001','004','001','002',520,'Pound','1952-05-20','00:00:01'),
+('002','001','004','001','002',1000,'Pound','1960-05-20','00:10:01'),
+('003','001','004','001','002',520,'Pound','1970-05-20','10:10:01'),
+('004','004','001','002','001',520,'Pound','1952-05-20','00:30:01'),
+('005','004','001','002','001',520,'Pound','1960-05-20','00:30:01'),
+('006','004','001','002','001',520,'Pound','1970-05-20','01:30:01');
 
 INSERT INTO Product (product_id, type, price, holdings, issuer) VALUES
 ('001','A1',100,'NULL','NULL'),

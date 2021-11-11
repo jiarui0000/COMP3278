@@ -73,6 +73,7 @@ CREATE TABLE Transaction(
     in_customer_id VARCHAR(10) NOT NULL,
     out_customer_id VARCHAR(10) NOT NULL,
     amount INT NOT NULL,
+    currency_type VARCHAR(20) NOT NULL,
     timepoint_date DATE NOT NULL,
     timepoint_time TIME NOT NULL,
     FOREIGN KEY (in_customer_id) REFERENCES Customer(customer_id),

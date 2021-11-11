@@ -4,7 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
-
+currency_constant={'US Dollar':1, 'Hong Kong Dollar':7.8, 'Pound':0.75, 'China Yuan':6.4}
 
 def newCustomerID():
     sql_command = "SELECT MAX(customer_id) FROM Customer;"
@@ -158,5 +158,81 @@ def accountBalance(account_id):
     return []
 
 
-cursor = my_cursor()
+def recentContect(customer_id):
+    sql_command=""
 
+
+def getType(account_id):
+    for category in ['Investment', 'Saving', 'Credit']:
+        sql_command = "SELECT * FROM " + category + "_account WHERE account_id='" + account_id + "';"
+        response = cursor.do(sql_command)
+        if len(response) != 0:
+            return category
+    return ''
+
+
+def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type):
+    # currency conversion
+    sql_command="SELECT currency_type FROM Account WHERE account_id='"+in_account_id+"';"
+    in_currency_constant = currency_constant[cursor.do(sql_command)[0][0]]
+    sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
+    out_currency_constant = currency_constant[cursor.do(sql_command)[0][0]]
+    in_amount = int(round(amount / currency_constant[currency_type] * in_currency_constant))
+    out_amount = int(round(amount / currency_constant[currency_type] * out_currency_constant))
+
+    # verify
+    valid = True
+    sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
+    valid = valid and (currency_type==cursor.do(sql_command)[0][0])
+    sql_command = "SELECT customer_id FROM Account WHERE account_id='" + in_account_id + "';"
+    valid = valid and (in_customer_id == cursor.do(sql_command)[0][0])
+    sql_command = "SELECT customer_id FROM Account WHERE account_id='" + out_account_id + "';"
+    valid = valid and (out_customer_id == cursor.do(sql_command)[0][0])
+    in_type=getType(in_account_id)
+    out_type=getType(out_account_id)
+    valid = valid and (in_type != 'Investment') and (out_type != 'Investment')
+    if out_type=='Saving':
+        sql_command= "SELECT balance FROM Saving_account WHERE account_id='"+out_account_id+"';"
+        valid = valid and (out_amount <= cursor.do(sql_command)[0][0])
+    if not valid:
+        return '', False
+
+    # make transaction
+    if in_type=='Saving':
+        sql_command = "SELECT balance FROM Saving_account WHERE account_id='" + in_account_id + "';"
+        balance = cursor.do(sql_command)[0][0]
+        balance += in_amount
+        sql_command = "UPDATE Saving_account SET balance="+str(balance)+" WHERE account_id='"+in_account_id+"';"
+        cursor.do(sql_command)
+    else: # credit account
+        sql_command = "SELECT total_debt FROM Credit_account WHERE account_id='" + in_account_id + "';"
+        debt = cursor.do(sql_command)[0][0]
+        debt -= in_amount
+        sql_command = "UPDATE Credit_account SET total_debt=" + str(debt) + " WHERE account_id='" + in_account_id + "';"
+        cursor.do(sql_command)
+    if out_type=='Saving':
+        sql_command = "SELECT balance FROM Saving_account WHERE account_id='" + out_account_id + "';"
+        balance = cursor.do(sql_command)[0][0]
+        balance -= out_amount
+        sql_command = "UPDATE Saving_account SET balance=" + str(balance) + " WHERE account_id='" + out_account_id + "';"
+        cursor.do(sql_command)
+    else: # credit account
+        sql_command = "SELECT total_debt FROM Credit_account WHERE account_id='" + out_account_id + "';"
+        debt = cursor.do(sql_command)[0][0]
+        debt += in_amount
+        sql_command = "UPDATE Credit_account SET total_debt=" + str(debt) + " WHERE account_id='" + out_account_id + "';"
+        cursor.do(sql_command)
+    sql_command="SELECT MAX(transaction_id) FROM Transaction;"
+    trandactionID=str(int(cursor.do(sql_command)[0][0]) + 1).zfill(3)
+    timepoint_date=datetime.today().strftime("%Y-%m-%d")
+    timepoint_time=datetime.now().strftime("%H:%M:%S")
+    sql_command="INSERT INTO Transaction VALUES ('"+trandactionID+"','"+str(in_account_id)+"','"+str(out_account_id)+ \
+                "','"+str(in_customer_id)+"','"+str(out_customer_id)+"',"+str(amount)+",'"+str(currency_type)+ \
+                "','"+str(timepoint_date)+"','"+str(timepoint_time)+"');"
+    print(sql_command)
+    cursor.do(sql_command)
+    return trandactionID
+
+
+cursor = my_cursor()
+# print(makeTransaction('004','001','002','001',370,'Pound'))
