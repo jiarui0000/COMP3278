@@ -36,12 +36,26 @@ def createAccount(account_id, customer_id, currency_type, account_type, create_t
         return False
 
 def passwdLogin(customer_id, password):
-    sql_command = "SELECT password FROM Customer WHERE customer_id='"+customer_id+"';"
-    response = cursor.do(sql_command)
-    if response[0][0] == password:
+    sql_command="SELECT password FROM Customer WHERE customer_id='"+customer_id+"';"
+    response=cursor.do(sql_command)
+    if response[0][0]==password:
         return True
     else:
         return False
+
+def updatePassword(customer_id, old_passwd, new_passwd):
+    sql_command="SELECT password FROM Customer WHERE customer_id='"+customer_id+"';"
+    response=cursor.do(sql_command)
+    if response[0][0]==old_passwd:
+        sql_command="UPDATE Customer SET password='"+new_passwd+"' WHERE customer_id='"+customer_id+"';"
+        try:
+            cursor.do(sql_command)
+            return True
+        except:
+            return False
+    else:
+        return False
+
 
 def passwdRetrieve(email_account):
     cursor = my_cursor()
@@ -50,6 +64,12 @@ def loadInfo(customer_id):
     sql_command = "SELECT * FROM Customer WHERE customer_id = '"+ customer_id + "'"
     print(sql_command)
     return cursor.do(sql_command)
+
+def isBirthday(customer_id):
+    date = datetime.today().strftime("%m-%d")
+    sql_command = "SELECT birthday FROM Customer WHERE customer_id = '"+customer_id+"';"
+    birthday = cursor.do(sql_command)[0][0]
+    return date==birthday.strftime("%m-%d")
 
 def updateInfo(customer_id, update_type, update_value):
     sql_command = "UPDATE Customer SET "+update_type+" = '"+update_value+"' WHERE customer_id='"+customer_id+"';"
@@ -71,10 +91,10 @@ def getSurname(customer_id):
 
 cursor = my_cursor()
 # createCustomer('009','Ma','Jack','male','2020-11-01','@gmail.com','12345678','student card',11111,'iamjack')
-print(createAccount('018', '007', 'Pound', 'saving', '2021-11-11', '62000'))
+# print(createAccount('018', '007', 'Pound', 'saving', '2021-11-11', '62000'))
 # print(passwdLogin('001', 'iamjack'))
 # print(updateInfo('002', 'name', 'rosy'))
 # print(checkGender('002'))
-print(cursor.do("SELECT * FROM Account;"))
-print(cursor.do("SELECT * FROM Saving_account;"))
+# isBirthday('001')
+# updatePassword('001','iamjack','iamjack')
 
