@@ -1,15 +1,21 @@
-import mysql.connector
 from Utils import *
 from datetime import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import random
 
-def createCustomer(customer_id,lastname,firstname,gender,birthday,email,phone,certification_type,id_number,password):
-    variables=locals()
+
+def createCustomer(customer_id, lastname, firstname, gender, birthday, email, phone, certification_type, id_number,
+                   password):
+    variables = locals()
     sql_command = "INSERT INTO Customer VALUES ('"
     for i in variables.keys():
-        sql_command=sql_command+str(variables[i])+"','"
-    sql_command=sql_command[:-2]
-    sql_command=sql_command+");"
+        sql_command = sql_command + str(variables[i]) + "','"
+    sql_command = sql_command[:-2]
+    sql_command = sql_command + ");"
     cursor.do(sql_command)
+
 
 def createAccount(account_id, customer_id, currency_type, account_type, create_time, account_params):
     # check if exist
@@ -21,33 +27,35 @@ def createAccount(account_id, customer_id, currency_type, account_type, create_t
         return False
 
     # insert new
-    variables=locals()
+    variables = locals()
     create_time = create_time = datetime.today().strftime("%Y-%m-%d")
-    sql_command = "INSERT INTO Account (account_id, customer_id, create_time, currency_type) VALUES ('"+account_id+"','"\
-                  +customer_id+"','"+create_time+"','"+currency_type+"');"
+    sql_command = "INSERT INTO Account (account_id, customer_id, create_time, currency_type) VALUES ('" + account_id + "','" \
+                  + customer_id + "','" + create_time + "','" + currency_type + "');"
     cursor.do(sql_command)
     account_type = account_type.capitalize()
-    sql_command = "INSERT INTO "+account_type+"_account VALUES ('"
-    sql_command += account_id+"','"+customer_id+"','"+currency_type+"','"+create_time+"','"+account_params+"');"
+    sql_command = "INSERT INTO " + account_type + "_account VALUES ('"
+    sql_command += account_id + "','" + customer_id + "','" + currency_type + "','" + create_time + "','" + account_params + "');"
     try:
         cursor.do(sql_command)
         return True
     except:
         return False
 
+
 def passwdLogin(customer_id, password):
-    sql_command="SELECT password FROM Customer WHERE customer_id='"+customer_id+"';"
-    response=cursor.do(sql_command)
-    if response[0][0]==password:
+    sql_command = "SELECT password FROM Customer WHERE customer_id='" + customer_id + "';"
+    response = cursor.do(sql_command)
+    if response[0][0] == password:
         return True
     else:
         return False
 
+
 def updatePassword(customer_id, old_passwd, new_passwd):
-    sql_command="SELECT password FROM Customer WHERE customer_id='"+customer_id+"';"
-    response=cursor.do(sql_command)
-    if response[0][0]==old_passwd:
-        sql_command="UPDATE Customer SET password='"+new_passwd+"' WHERE customer_id='"+customer_id+"';"
+    sql_command = "SELECT password FROM Customer WHERE customer_id='" + customer_id + "';"
+    response = cursor.do(sql_command)
+    if response[0][0] == old_passwd:
+        sql_command = "UPDATE Customer SET password='" + new_passwd + "' WHERE customer_id='" + customer_id + "';"
         try:
             cursor.do(sql_command)
             return True
@@ -56,45 +64,78 @@ def updatePassword(customer_id, old_passwd, new_passwd):
     else:
         return False
 
+def passwdRetrieve(customer_id):  # send secret key to registered email
+    sender = ''
+    sender_pass = '' #在这里写你的邮箱密码和邮箱
+    receiver = cursor.do("SELECT email FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
+    customer_name = cursor.do("SELECT firstname FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
+    title = '[COMP3278G12] Password Retrieve'
+    # secret key generate
+    secret_key = ""
+    for _ in range(8):
+        secret_key += chr(random.randint(97,122))
 
-def passwdRetrieve(email_account):
-    cursor = my_cursor()
+    # Setup the MIME
+    message = MIMEMultipart()
+    message['From'] = sender
+    message['To'] = receiver
+    message['Subject'] = title  # The subject line
+    # The body and the attachments for the mail
+    message.attach(MIMEText('Dear ' + customer_name + ',\n\n' + \
+                            'You are retrieving your password. \nYour new password is: ' + secret_key + '\n\nNow you can use it to log in. \n\nDevelop Team G12\n', \
+                            'plain', 'utf-8'))
+    # Create SMTP session for sending the mail
+    session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
+    session.starttls()  # enable security
+    session.login(sender, sender_pass)  # login with mail_id and password
+    text = message.as_string()
+    session.sendmail(sender, receiver, text)
+    session.quit()
+    print('Mail Sent with title ' + title)
+
+    new_passwd = secret_key
+    sql_command = "UPDATE Customer SET password='" + new_passwd + "' WHERE customer_id='" + customer_id + "';"
+    cursor.do(sql_command)
+
+def passwdRetrievel2(customer_id, new_passwd):  # set new password
+    return
 
 def loadInfo(customer_id):
-    sql_command = "SELECT * FROM Customer WHERE customer_id = '"+ customer_id + "'"
+    sql_command = "SELECT * FROM Customer WHERE customer_id = '" + customer_id + "'"
     print(sql_command)
     return cursor.do(sql_command)
 
+
 def isBirthday(customer_id):
     date = datetime.today().strftime("%m-%d")
-    sql_command = "SELECT birthday FROM Customer WHERE customer_id = '"+customer_id+"';"
+    sql_command = "SELECT birthday FROM Customer WHERE customer_id = '" + customer_id + "';"
     birthday = cursor.do(sql_command)[0][0]
-    return date==birthday.strftime("%m-%d")
+    return date == birthday.strftime("%m-%d")
+
 
 def updateInfo(customer_id, update_type, update_value):
-    sql_command = "UPDATE Customer SET "+update_type+" = '"+update_value+"' WHERE customer_id='"+customer_id+"';"
+    sql_command = "UPDATE Customer SET " + update_type + " = '" + update_value + "' WHERE customer_id='" + customer_id + "';"
     try:
         cursor.do(sql_command)
         return True
     except:
         return False
 
+
 def checkGender(customer_id):
-    sql_command = "SELECT gender FROM Customer WHERE customer_id='"+customer_id+"';"
+    sql_command = "SELECT gender FROM Customer WHERE customer_id='" + customer_id + "';"
     response = cursor.do(sql_command)
     return response[0][0]
+
 
 def getSurname(customer_id):
-    sql_command = "SELECT lastname FROM Customer WHERE customer_id='"+customer_id+"';"
+    sql_command = "SELECT lastname FROM Customer WHERE customer_id='" + customer_id + "';"
     response = cursor.do(sql_command)
     return response[0][0]
 
+
 cursor = my_cursor()
-# createCustomer('009','Ma','Jack','male','2020-11-01','@gmail.com','12345678','student card',11111,'iamjack')
-# print(createAccount('018', '007', 'Pound', 'saving', '2021-11-11', '62000'))
-# print(passwdLogin('001', 'iamjack'))
-# print(updateInfo('002', 'name', 'rosy'))
-# print(checkGender('002'))
-# isBirthday('001')
-# updatePassword('001','iamjack','iamjack')
+print(updatePassword('004', 'iamjiarui', 'password2'))
+updateInfo('004', 'email', 'jiaruiz@connect.hku.hk')
+passwdRetrieve('004')
 
