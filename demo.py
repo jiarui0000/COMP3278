@@ -148,8 +148,15 @@ def accountList(customer_id):
     return accounts
 
 
+def accountBalance(account_id):
+    for category in ['Investment', 'Saving', 'Credit']:
+        sql_command = "SELECT * FROM "+category+"_account WHERE account_id='" + account_id + "';"
+        response = cursor.do(sql_command)
+        if len(response)!=0:
+            rp=response[0]
+            return [rp[0], rp[4], rp[2]]
+    return []
+
+
 cursor = my_cursor()
-# print(updatePassword('004', 'iamjiarui', 'password2'))
-# updateInfo('004', 'email', 'jiaruiz@connect.hku.hk')
-# passwdRetrieve('004')
-accountList('001')
+
