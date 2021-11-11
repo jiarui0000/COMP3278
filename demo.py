@@ -8,7 +8,7 @@ import random
 
 def newCustomerID():
     sql_command = "SELECT MAX(customer_id) FROM Customer;"
-    return str(int(cursor.do(sql_command)[0][0])+1).zfill(3)
+    return str(int(cursor.do(sql_command)[0][0]) + 1).zfill(3)
 
 
 def createCustomer(customer_id, lastname, firstname, gender, birthday, email, phone, certification_type, id_number,
@@ -71,7 +71,7 @@ def updatePassword(customer_id, old_passwd, new_passwd):
 
 
 def passwdRetrieve(customer_id):  # set new password and send by email
-    sender = 'jiaruiz@'
+    sender = 'jiaruiz@connect.hku.hk'
     sender_pass = ''  # 在这里写你的邮箱密码和邮箱
     receiver = cursor.do("SELECT email FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     customer_name = cursor.do("SELECT firstname FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
@@ -102,10 +102,6 @@ def passwdRetrieve(customer_id):  # set new password and send by email
     new_passwd = secret_key
     sql_command = "UPDATE Customer SET password='" + new_passwd + "' WHERE customer_id='" + customer_id + "';"
     cursor.do(sql_command)
-
-
-def passwdRetrieve2(customer_id, new_passwd):
-    return
 
 
 def loadInfo(customer_id):
@@ -143,11 +139,17 @@ def getSurname(customer_id):
 
 
 def accountList(customer_id):
-    return
+    accounts = []
+    for category in ['Investment', 'Saving', 'Credit']:
+        sql_command = "SELECT * FROM "+category+"_account WHERE customer_id='" + customer_id + "';"
+        response = cursor.do(sql_command)
+        for ia in response:  # ia: account_id, customer_id, currency_type, create_time, total_value
+            accounts.append((ia[0], category, ia[2], ia[3], ia[4]))
+    return accounts
 
 
 cursor = my_cursor()
 # print(updatePassword('004', 'iamjiarui', 'password2'))
 # updateInfo('004', 'email', 'jiaruiz@connect.hku.hk')
 # passwdRetrieve('004')
-newCustomerID()
+accountList('001')
