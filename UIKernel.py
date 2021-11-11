@@ -5,6 +5,7 @@ from ikyc_login import IKYC_Login
 from ikyc_signup_v2 import IKYC_SignUp_v2
 from UserInfo import UserInfo
 import autoSignIn #Initiating auto sign-in sys.
+import demo #Database functions.
 
 
 ###IMPORTANT###
@@ -78,6 +79,7 @@ class UIKernel(QtWidgets.QMainWindow):
             self.loginUI.showErrorPopUpWindow("Please enter your Customer ID for password recovery!")
             return
         print("UIKernel: Initiating password find-back sequence for user_id " + customer_id + " ...")
+        demo.passwdRetrieve(customer_id)
 
 
 
@@ -97,6 +99,7 @@ class UIKernel(QtWidgets.QMainWindow):
 
     def signupUI_onClickSignUpButton(self):
         self.signupUI_captureInfo()
+        self.signupUI_registerInfoToDatabase(self.regInfo)
 
 
     def signupUI_captureInfo(self):
@@ -130,6 +133,11 @@ class UIKernel(QtWidgets.QMainWindow):
         print(self.regInfo.password + "\n")
         print(self.regInfo.email + "\n")
         print(self.regInfo.phoneNumber + "\n")
+
+    def signupUI_registerInfoToDatabase(self, regInfo: UserInfo) -> None:
+        demo.createCustomer(demo.newCustomerID(), self.regInfo.lastName, self.regInfo.firstName, self.regInfo.gender, self.regInfo.birthday, \
+            self.regInfo.email, self.regInfo.phoneNumber, self.regInfo.certification_type, self.regInfo.id_number, self.regInfo.password)
+        print("UIKernel: Register completed.")
 
 
 
