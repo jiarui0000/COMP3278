@@ -215,7 +215,7 @@ QPushButton:checked{
 }</string>
                </property>
                <property name="text">
-                <string>Profile     </string>
+                <string> Profile    </string>
                </property>
                <property name="icon">
                 <iconset>
@@ -361,7 +361,7 @@ QPushButton:hover{
 }</string>
                </property>
                <property name="text">
-                <string> Wallet    </string>
+                <string> Accounts</string>
                </property>
                <property name="icon">
                 <iconset>
@@ -1266,9 +1266,9 @@ background-color: rgba(191, 200, 234, 150);</string>
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>410</y>
+             <y>460</y>
              <width>721</width>
-             <height>131</height>
+             <height>101</height>
             </rect>
            </property>
            <property name="title">
@@ -1277,8 +1277,8 @@ background-color: rgba(191, 200, 234, 150);</string>
            <widget class="QLineEdit" name="lineEdit_accountid">
             <property name="geometry">
              <rect>
-              <x>10</x>
-              <y>30</y>
+              <x>20</x>
+              <y>40</y>
               <width>121</width>
               <height>31</height>
              </rect>
@@ -1287,7 +1287,7 @@ background-color: rgba(191, 200, 234, 150);</string>
            <widget class="QLineEdit" name="lineEdit_param">
             <property name="geometry">
              <rect>
-              <x>450</x>
+              <x>440</x>
               <y>40</y>
               <width>131</width>
               <height>31</height>
@@ -1311,7 +1311,7 @@ background-color: rgba(191, 200, 234, 150);</string>
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>70</y>
+              <y>50</y>
               <width>121</width>
               <height>31</height>
              </rect>
@@ -1331,7 +1331,7 @@ background-color: rgba(191, 200, 234, 150);</string>
             <property name="geometry">
              <rect>
               <x>300</x>
-              <y>70</y>
+              <y>50</y>
               <width>121</width>
               <height>31</height>
              </rect>
@@ -1385,7 +1385,7 @@ background-color: rgba(191, 200, 234, 150);</string>
              <x>30</x>
              <y>20</y>
              <width>631</width>
-             <height>241</height>
+             <height>201</height>
             </rect>
            </property>
            <property name="minimumSize">
@@ -1393,6 +1393,9 @@ background-color: rgba(191, 200, 234, 150);</string>
              <width>631</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
            </property>
            <column>
             <property name="text">
@@ -1423,14 +1426,164 @@ background-color: rgba(191, 200, 234, 150);</string>
           <widget class="QLabel" name="label_2">
            <property name="geometry">
             <rect>
-             <x>40</x>
-             <y>270</y>
-             <width>201</width>
-             <height>21</height>
+             <x>30</x>
+             <y>240</y>
+             <width>221</width>
+             <height>16</height>
             </rect>
            </property>
            <property name="text">
-            <string>Account Balance</string>
+            <string>Transaction History</string>
+           </property>
+          </widget>
+          <widget class="QTableWidget" name="tableWidget_transactions">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>281</y>
+             <width>631</width>
+             <height>151</height>
+            </rect>
+           </property>
+           <column>
+            <property name="text">
+             <string>Transaction_ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>In Account ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Out Account ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Amount</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Currency_Type</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </column>
+          </widget>
+          <widget class="QLabel" name="label_viewinfo">
+           <property name="geometry">
+            <rect>
+             <x>210</x>
+             <y>240</y>
+             <width>441</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select an account to view and make transactions</string>
+           </property>
+          </widget>
+          <widget class="QFrame" name="frame_maketransaction">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>270</y>
+             <width>641</width>
+             <height>171</height>
+            </rect>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <widget class="QPushButton" name="pushButton_cancel">
+            <property name="geometry">
+             <rect>
+              <x>520</x>
+              <y>130</y>
+              <width>93</width>
+              <height>28</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Cancel</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>30</y>
+              <width>113</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_2">
+            <property name="geometry">
+             <rect>
+              <x>180</x>
+              <y>30</y>
+              <width>113</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineEdit_3">
+            <property name="geometry">
+             <rect>
+              <x>330</x>
+              <y>30</y>
+              <width>113</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="comboBox">
+            <property name="geometry">
+             <rect>
+              <x>490</x>
+              <y>30</y>
+              <width>87</width>
+              <height>22</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QPushButton" name="pushButton_make">
+           <property name="geometry">
+            <rect>
+             <x>220</x>
+             <y>230</y>
+             <width>111</width>
+             <height>28</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Make trans</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="page_transfer">
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>671</width>
+             <height>291</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>search?</string>
            </property>
           </widget>
          </widget>

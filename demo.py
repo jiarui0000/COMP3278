@@ -174,6 +174,14 @@ def transactionHistory(customer_id):
     history.sort(key=lambda s:(s[7], s[8], s[0]))
     return history
 
+def transactionHistory2(account_id):
+    history = []
+    sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE in_account_id='"+account_id+"';"
+    history += cursor.do(sql_command)
+    sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE out_account_id='" + account_id + "';"
+    history += cursor.do(sql_command)
+    history.sort(key=lambda s:(s[0]))
+    return history
 
 def getType(account_id):
     for category in ['Investment', 'Saving', 'Credit']:

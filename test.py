@@ -10,6 +10,7 @@ dlg = uic.loadUi("p_main.ui")
 ###
 #default value
 edit = False
+trans = False
 poptype = "logout"
 
 
@@ -91,6 +92,9 @@ def init_page_profile():
 
 def init_page_wallet():
     refresh()
+    dlg.label_viewinfo.setVisible(True)
+    dlg.frame_maketransaction.setVisible(False)
+    dlg.pushButton_make.setVisible(False)
     print("balance:")
     print(accountBalance(customer_id))
 
@@ -140,6 +144,8 @@ def edit_profile():
         #update database
         dlg.pushButton_edit_profile.setText("Edit")
         edit = False
+
+#accounts page
 def clearData():
     dlg.tableWidget_accounts.clearSelection()
     while(dlg.tableWidget_accounts.rowCount() > 0):
@@ -157,10 +163,54 @@ def createA():
 def refresh():
     clearData()
     loadAccounts()
+    # print(dlg.tableWidget_accounts.item(dlg.tableWidget_accounts.currentRow(), 0).text())
 
+
+def getSelectedRowId():
+    return dlg.tableWidget_accounts.currentRow()
+def getSelectedAccountId():
+    # print(dlg.tableWidget_accounts.item(1,1))
+    return dlg.tableWidget_accounts.item(dlg.tableWidget_accounts.currentRow(), 0).text()
+
+def loadHistory(account_id):
+    list=transactionHistory2(account_id)
+    # print(accountList(customer_id))
+    # users = helper.select("SELECT * FROM users")
+    # print(users)
+    for row_count, t in enumerate(list):
+        dlg.tableWidget_transactions.insertRow(row_count)#row
+        for column_number, data in enumerate(t):
+            cell = QtWidgets.QTableWidgetItem(str(data))#one cell
+            dlg.tableWidget_transactions.setItem(row_count, column_number, cell)
+
+def clearData2():
+    dlg.tableWidget_transactions.clearSelection()
+    while(dlg.tableWidget_transactions.rowCount() > 0):
+        dlg.tableWidget_transactions.removeRow(0)
+        dlg.tableWidget_transactions.clearSelection()
+
+def selectionChange():
+    # print(getSelectedUserId())
+    # selected_row = getSelectedRowId()
+    dlg.label_viewinfo.setVisible(False)
+    dlg.pushButton_make.setVisible(True)
+    account_id = getSelectedAccountId()
+    # name = dlg.tableWidget.item(selected_row, 1).text()
+    # date = dlg.tableWidget.item(selected_row, 2).text()
+    # admin = dlg.tableWidget.item(selected_row, 3).text()
+
+    # dlg.lineEdit_4.setText(name)
+    # dlg.lineEdit_5.setText(date)
+    clearData2()
+    loadHistory(account_id)
+
+def makeT():#false的error提示
+    dlg.frame_maketransaction.setVisible(True)
 # print(cursor.do("SELECT * FROM Customer"))
 
-
+def closeT():
+    dlg.frame_maketransaction.setVisible(False)
+    # 所有text归零
 #side menu
 # dlg.comboBox_ctype.setPlaceholderText("Account Type")
 # dlg.lineEdit_accountid.setPlaceholderText("Account ID")
@@ -173,11 +223,13 @@ dlg.pushButton_logout.clicked.connect(lambda:show_popup("Message","Are you sure 
 # dlg.pushButton_profile.clicked.connect(setPage())
 #profile page
 dlg.pushButton_edit_profile.clicked.connect(edit_profile)
-
-#wallet page
+# dlg.pushButton_history.clicked.connect(getSelectedAccountId())
+#accounts page
 dlg.lineEdit_accountid.setPlaceholderText("Account ID")
 dlg.pushButton_create.clicked.connect(createA)
-
+dlg.tableWidget_accounts.itemSelectionChanged.connect(selectionChange)
+dlg.pushButton_make.clicked.connect(makeT)
+dlg.pushButton_cancel.clicked.connect(closeT)
 #init
 cursor = my_cursor()
 customer_id = '002'
@@ -186,7 +238,8 @@ if isBirthday(customer_id):
     show_message("","Happy birthday! "+ ("Mr. " if checkGender(customer_id) == "male" else "Ms. ") + getSurname(customer_id))
 greeting()
 setPage(1)
-# print(accountBalance(customer_id))
 
+# print(accountBalance(customer_id))
+# print(transactionHistory2(getSelectedAccountId()))
 dlg.show()
 app.exec()
