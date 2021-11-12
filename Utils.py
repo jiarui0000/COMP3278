@@ -8,7 +8,7 @@ import mysql.connector as mysql
 
 
 class my_cursor():
-    def __init__(self,user="root",passwd="123456",host="localhost"):
+    def __init__(self,user="root",passwd="u3563782",host="localhost"):
         self.myconn=mysql.connect(host=host,user=user,passwd=passwd,auth_plugin='mysql_native_password')
         self.cursor=self.myconn.cursor()
         if not ((('COMP3278_G12',) in self.do("show databases")) or (('comp3278_g12',) in self.do('show databases'))):

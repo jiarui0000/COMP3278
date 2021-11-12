@@ -136,9 +136,14 @@ class UIKernel(QtWidgets.QMainWindow):
         print(self.regInfo.phoneNumber + "\n")
 
     def signupUI_registerInfoToDatabase(self, regInfo: UserInfo) -> None:
-        demo.createCustomer(demo.newCustomerID(), self.regInfo.lastName, self.regInfo.firstName, self.regInfo.gender, self.regInfo.birthday, \
+        newID = demo.newCustomerID()
+        print("newID is:", newID)
+        demo.createCustomer(newID, self.regInfo.lastName, self.regInfo.firstName, self.regInfo.gender, self.regInfo.birthday, \
             self.regInfo.email, self.regInfo.phoneNumber, self.regInfo.certification_type, self.regInfo.id_number, self.regInfo.password)
         print("UIKernel: Register completed.")
+        print("Start Capturing Faces")
+        autoSignIn.regFaceID(newID)
+
 
 
 

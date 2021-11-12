@@ -55,7 +55,7 @@ def autoSignIn():
             id_, conf = recognizer.predict(roi_gray)
 
             # 4.1 If the face is recognized
-            if conf >= 30:
+            if conf >= 20:
                 # print(id_)
                 # print(labels[id_])
                 font = cv2.QT_FONT_NORMAL
@@ -68,8 +68,8 @@ def autoSignIn():
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), (2))
 
                 # Find the customer information in the database.
-                select = "SELECT customer_id, name FROM Customer WHERE customer_id='%s'" % (customer_id)
-                name = cursor.execute(select)
+                select = "SELECT customer_id FROM Customer WHERE customer_id='%s'" % (customer_id)
+                cursor.execute(select)
                 result = cursor.fetchall()
                 # print(result)
                 data = "error"
@@ -115,8 +115,9 @@ def autoSignIn():
 
 
 def regFaceID(user_id):
-    faceCapture(user_id)
-    train()
+    faceCapture.faceCapture(user_id)
+    train.train()
+    print("Training complete!")
 
 def signIn_idAndpwd(customer_id, pwd):
     #myconn = mysql.connector.connect(host="localhost", user="root", passwd="u3563782", database="COMP3278_G12")
