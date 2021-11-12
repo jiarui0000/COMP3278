@@ -20,7 +20,7 @@ def show_message(title= "Message", message="text"):
 
 def timecheck():
     d_time = datetime.datetime.strptime(str(datetime.datetime.now().date())+'6:00', '%Y-%m-%d%H:%M')
-    d_time1 =  datetime.datetime.strptime(str(datetime.datetime.now().date())+'12:00', '%Y-%m-%d%H:%M')
+    d_time1 = datetime.datetime.strptime(str(datetime.datetime.now().date())+'12:00', '%Y-%m-%d%H:%M')
     d_time2 = datetime.datetime.strptime(str(datetime.datetime.now().date())+'18:00', '%Y-%m-%d%H:%M')
     n_time = datetime.datetime.now()
     if n_time > d_time and n_time<d_time1:
@@ -39,7 +39,7 @@ def greeting():
     else:
         dlg.label.setText("Good evening,")
 
-def show_popup(type="logout",title= "Test", message="message"):
+def show_popup(title= "Test", message="message"):
     msg = QMessageBox()
     msg.setWindowTitle(title)
     msg.setText(message)
@@ -56,7 +56,16 @@ def popup_button(i):
     elif poptype == "delete1":
         print("not")
 
-    
+def loadAccounts():
+    list=accountList(customer_id)
+    print(accountList(customer_id))
+    # users = helper.select("SELECT * FROM users")
+    # print(users)
+    for row_count, account in enumerate(list):
+        dlg.tableWidget_accounts.insertRow(row_count)#row
+        for column_number, data in enumerate(account):
+            cell = QtWidgets.QTableWidgetItem(str(data))#one cell
+            dlg.tableWidget_accounts.setItem(row_count, column_number, cell)
 
 def init_page_profile():
     result = loadInfo(customer_id)[0]
@@ -80,14 +89,23 @@ def init_page_profile():
     dlg.lineEdit_certi.setReadOnly(True)
     dlg.lineEdit_cid.setReadOnly(True)
 
+def init_page_wallet():
+    refresh()
+    print("balance:")
+    print(accountBalance(customer_id))
 
 
 def setPage(page):
     dlg.stackedWidget.setCurrentIndex(page)
     if page == 0:
+        dlg.pushButton_profile.setProperty("class", "one")
+        # dlg.pushButton_profile.setStyleSheet("background-color: rgb(212, 212, 212);")
         init_page_profile()
     elif page == 1:
         print("hi")
+    elif page == 2:
+        print("hrere")
+        init_page_wallet()
 
 def edit_profile():
     global edit
@@ -122,26 +140,53 @@ def edit_profile():
         #update database
         dlg.pushButton_edit_profile.setText("Edit")
         edit = False
+def clearData():
+    dlg.tableWidget_accounts.clearSelection()
+    while(dlg.tableWidget_accounts.rowCount() > 0):
+        dlg.tableWidget_accounts.removeRow(0)
+        dlg.tableWidget_accounts.clearSelection()
 
+def createA():
+    accountid = dlg.lineEdit_accountid.text()
+    param = dlg.lineEdit_param.text()
+    ctype = dlg.comboBox_ctype.currentText()
+    atype = dlg.comboBox_atype.currentText()
+    print(ctype)
+    createAccount(accountid, customer_id, ctype, atype, param)
+    
+def refresh():
+    clearData()
+    loadAccounts()
 
-
-#init
-
-cursor = my_cursor()
-customer_id = '007'
 # print(cursor.do("SELECT * FROM Customer"))
-print(loadInfo(customer_id))
-dlg.lineEdit_4.setPlaceholderText("account id")
+
+
+#side menu
+# dlg.comboBox_ctype.setPlaceholderText("Account Type")
+# dlg.lineEdit_accountid.setPlaceholderText("Account ID")
 dlg.pushButton_profile.clicked.connect(lambda:setPage(0))
 dlg.pushButton_home.clicked.connect(lambda:setPage(1))
 dlg.pushButton_wallet.clicked.connect(lambda:setPage(2))
-# dlg.pushButton_profile.clicked.connect(setPage())
-dlg.pushButton_edit_profile.clicked.connect(edit_profile)
 poptype="logout"
-dlg.pushButton_logout.clicked.connect(lambda:show_popup())
-greeting()
+dlg.pushButton_logout.clicked.connect(lambda:show_popup("Message","Are you sure to log out?"))
+
+# dlg.pushButton_profile.clicked.connect(setPage())
+#profile page
+dlg.pushButton_edit_profile.clicked.connect(edit_profile)
+
+#wallet page
+dlg.lineEdit_accountid.setPlaceholderText("Account ID")
+dlg.pushButton_create.clicked.connect(createA)
+
+#init
+cursor = my_cursor()
+customer_id = '002'
+print(loadInfo(customer_id))
 if isBirthday(customer_id):
     show_message("","Happy birthday! "+ ("Mr. " if checkGender(customer_id) == "male" else "Ms. ") + getSurname(customer_id))
+greeting()
+setPage(1)
+# print(accountBalance(customer_id))
 
 dlg.show()
 app.exec()

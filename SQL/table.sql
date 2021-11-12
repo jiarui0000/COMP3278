@@ -11,7 +11,7 @@ CREATE TABLE Customer (
     email VARCHAR(50) NOT NULL,
     phone VARCHAR(50) NOT NULL,
     certification_type VARCHAR(20) NOT NULL,
-    id_number INT NOT NULL,
+    id_number VARCHAR(20) NOT NULL,
     password VARCHAR(20) NOT NULL
 );
 

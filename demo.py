@@ -22,7 +22,7 @@ def createCustomer(customer_id, lastname, firstname, gender, birthday, email, ph
     cursor.do(sql_command)
 
 
-def createAccount(account_id, customer_id, currency_type, account_type, create_time, account_params):
+def createAccount(account_id, customer_id, currency_type, account_type, account_params):
     # check if exist
     response = cursor.do("SELECT account_id FROM Account;")
     exist_account = []
@@ -33,7 +33,7 @@ def createAccount(account_id, customer_id, currency_type, account_type, create_t
 
     # insert new
     variables = locals()
-    create_time = create_time = datetime.today().strftime("%Y-%m-%d")
+    create_time = datetime.today().strftime("%Y-%m-%d")
     sql_command = "INSERT INTO Account (account_id, customer_id, create_time, currency_type) VALUES ('" + account_id + "','" \
                   + customer_id + "','" + create_time + "','" + currency_type + "');"
     cursor.do(sql_command)
