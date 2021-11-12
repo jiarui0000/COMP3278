@@ -4,7 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
-currency_constant={'US Dollar':1, 'Hong Kong Dollar':7.8, 'Pound':0.75, 'China Yuan':6.4}
+currency_constant={'US Dollar':1, 'HKD':7.8, 'Pound':0.75, 'Yuan':6.4}
 
 def newCustomerID():
     sql_command = "SELECT MAX(customer_id) FROM Customer;"
