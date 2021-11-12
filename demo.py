@@ -71,8 +71,8 @@ def updatePassword(customer_id, old_passwd, new_passwd):
 
 
 def passwdRetrieve(customer_id):  # set new password and send by email
-    sender = 'jiaruiz@connect.hku.hk'
-    sender_pass = ''  # 在这里写你的邮箱密码和邮箱
+    sender = 'comp3278g12@gmail.com'
+    sender_pass = 'nebca3-jihbiw-vagtAq' 
     receiver = cursor.do("SELECT email FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     customer_name = cursor.do("SELECT firstname FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     title = '[COMP3278G12] Password Retrieve'
