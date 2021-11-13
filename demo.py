@@ -108,7 +108,6 @@ def passwdRetrieve(customer_id):  # set new password and send by email
 
 def loadInfo(customer_id):
     sql_command = "SELECT * FROM Customer WHERE customer_id = '" + customer_id + "'"
-    print(sql_command)
     return cursor.do(sql_command)
 
 
@@ -283,7 +282,6 @@ def searchTransaction(customer_id, find_type, find_param):
                       +"') AND (timepoint_date <= '"+str(find_param[1]) \
                       +"') AND (timepoint_date >= '"+str(find_param[0]) \
                       +"');"
-        print(sql_command)
     return cursor.do(sql_command)
 
 
