@@ -275,5 +275,4 @@ def searchTransaction(customer_id, find_type, find_param):
 
 
 cursor = my_cursor()
-print(updateInfo('004', 'email','jiaruiz@connect.hku.hk'))
-print(passwdRetrieve('004'))
+
