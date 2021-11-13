@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 import random
 
 currency_constant = {'US Dollar': 1, 'HKD': 7.8, 'Pound': 0.75, 'Yuan': 6.4}
+display_currency = 'HKD'
 
 
 def newCustomerID():
@@ -274,34 +275,88 @@ def searchTransaction(customer_id, find_type, find_param):
                       + "' OR out_customer_id='" + customer_id \
                       + "' )AND " + str(find_type) + "='" + str(find_param) + "';"
     elif find_type == 'account_id':
-        sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id+"' OR out_customer_id='" \
-                      +customer_id+"' ) AND (in_account_id='"+str(find_param)+"' OR out_account_id='"+str(find_param)+"');"
+        sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id + "' OR out_customer_id='" \
+                      + customer_id + "' ) AND (in_account_id='" + str(find_param) + "' OR out_account_id='" + str(
+            find_param) + "');"
     elif find_type == 'time_period':
         sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id \
-                      +"' OR out_customer_id='" + customer_id \
-                      +"') AND (timepoint_date <= '"+str(find_param[1]) \
-                      +"') AND (timepoint_date >= '"+str(find_param[0]) \
-                      +"');"
+                      + "' OR out_customer_id='" + customer_id \
+                      + "') AND (timepoint_date <= '" + str(find_param[1]) \
+                      + "') AND (timepoint_date >= '" + str(find_param[0]) \
+                      + "');"
     return cursor.do(sql_command)
 
 
 def loginHistory(customer_id):
-    sql_command="SELECT timepoint FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
-    response=cursor.do(sql_command)
+    sql_command = "SELECT timepoint FROM Login_history WHERE customer_id='" + str(customer_id) + "';"
+    response = cursor.do(sql_command)
     return response
 
 
-# def loginHistory(customer_id):
-#     sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
-#     response=cursor.do(sql_command)
-#     return response
-# def updateHistory(customer_id):
-
-
 def updateHistory(customer_id):
-    timepoint= datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    sql_command="INSERT INTO Login_history VALUES ('"+timepoint+"','"+str(customer_id)+"');"
+    timepoint = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    sql_command = "INSERT INTO Login_history VALUES ('" + timepoint + "','" + str(customer_id) + "');"
     cursor.do(sql_command)
 
 
+def balanceTrend(customer_id):
+    current_month = datetime.today().strftime("%Y-%m")
+    # get months for searching
+    month_to_search = []
+    for _ in range(12):
+        month_to_search.append(current_month)
+        y = int(current_month[:4])
+        m = int(current_month[5:])
+        if m == 1:
+            y -= 1
+            m = 12
+        else:
+            m -= 1
+        current_month = str(y).zfill(4) + "-" + str(m).zfill(2)
+
+    # calculate current balance
+    category = {'Investment': 'total_value', 'Saving': 'balance', 'Credit': 'total_debt'}
+    current_balance = 0
+    for c in category:
+        for currency in currency_constant:
+            sql_command = "SELECT SUM(" + category[c] + ") FROM " + c + "_account WHERE (customer_id='" \
+                          + customer_id + "') AND (currency_type='" + currency + "');"
+            response = cursor.do(sql_command)[0][0]
+            if response is None:
+                current_balance += 0
+            else:
+                current_balance += int(float(response) * currency_constant[display_currency] / currency_constant[currency])
+    print(current_balance)
+
+    # calculate backward
+    monthly_balance = [current_balance]
+    monthly_increase = []
+    for month in month_to_search:
+        monthly_increase.append(0)
+        for currency in currency_constant:
+            sql_command = "SELECT SUM(amount) FROM Transaction WHERE (out_customer_id='" \
+                          + customer_id + "') AND (currency_type='" + currency \
+                          + "') AND (timepoint_date LIKE '" + month + "___');"
+            response = cursor.do(sql_command)[0][0]
+            if response is None:
+                trans_out = 0
+            else:
+                trans_out = float(response)
+            sql_command = "SELECT SUM(amount) FROM Transaction WHERE (in_customer_id='" \
+                          + customer_id + "') AND (currency_type='" + currency \
+                          + "') AND (timepoint_date LIKE '" + month + "___');"
+            response = cursor.do(sql_command)[0][0]
+            if response is None:
+                trans_in = 0
+            else:
+                trans_in = round(float(response))
+            increase = int(
+                round((trans_in - trans_out) * currency_constant[display_currency] / currency_constant[currency]))
+            monthly_increase[-1] += increase
+        monthly_balance.append(monthly_balance[-1] - monthly_increase[-1])
+    monthly_balance = monthly_balance[:-1]
+    return month_to_search, monthly_increase, monthly_balance
+
+
 cursor = my_cursor()
+# print(balanceTrend('001'))
