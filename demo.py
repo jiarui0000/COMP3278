@@ -137,6 +137,11 @@ def getSurname(customer_id):
     response = cursor.do(sql_command)
     return response[0][0]
 
+def getFirstname(customer_id):
+    sql_command = "SELECT firstname FROM Customer WHERE customer_id='" + customer_id + "';"
+    response = cursor.do(sql_command)
+    return response[0][0]
+
 
 def accountList(customer_id):
     accounts = []

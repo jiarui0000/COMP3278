@@ -57,6 +57,22 @@ def popup_button(i):
     elif poptype == "delete1":
         print("not")
 
+def loadContects():
+    list=recentContect(customer_id)
+    # list2 = 
+    for row_count, Contect in enumerate(list):
+        dlg.tableWidget_recentContect.insertRow(row_count)#row
+        id = Contect[1]
+        name = getSurname(id) +", "+ getFirstname(id)
+        cell = QtWidgets.QTableWidgetItem(name)
+        dlg.tableWidget_recentContect.setItem(row_count, 0, cell)
+        cell = QtWidgets.QTableWidgetItem(str(Contect[0]))
+        dlg.tableWidget_recentContect.setItem(row_count, 1, cell)
+    # for column_number, data in enumerate(Contect):
+    #     cell = QtWidgets.QTableWidgetItem(str(data))#one cell
+    #     dlg.tableWidget_recentContect.setItem(row_count, column_number, cell)
+    
+
 def loadAccounts():
     list=accountList(customer_id)
     print(accountList(customer_id))
@@ -68,7 +84,14 @@ def loadAccounts():
             cell = QtWidgets.QTableWidgetItem(str(data))#one cell
             dlg.tableWidget_accounts.setItem(row_count, column_number, cell)
 
+def init_page_home():
+    clearData3()
+    loadContects()
+
+
+
 def init_page_profile():
+    dlg.frame_pwd.setVisible(False)
     result = loadInfo(customer_id)[0]
     dlg.lineEdit_lastname.setText(result[1])
     dlg.lineEdit_firstname.setText(result[2])
@@ -92,6 +115,7 @@ def init_page_profile():
 
 def init_page_wallet():
     refresh()
+    clearData2()
     dlg.label_viewinfo.setVisible(True)
     dlg.frame_maketransaction.setVisible(False)
     dlg.pushButton_make.setVisible(False)
@@ -102,14 +126,42 @@ def init_page_wallet():
 def setPage(page):
     dlg.stackedWidget.setCurrentIndex(page)
     if page == 0:
-        dlg.pushButton_profile.setProperty("class", "one")
+        # dlg.pushButton_profile.setProperty("class", "one")
         # dlg.pushButton_profile.setStyleSheet("background-color: rgb(212, 212, 212);")
         init_page_profile()
     elif page == 1:
+        init_page_home()
         print("hi")
+        dlg.pushButton_home.setObjectName('btn1')
+        # dlg.pushButton_home.setProperty('level', '1')
+        # self.btn1.setObjectName('btn1')
+        # dlg.pushButton_home.setStyleSheet('QPushButton#btn1{color: yellow; font-size: 20px;}')
     elif page == 2:
         print("hrere")
         init_page_wallet()
+
+def changepwd():
+    dlg.frame_pwd.setVisible(True)
+
+
+def confirmchangepwd():
+    old = dlg.lineEdit_p1.text()
+    new1 = dlg.lineEdit_p2.text()
+    new2 = dlg.lineEdit_p3.text()
+    if (new1 != new2):
+        show_message(title= "Message", message="The confirm password is not the same as new password!")
+    else:
+        if (updatePassword(customer_id, old, new1) == False):
+            show_message(title= "Message", message="The old password is incorrect!")
+        else:
+            show_message(title= "Message", message="Updated password successfully!")
+
+
+def cancelchangepwd():
+    dlg.lineEdit_p1.setText = ""
+    dlg.lineEdit_p2.setText = ""
+    dlg.lineEdit_p3.setText = ""
+    dlg.frame_pwd.setVisible(False)
 
 def edit_profile():
     global edit
@@ -152,6 +204,12 @@ def clearData():
         dlg.tableWidget_accounts.removeRow(0)
         dlg.tableWidget_accounts.clearSelection()
 
+def clearData3():
+    dlg.tableWidget_recentContect.clearSelection()
+    while(dlg.tableWidget_recentContect.rowCount() > 0):
+        dlg.tableWidget_recentContect.removeRow(0)
+        dlg.tableWidget_recentContect.clearSelection()
+
 def createA():
     accountid = dlg.lineEdit_accountid.text()
     param = dlg.lineEdit_param.text()
@@ -165,6 +223,9 @@ def refresh():
     loadAccounts()
     # print(dlg.tableWidget_accounts.item(dlg.tableWidget_accounts.currentRow(), 0).text())
 
+# def refresh2():
+#     clearData()
+#     loadAccounts()
 
 def getSelectedRowId():
     return dlg.tableWidget_accounts.currentRow()
@@ -205,6 +266,10 @@ def selectionChange():
     loadHistory(account_id)
 
 def makeT():#false的error提示
+    # selected_row = getSelectedRowId()
+    account_id = getSelectedAccountId()
+    # name = dlg.tableWidget.item(selected_row, 1).text()
+    dlg.lineEdit_From_account.setText(account_id)
     dlg.frame_maketransaction.setVisible(True)
 # print(cursor.do("SELECT * FROM Customer"))
 
@@ -223,6 +288,9 @@ dlg.pushButton_logout.clicked.connect(lambda:show_popup("Message","Are you sure 
 # dlg.pushButton_profile.clicked.connect(setPage())
 #profile page
 dlg.pushButton_edit_profile.clicked.connect(edit_profile)
+dlg.pushButton_changepwd.clicked.connect(changepwd)
+dlg.pushButton_cancelpwd.clicked.connect(cancelchangepwd)
+dlg.pushButton_confirmpwd.clicked.connect(confirmchangepwd)
 # dlg.pushButton_history.clicked.connect(getSelectedAccountId())
 #accounts page
 dlg.lineEdit_accountid.setPlaceholderText("Account ID")
@@ -238,7 +306,7 @@ if isBirthday(customer_id):
     show_message("","Happy birthday! "+ ("Mr. " if checkGender(customer_id) == "male" else "Ms. ") + getSurname(customer_id))
 greeting()
 setPage(1)
-
+print(recentContect(customer_id))
 # print(accountBalance(customer_id))
 # print(transactionHistory2(getSelectedAccountId()))
 dlg.show()
