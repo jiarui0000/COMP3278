@@ -300,7 +300,7 @@ def loginHistory(customer_id):
 
 
 def updateHistory(customer_id):
-    timepoint= datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    timepoint= datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     sql_command="INSERT INTO Login_history VALUES ('"+timepoint+"','"+str(customer_id)+"');"
     cursor.do(sql_command)
 

@@ -23,14 +23,6 @@ CREATE TABLE CustomerHistory(
     FOREIGN KEY (from_customer_id) REFERENCES Customer(customer_id)
 );
 
-CREATE TABLE Frequent_contact(
-    from_customer_id VARCHAR(10),
-    to_customer_id VARCHAR(10),
-    last_transfer_date DATE,
-    FOREIGN KEY (from_customer_id) REFERENCES Customer(customer_id),
-    FOREIGN KEY (to_customer_id) REFERENCES Customer(customer_id)
-);
-
 CREATE TABLE Account(
     account_id VARCHAR(10) NOT NULL PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,
@@ -116,7 +108,7 @@ CREATE TABLE Loan_contain(
 );
 
 CREATE TABLE Login_history(
-    timepoint VARCHAR(20) NOT NULL PRIMARY KEY,
+    timepoint DATETIME NOT NULL PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
