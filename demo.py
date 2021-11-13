@@ -287,4 +287,13 @@ def searchTransaction(customer_id, find_type, find_param):
     return cursor.do(sql_command)
 
 
+def loginHistory(customer_id):
+    sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
+    response=cursor.do(sql_command)
+    return response
+
+
+# def updateHistory(customer_id):
+
+
 cursor = my_cursor()
