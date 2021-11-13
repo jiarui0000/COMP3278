@@ -297,7 +297,12 @@ def loginHistory(customer_id):
     sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
     response=cursor.do(sql_command)
     return response
-# def updateHistory(customer_id):
+
+
+def updateHistory(customer_id):
+    timepoint= datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    sql_command="INSERT INTO Login_history VALUES ('"+timepoint+"','"+str(customer_id)+"');"
+    cursor.do(sql_command)
 
 
 cursor = my_cursor()
