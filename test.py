@@ -265,13 +265,27 @@ def selectionChange():
     clearData2()
     loadHistory(account_id)
 
-def makeT():#false的error提示
+def makeT():
     # selected_row = getSelectedRowId()
     account_id = getSelectedAccountId()
     # name = dlg.tableWidget.item(selected_row, 1).text()
     dlg.lineEdit_From_account.setText(account_id)
     dlg.frame_maketransaction.setVisible(True)
 # print(cursor.do("SELECT * FROM Customer"))
+def makeT2():#false的error提示
+    froma = dlg.lineEdit_From_account.text()
+    toa = dlg.lineEdit_To_account.text()
+    toc = dlg.lineEdit_To_customer.text()
+    amount = dlg.lineEdit_amount.text()
+    ttype = dlg.comboBox_ttype.currentText()
+    # makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type)
+    # print((toa, froma, toc, customer_id, int(amount), ttype))
+    # print(makeTransaction(toa, froma, toc, customer_id, int(amount), ttype))
+    if (makeTransaction(toa, froma, toc, customer_id, int(amount), ttype)=='', False):
+        show_message("Error","Transaction failed!")
+    else: 
+        show_message("Success","Transaction succeeded!")
+    
 
 def closeT():
     dlg.frame_maketransaction.setVisible(False)
@@ -298,6 +312,7 @@ dlg.pushButton_create.clicked.connect(createA)
 dlg.tableWidget_accounts.itemSelectionChanged.connect(selectionChange)
 dlg.pushButton_make.clicked.connect(makeT)
 dlg.pushButton_cancel.clicked.connect(closeT)
+dlg.pushButton_make2.clicked.connect(makeT2)
 #init
 cursor = my_cursor()
 customer_id = '002'

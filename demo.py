@@ -260,7 +260,7 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
                 "','"+str(in_customer_id)+"','"+str(out_customer_id)+"',"+str(amount)+",'"+str(currency_type)+ \
                 "','"+str(timepoint_date)+"','"+str(timepoint_time)+"');"
     cursor.do(sql_command)
-    return trandactionID
+    return trandactionID, True
 
 
 def searchTransaction(customer_id, find_type, find_param):
@@ -275,4 +275,3 @@ def searchTransaction(customer_id, find_type, find_param):
 
 
 cursor = my_cursor()
-
