@@ -1681,7 +1681,7 @@ background-color: rgba(191, 200, 234, 150);</string>
              <string>Cancel</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="lineEdit">
+           <widget class="QLineEdit" name="lineEdit_To_account">
             <property name="geometry">
              <rect>
               <x>30</x>
@@ -1697,7 +1697,7 @@ background-color: rgba(191, 200, 234, 150);</string>
              <string>To_account</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="lineEdit_To_customer">
             <property name="geometry">
              <rect>
               <x>180</x>
@@ -1713,7 +1713,7 @@ background-color: rgba(191, 200, 234, 150);</string>
              <string>To_customer</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="lineEdit_3">
+           <widget class="QLineEdit" name="lineEdit_amount">
             <property name="geometry">
              <rect>
               <x>330</x>
@@ -1729,7 +1729,7 @@ background-color: rgba(191, 200, 234, 150);</string>
              <string>amount</string>
             </property>
            </widget>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="comboBox_ttype">
             <property name="geometry">
              <rect>
               <x>490</x>
