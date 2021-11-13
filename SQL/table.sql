@@ -114,3 +114,9 @@ CREATE TABLE Loan_contain(
     FOREIGN KEY (loan_id) REFERENCES Loan(loan_id),
     FOREIGN KEY (account_id) REFERENCES Credit_account(account_id)
 );
+
+CREATE TABLE Login_history(
+    timepoint VARCHAR(20) NOT NULL PRIMARY KEY,
+    customer_id VARCHAR(10) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+);

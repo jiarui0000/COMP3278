@@ -72,7 +72,7 @@ def updatePassword(customer_id, old_passwd, new_passwd):
 
 def passwdRetrieve(customer_id):  # set new password and send by email
     sender = 'comp3278g12@gmail.com'
-    sender_pass = 'nebca3-jihbiw-vagtAq' 
+    sender_pass = 'comp3278comp3278'
     receiver = cursor.do("SELECT email FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     customer_name = cursor.do("SELECT firstname FROM Customer WHERE customer_id = '" + customer_id + "';")[0][0]
     title = '[COMP3278G12] Password Retrieve'
@@ -97,7 +97,7 @@ def passwdRetrieve(customer_id):  # set new password and send by email
     text = message.as_string()
     session.sendmail(sender, receiver, text)
     session.quit()
-    print('Mail Sent with title ' + title)
+    print('Mail Sent to ' + receiver)
 
     new_passwd = secret_key
     sql_command = "UPDATE Customer SET password='" + new_passwd + "' WHERE customer_id='" + customer_id + "';"
@@ -136,6 +136,7 @@ def getSurname(customer_id):
     sql_command = "SELECT lastname FROM Customer WHERE customer_id='" + customer_id + "';"
     response = cursor.do(sql_command)
     return response[0][0]
+
 
 def getFirstname(customer_id):
     sql_command = "SELECT firstname FROM Customer WHERE customer_id='" + customer_id + "';"
@@ -179,6 +180,7 @@ def transactionHistory(customer_id):
     history.sort(key=lambda s:(s[7], s[8], s[0]))
     return history
 
+
 def transactionHistory2(account_id):
     history = []
     sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE in_account_id='"+account_id+"';"
@@ -187,6 +189,7 @@ def transactionHistory2(account_id):
     history += cursor.do(sql_command)
     history.sort(key=lambda s:(s[0]))
     return history
+
 
 def getType(account_id):
     for category in ['Investment', 'Saving', 'Credit']:
@@ -272,4 +275,5 @@ def searchTransaction(customer_id, find_type, find_param):
 
 
 cursor = my_cursor()
-print(searchTransaction('001', 'account_id', '001'))
+print(updateInfo('004', 'email','jiaruiz@connect.hku.hk'))
+print(passwdRetrieve('004'))
