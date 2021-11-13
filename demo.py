@@ -333,30 +333,22 @@ def balanceTrend(customer_id):
     monthly_increase = []
     for month in month_to_search:
         monthly_increase.append(0)
-        for currency in currency_constant:
-            sql_command = "SELECT SUM(amount) FROM Transaction WHERE (out_customer_id='" \
-                          + customer_id + "') AND (currency_type='" + currency \
-                          + "') AND (timepoint_date LIKE '" + month + "___');"
-            response = cursor.do(sql_command)[0][0]
-            if response is None:
-                trans_out = 0
-            else:
-                trans_out = float(response)
-            sql_command = "SELECT SUM(amount) FROM Transaction WHERE (in_customer_id='" \
-                          + customer_id + "') AND (currency_type='" + currency \
-                          + "') AND (timepoint_date LIKE '" + month + "___');"
-            response = cursor.do(sql_command)[0][0]
-            if response is None:
-                trans_in = 0
-            else:
-                trans_in = round(float(response))
-            increase = int(
-                round((trans_in - trans_out) * currency_constant[display_currency] / currency_constant[currency]))
-            monthly_increase[-1] += increase
+        sql_command = "SELECT currency_type, SUM(amount) FROM " \
+                      "(SELECT currency_type, amount FROM Transaction WHERE (in_customer_id='" \
+                          + customer_id + "') AND (timepoint_date LIKE '" + month + "___')) T GROUP BY currency_type;"
+        response=cursor.do(sql_command)
+        for r in response:
+            monthly_increase[-1]+=int(round(float(r[1])*currency_constant[display_currency]/currency_constant[r[0]]))
+        sql_command = "SELECT currency_type, SUM(amount) FROM " \
+                      "(SELECT currency_type, amount FROM Transaction WHERE (out_customer_id='" \
+                          + customer_id + "') AND (timepoint_date LIKE '" + month + "___')) T GROUP BY currency_type;"
+        response=cursor.do(sql_command)
+        for r in response:
+            monthly_increase[-1]-=int(round(float(r[1])*currency_constant[display_currency]/currency_constant[r[0]]))
         monthly_balance.append(monthly_balance[-1] - monthly_increase[-1])
     monthly_balance = monthly_balance[:-1]
     return month_to_search, monthly_increase, monthly_balance
 
 
 cursor = my_cursor()
-# print(balanceTrend('001'))
+print(balanceTrend('001'))
