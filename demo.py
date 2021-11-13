@@ -293,6 +293,10 @@ def loginHistory(customer_id):
     return response
 
 
+def loginHistory(customer_id):
+    sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
+    response=cursor.do(sql_command)
+    return response
 # def updateHistory(customer_id):
 
 
