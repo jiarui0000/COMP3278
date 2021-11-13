@@ -84,9 +84,30 @@ def loadAccounts():
             cell = QtWidgets.QTableWidgetItem(str(data))#one cell
             dlg.tableWidget_accounts.setItem(row_count, column_number, cell)
 
+def loadLogin():
+    list=loginHistory(customer_id)
+    print(list)
+    for row_count, history in enumerate(list):
+        dlg.tableWidget_login.insertRow(row_count)
+        print(row_count)
+        print(str(history[0]))
+        cell = QtWidgets.QTableWidgetItem(str(history[0]))
+        dlg.tableWidget_login.setItem(row_count, 0, cell)
+
+def clearData4():
+    # print("clear")
+    dlg.tableWidget_login.clearSelection()
+    while(dlg.tableWidget_login.rowCount() > 0):
+        dlg.tableWidget_login.removeRow(0)
+        dlg.tableWidget_login.clearSelection()
+
 def init_page_home():
     clearData3()
     loadContects()
+    clearData4()
+    loadLogin()
+
+
 
 
 
@@ -122,7 +143,6 @@ def init_page_wallet():
     print("balance:")
     print(accountBalance(customer_id))
 
-
 def setPage(page):
     dlg.stackedWidget.setCurrentIndex(page)
     if page == 0:
@@ -139,10 +159,16 @@ def setPage(page):
     elif page == 2:
         print("hrere")
         init_page_wallet()
+    elif page==3:
+        init_page_transfer()
+
 
 def changepwd():
     dlg.frame_pwd.setVisible(True)
 
+def init_page_transfer():
+    dlg.stackedWidget_2.setCurrentIndex(0)
+    # print("yes")
 
 def confirmchangepwd():
     old = dlg.lineEdit_p1.text()
@@ -250,6 +276,12 @@ def clearData2():
         dlg.tableWidget_transactions.removeRow(0)
         dlg.tableWidget_transactions.clearSelection()
 
+def clearData5():
+    dlg.tableWidget_transactions_2.clearSelection()
+    while(dlg.tableWidget_transactions_2.rowCount() > 0):
+        dlg.tableWidget_transactions_2.removeRow(0)
+        dlg.tableWidget_transactions_2.clearSelection()
+
 def selectionChange():
     # print(getSelectedUserId())
     # selected_row = getSelectedRowId()
@@ -285,17 +317,47 @@ def makeT2():#false的error提示
         show_message("Error","Transaction failed!")
     else: 
         show_message("Success","Transaction succeeded!")
-    
 
 def closeT():
     dlg.frame_maketransaction.setVisible(False)
     # 所有text归零
+
+def loadT2(find_type, t):
+    list=searchTransaction(customer_id, find_type, t)
+    # print(accountList(customer_id))
+    # users = helper.select("SELECT * FROM users")
+    # print(users)
+    for row_count, tt in enumerate(list):
+        dlg.tableWidget_transactions_2.insertRow(row_count)#row
+        for column_number, data in enumerate(tt):
+            cell = QtWidgets.QTableWidgetItem(str(data))#one cell
+            dlg.tableWidget_transactions_2.setItem(row_count, column_number, cell)
+#page_transaction
+def search1():
+    fromt = dlg.lineEdit_fromt.text()
+    tot =dlg.lineEdit_tot.text()
+    t = (fromt,tot)
+    find_type = 'time_period'
+    print(len(tot))
+    clearData5()
+    loadT2(find_type, t)
+    # print(searchTransaction(find_type, t))
+def search2():
+    find_type = dlg.comboBox_stype.currentText()
+    t = dlg.lineEdit_param2.text()
+    clearData5()
+    loadT2(find_type, t)
+
+
+
+
 #side menu
 # dlg.comboBox_ctype.setPlaceholderText("Account Type")
 # dlg.lineEdit_accountid.setPlaceholderText("Account ID")
 dlg.pushButton_profile.clicked.connect(lambda:setPage(0))
 dlg.pushButton_home.clicked.connect(lambda:setPage(1))
 dlg.pushButton_wallet.clicked.connect(lambda:setPage(2))
+dlg.pushButton_transfer.clicked.connect(lambda:setPage(3))
 poptype="logout"
 dlg.pushButton_logout.clicked.connect(lambda:show_popup("Message","Are you sure to log out?"))
 
@@ -313,6 +375,11 @@ dlg.tableWidget_accounts.itemSelectionChanged.connect(selectionChange)
 dlg.pushButton_make.clicked.connect(makeT)
 dlg.pushButton_cancel.clicked.connect(closeT)
 dlg.pushButton_make2.clicked.connect(makeT2)
+#transaction page
+dlg.radioButton_2.clicked.connect(lambda:dlg.stackedWidget_2.setCurrentIndex(1))
+dlg.radioButton.clicked.connect(lambda:dlg.stackedWidget_2.setCurrentIndex(2))
+dlg.pushButton_searchtime.clicked.connect(search1)
+dlg.pushButton_searchtype.clicked.connect(search2)
 #init
 cursor = my_cursor()
 customer_id = '002'
@@ -322,6 +389,7 @@ if isBirthday(customer_id):
 greeting()
 setPage(1)
 print(recentContect(customer_id))
+print(loginHistory(customer_id))
 # print(accountBalance(customer_id))
 # print(transactionHistory2(getSelectedAccountId()))
 dlg.show()

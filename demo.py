@@ -271,14 +271,14 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
 
 def searchTransaction(customer_id, find_type, find_param):
     if find_type in ['timepoint_date', 'transaction_id']:
-        sql_command = "SELECT * FROM Transaction WHERE (in_customer_id='" + customer_id \
+        sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id \
                       + "' OR out_customer_id='" + customer_id \
                       + "' )AND " + str(find_type) + "='" + str(find_param) + "';"
     elif find_type == 'account_id':
-        sql_command = "SELECT * FROM Transaction WHERE (in_customer_id='" + customer_id+"' OR out_customer_id='" \
+        sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id+"' OR out_customer_id='" \
                       +customer_id+"' ) AND (in_account_id='"+str(find_param)+"' OR out_account_id='"+str(find_param)+"');"
     elif find_type == 'time_period':
-        sql_command = "SELECT * FROM Transaction WHERE (in_customer_id='" + customer_id \
+        sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id \
                       +"' OR out_customer_id='" + customer_id \
                       +"') AND (timepoint_date <= '"+str(find_param[1]) \
                       +"') AND (timepoint_date >= '"+str(find_param[0]) \
@@ -288,15 +288,16 @@ def searchTransaction(customer_id, find_type, find_param):
 
 
 def loginHistory(customer_id):
-    sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
+    sql_command="SELECT timepoint FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
     response=cursor.do(sql_command)
     return response
 
 
-def loginHistory(customer_id):
-    sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
-    response=cursor.do(sql_command)
-    return response
+# def loginHistory(customer_id):
+#     sql_command="SELECT * FROM Login_history WHERE customer_id='"+str(customer_id)+"';"
+#     response=cursor.do(sql_command)
+#     return response
+# def updateHistory(customer_id):
 
 
 def updateHistory(customer_id):

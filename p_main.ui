@@ -596,7 +596,7 @@ QPushButton:hover{
           </size>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="page_profile">
           <widget class="QFrame" name="frame_27">
@@ -1165,134 +1165,61 @@ border-radius:10px;
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <property name="leftMargin">
-               <number>0</number>
+             <widget class="QFrame" name="frame_9">
+              <property name="geometry">
+               <rect>
+                <x>1</x>
+                <y>1</y>
+                <width>250</width>
+                <height>566</height>
+               </rect>
               </property>
-              <property name="topMargin">
-               <number>0</number>
+              <property name="maximumSize">
+               <size>
+                <width>250</width>
+                <height>16777215</height>
+               </size>
               </property>
-              <property name="rightMargin">
-               <number>0</number>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
-              <property name="bottomMargin">
-               <number>0</number>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
-              <item>
-               <widget class="QFrame" name="frame_9">
-                <property name="maximumSize">
-                 <size>
-                  <width>250</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <widget class="QFrame" name="frame_11">
-                 <property name="geometry">
-                  <rect>
-                   <x>0</x>
-                   <y>332</y>
-                   <width>241</width>
-                   <height>191</height>
-                  </rect>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border-radius:10px;
+              <widget class="QFrame" name="frame_11">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>332</y>
+                 <width>241</width>
+                 <height>191</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius:10px;
 background-color: rgb(191, 200, 234);
 background-color: rgba(191, 200, 234, 150);
 background-color: rgba(123, 134, 170, 150);</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_7">
-                  <item>
-                   <widget class="QLabel" name="label_6">
-                    <property name="styleSheet">
-                     <string notr="true"/>
-                    </property>
-                    <property name="text">
-                     <string>Frequent Contact</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QTableWidget" name="tableWidget_recentContect">
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>200</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgba(191, 200, 234, 0);</string>
-                    </property>
-                    <column>
-                     <property name="text">
-                      <string>Name</string>
-                     </property>
-                    </column>
-                    <column>
-                     <property name="text">
-                      <string>Account ID</string>
-                     </property>
-                    </column>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QFrame" name="frame_12">
-                 <property name="geometry">
-                  <rect>
-                   <x>0</x>
-                   <y>0</y>
-                   <width>241</width>
-                   <height>321</height>
-                  </rect>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(176, 196, 222, 150);
-border-radius:10px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <widget class="QLabel" name="label_7">
-                  <property name="geometry">
-                   <rect>
-                    <x>11</x>
-                    <y>11</y>
-                    <width>221</width>
-                    <height>22</height>
-                   </rect>
-                  </property>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <widget class="QLabel" name="label_6">
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
                   <property name="text">
-                   <string>Login Hitory</string>
+                   <string>Frequent Contact</string>
                   </property>
                  </widget>
-                 <widget class="QTableWidget" name="tableWidget_3">
-                  <property name="geometry">
-                   <rect>
-                    <x>11</x>
-                    <y>40</y>
-                    <width>219</width>
-                    <height>160</height>
-                   </rect>
-                  </property>
+                </item>
+                <item>
+                 <widget class="QTableWidget" name="tableWidget_recentContect">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -1302,125 +1229,163 @@ border-radius:10px;</string>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgba(191, 200, 234, 0);</string>
                   </property>
+                  <column>
+                   <property name="text">
+                    <string>Name</string>
+                   </property>
+                  </column>
+                  <column>
+                   <property name="text">
+                    <string>Account ID</string>
+                   </property>
+                  </column>
                  </widget>
-                </widget>
-                <widget class="QPushButton" name="pushButton">
-                 <property name="geometry">
-                  <rect>
-                   <x>20</x>
-                   <y>530</y>
-                   <width>211</width>
-                   <height>28</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>make transaction to this person</string>
-                 </property>
-                </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QFrame" name="frame_12">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>241</width>
+                 <height>321</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(176, 196, 222, 150);
+border-radius:10px;</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <widget class="QLabel" name="label_7">
+                <property name="geometry">
+                 <rect>
+                  <x>11</x>
+                  <y>11</y>
+                  <width>221</width>
+                  <height>22</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>Login Hitory</string>
+                </property>
                </widget>
-              </item>
-              <item>
-               <widget class="QFrame" name="frame_10">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
+               <widget class="QTableWidget" name="tableWidget_login">
+                <property name="geometry">
+                 <rect>
+                  <x>11</x>
+                  <y>40</y>
+                  <width>219</width>
+                  <height>200</height>
+                 </rect>
                 </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>200</height>
+                 </size>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_6">
-                 <property name="spacing">
-                  <number>0</number>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgba(191, 200, 234, 0);</string>
+                </property>
+                <property name="lineWidth">
+                 <number>0</number>
+                </property>
+                <property name="rowCount">
+                 <number>0</number>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>Date</string>
                  </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QWidget" name="widget" native="true">
-                   <widget class="QLabel" name="label_4">
-                    <property name="geometry">
-                     <rect>
-                      <x>20</x>
-                      <y>-10</y>
-                      <width>441</width>
-                      <height>71</height>
-                     </rect>
-                    </property>
-                    <property name="text">
-                     <string>当月各消费类型占比，widget可显示matplotlib出的图</string>
-                    </property>
-                   </widget>
-                   <widget class="QLabel" name="label_5">
-                    <property name="geometry">
-                     <rect>
-                      <x>30</x>
-                      <y>50</y>
-                      <width>351</width>
-                      <height>211</height>
-                     </rect>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="pixmap">
-                     <pixmap>example.png</pixmap>
-                    </property>
-                   </widget>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="frame_13">
-                   <property name="styleSheet">
-                    <string notr="true">border-radius:10px;
+                </column>
+               </widget>
+              </widget>
+              <widget class="QPushButton" name="pushButton">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>530</y>
+                 <width>211</width>
+                 <height>28</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>to this person?</string>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QFrame" name="frame_10">
+              <property name="geometry">
+               <rect>
+                <x>258</x>
+                <y>1</y>
+                <width>496</width>
+                <height>566</height>
+               </rect>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QFrame" name="frame_13">
+               <property name="geometry">
+                <rect>
+                 <x>84</x>
+                 <y>1</y>
+                 <width>411</width>
+                 <height>564</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius:10px;
 background-color: rgb(191, 200, 234);
 background-color: rgba(191, 200, 234, 150);</string>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <widget class="QLabel" name="label_3">
-                    <property name="geometry">
-                     <rect>
-                      <x>10</x>
-                      <y>10</y>
-                      <width>461</width>
-                      <height>21</height>
-                     </rect>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgba(191, 200, 234, 150);</string>
-                    </property>
-                    <property name="text">
-                     <string>Login </string>
-                    </property>
-                   </widget>
-                   <widget class="QTableWidget" name="tableWidget">
-                    <property name="geometry">
-                     <rect>
-                      <x>10</x>
-                      <y>40</y>
-                      <width>461</width>
-                      <height>211</height>
-                     </rect>
-                    </property>
-                   </widget>
-                  </widget>
-                 </item>
-                </layout>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <widget class="QLabel" name="label_3">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>10</y>
+                  <width>461</width>
+                  <height>21</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgba(191, 200, 234, 150);</string>
+                </property>
+                <property name="text">
+                 <string>Login </string>
+                </property>
                </widget>
-              </item>
-             </layout>
+               <widget class="QTableWidget" name="tableWidget">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>40</y>
+                  <width>461</width>
+                  <height>211</height>
+                 </rect>
+                </property>
+               </widget>
+              </widget>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -1657,7 +1622,7 @@ background-color: rgba(191, 200, 234, 150);</string>
            <property name="geometry">
             <rect>
              <x>30</x>
-             <y>280</y>
+             <y>270</y>
              <width>631</width>
              <height>171</height>
             </rect>
@@ -1800,11 +1765,284 @@ background-color: rgba(191, 200, 234, 150);</string>
              <x>30</x>
              <y>20</y>
              <width>671</width>
-             <height>291</height>
+             <height>331</height>
             </rect>
            </property>
            <property name="title">
-            <string>search?</string>
+            <string>Search Transaction</string>
+           </property>
+           <widget class="QRadioButton" name="radioButton">
+            <property name="geometry">
+             <rect>
+              <x>400</x>
+              <y>140</y>
+              <width>115</width>
+              <height>19</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Type based</string>
+            </property>
+           </widget>
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="geometry">
+             <rect>
+              <x>240</x>
+              <y>140</y>
+              <width>115</width>
+              <height>19</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Time Period</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_5">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>140</y>
+              <width>141</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Seasrch base on:</string>
+            </property>
+           </widget>
+           <widget class="QStackedWidget" name="stackedWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>170</y>
+              <width>561</width>
+              <height>121</height>
+             </rect>
+            </property>
+            <property name="currentIndex">
+             <number>2</number>
+            </property>
+            <widget class="QWidget" name="page_default">
+             <widget class="QLabel" name="label_26">
+              <property name="geometry">
+               <rect>
+                <x>131</x>
+                <y>50</y>
+                <width>301</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>please select to search!</string>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="page_time">
+             <widget class="QFrame" name="frame_4">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>531</width>
+                <height>101</height>
+               </rect>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QLabel" name="label_4">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>10</y>
+                 <width>221</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>format e.g. 1995-03-05</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_23">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>50</y>
+                 <width>72</width>
+                 <height>15</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>from</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_24">
+               <property name="geometry">
+                <rect>
+                 <x>290</x>
+                 <y>50</y>
+                 <width>72</width>
+                 <height>15</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>to</string>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="lineEdit_fromt">
+               <property name="geometry">
+                <rect>
+                 <x>90</x>
+                 <y>50</y>
+                 <width>151</width>
+                 <height>21</height>
+                </rect>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="lineEdit_tot">
+               <property name="geometry">
+                <rect>
+                 <x>360</x>
+                 <y>50</y>
+                 <width>141</width>
+                 <height>21</height>
+                </rect>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButton_searchtime">
+               <property name="geometry">
+                <rect>
+                 <x>350</x>
+                 <y>10</y>
+                 <width>93</width>
+                 <height>28</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Search</string>
+               </property>
+              </widget>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="page_type">
+             <widget class="QComboBox" name="comboBox_stype">
+              <property name="geometry">
+               <rect>
+                <x>40</x>
+                <y>60</y>
+                <width>151</width>
+                <height>22</height>
+               </rect>
+              </property>
+              <item>
+               <property name="text">
+                <string>transaction_id</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>timepoint_date</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>account_id</string>
+               </property>
+              </item>
+             </widget>
+             <widget class="QLabel" name="label_25">
+              <property name="geometry">
+               <rect>
+                <x>40</x>
+                <y>20</y>
+                <width>72</width>
+                <height>15</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Type</string>
+              </property>
+             </widget>
+             <widget class="QLineEdit" name="lineEdit_param2">
+              <property name="geometry">
+               <rect>
+                <x>290</x>
+                <y>60</y>
+                <width>113</width>
+                <height>21</height>
+               </rect>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_searchtype">
+              <property name="geometry">
+               <rect>
+                <x>440</x>
+                <y>60</y>
+                <width>93</width>
+                <height>28</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Search</string>
+              </property>
+             </widget>
+            </widget>
+           </widget>
+          </widget>
+          <widget class="QTableWidget" name="tableWidget_transactions_2">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>400</y>
+             <width>631</width>
+             <height>151</height>
+            </rect>
+           </property>
+           <column>
+            <property name="text">
+             <string>Transaction_ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>In Account ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Out Account ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Amount</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Currency_Type</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </column>
+          </widget>
+          <widget class="QLabel" name="label_27">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>360</y>
+             <width>181</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>search result:</string>
            </property>
           </widget>
          </widget>
