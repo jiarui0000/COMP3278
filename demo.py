@@ -4,7 +4,9 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
-currency_constant={'US Dollar':1, 'HKD':7.8, 'Pound':0.75, 'Yuan':6.4}
+
+currency_constant = {'US Dollar': 1, 'HKD': 7.8, 'Pound': 0.75, 'Yuan': 6.4}
+
 
 def newCustomerID():
     sql_command = "SELECT MAX(customer_id) FROM Customer;"
@@ -147,7 +149,7 @@ def getFirstname(customer_id):
 def accountList(customer_id):
     accounts = []
     for category in ['Investment', 'Saving', 'Credit']:
-        sql_command = "SELECT * FROM "+category+"_account WHERE customer_id='" + customer_id + "';"
+        sql_command = "SELECT * FROM " + category + "_account WHERE customer_id='" + customer_id + "';"
         response = cursor.do(sql_command)
         for ia in response:  # ia: account_id, customer_id, currency_type, create_time, total_value
             accounts.append((ia[0], category, ia[2], ia[3], ia[4]))
@@ -156,38 +158,38 @@ def accountList(customer_id):
 
 def accountBalance(account_id):
     for category in ['Investment', 'Saving', 'Credit']:
-        sql_command = "SELECT * FROM "+category+"_account WHERE account_id='" + account_id + "';"
+        sql_command = "SELECT * FROM " + category + "_account WHERE account_id='" + account_id + "';"
         response = cursor.do(sql_command)
-        if len(response)!=0:
-            rp=response[0]
+        if len(response) != 0:
+            rp = response[0]
             return [rp[0], rp[4], rp[2]]
     return []
 
 
 def recentContect(customer_id):
-    sql_command="SELECT in_account_id, in_customer_id FROM ( \
-                SELECT DISTINCT in_account_id, in_customer_id FROM Transaction WHERE out_customer_id='"\
-                +customer_id+"') T LIMIT 3;"
+    sql_command = "SELECT in_account_id, in_customer_id FROM ( \
+                SELECT DISTINCT in_account_id, in_customer_id FROM Transaction WHERE out_customer_id='" \
+                  + customer_id + "') T LIMIT 3;"
     return cursor.do(sql_command)
 
 
 def transactionHistory(customer_id):
     history = []
-    sql_command = "SELECT * FROM Transaction WHERE in_customer_id='"+customer_id+"';"
+    sql_command = "SELECT * FROM Transaction WHERE in_customer_id='" + customer_id + "';"
     history += cursor.do(sql_command)
     sql_command = "SELECT * FROM Transaction WHERE out_customer_id='" + customer_id + "';"
     history += cursor.do(sql_command)
-    history.sort(key=lambda s:(s[7], s[8], s[0]))
+    history.sort(key=lambda s: (s[7], s[8], s[0]))
     return history
 
 
 def transactionHistory2(account_id):
     history = []
-    sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE in_account_id='"+account_id+"';"
+    sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE in_account_id='" + account_id + "';"
     history += cursor.do(sql_command)
     sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE out_account_id='" + account_id + "';"
     history += cursor.do(sql_command)
-    history.sort(key=lambda s:(s[0]))
+    history.sort(key=lambda s: (s[0]))
     return history
 
 
@@ -202,7 +204,7 @@ def getType(account_id):
 
 def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type):
     # currency conversion
-    sql_command="SELECT currency_type FROM Account WHERE account_id='"+in_account_id+"';"
+    sql_command = "SELECT currency_type FROM Account WHERE account_id='" + in_account_id + "';"
     in_currency_constant = currency_constant[cursor.do(sql_command)[0][0]]
     sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
     out_currency_constant = currency_constant[cursor.do(sql_command)[0][0]]
@@ -213,66 +215,76 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
     valid = True
     valid = valid and (in_account_id != out_account_id)
     sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
-    valid = valid and (currency_type==cursor.do(sql_command)[0][0])
+    valid = valid and (currency_type == cursor.do(sql_command)[0][0])
     sql_command = "SELECT customer_id FROM Account WHERE account_id='" + in_account_id + "';"
     valid = valid and (in_customer_id == cursor.do(sql_command)[0][0])
     sql_command = "SELECT customer_id FROM Account WHERE account_id='" + out_account_id + "';"
     valid = valid and (out_customer_id == cursor.do(sql_command)[0][0])
-    in_type=getType(in_account_id)
-    out_type=getType(out_account_id)
+    in_type = getType(in_account_id)
+    out_type = getType(out_account_id)
     valid = valid and (in_type != 'Investment') and (out_type != 'Investment')
-    if out_type=='Saving':
-        sql_command= "SELECT balance FROM Saving_account WHERE account_id='"+out_account_id+"';"
+    if out_type == 'Saving':
+        sql_command = "SELECT balance FROM Saving_account WHERE account_id='" + out_account_id + "';"
         valid = valid and (out_amount <= cursor.do(sql_command)[0][0])
     if not valid:
         return '', False
 
     # make transaction
-    if in_type=='Saving':
+    if in_type == 'Saving':
         sql_command = "SELECT balance FROM Saving_account WHERE account_id='" + in_account_id + "';"
         balance = cursor.do(sql_command)[0][0]
         balance += in_amount
-        sql_command = "UPDATE Saving_account SET balance="+str(balance)+" WHERE account_id='"+in_account_id+"';"
+        sql_command = "UPDATE Saving_account SET balance=" + str(balance) + " WHERE account_id='" + in_account_id + "';"
         cursor.do(sql_command)
-    else: # credit account
+    else:  # credit account
         sql_command = "SELECT total_debt FROM Credit_account WHERE account_id='" + in_account_id + "';"
         debt = cursor.do(sql_command)[0][0]
         debt -= in_amount
         sql_command = "UPDATE Credit_account SET total_debt=" + str(debt) + " WHERE account_id='" + in_account_id + "';"
         cursor.do(sql_command)
-    if out_type=='Saving':
+    if out_type == 'Saving':
         sql_command = "SELECT balance FROM Saving_account WHERE account_id='" + out_account_id + "';"
         balance = cursor.do(sql_command)[0][0]
         balance -= out_amount
-        sql_command = "UPDATE Saving_account SET balance=" + str(balance) + " WHERE account_id='" + out_account_id + "';"
+        sql_command = "UPDATE Saving_account SET balance=" + str(
+            balance) + " WHERE account_id='" + out_account_id + "';"
         cursor.do(sql_command)
-    else: # credit account
+    else:  # credit account
         sql_command = "SELECT total_debt FROM Credit_account WHERE account_id='" + out_account_id + "';"
         debt = cursor.do(sql_command)[0][0]
         debt += in_amount
-        sql_command = "UPDATE Credit_account SET total_debt=" + str(debt) + " WHERE account_id='" + out_account_id + "';"
+        sql_command = "UPDATE Credit_account SET total_debt=" + str(
+            debt) + " WHERE account_id='" + out_account_id + "';"
         cursor.do(sql_command)
-    sql_command="SELECT MAX(transaction_id) FROM Transaction;"
-    trandactionID=str(int(cursor.do(sql_command)[0][0]) + 1).zfill(3)
-    timepoint_date=datetime.today().strftime("%Y-%m-%d")
-    timepoint_time=datetime.now().strftime("%H:%M:%S")
-    sql_command="INSERT INTO Transaction VALUES ('"+trandactionID+"','"+str(in_account_id)+"','"+str(out_account_id)+ \
-                "','"+str(in_customer_id)+"','"+str(out_customer_id)+"',"+str(amount)+",'"+str(currency_type)+ \
-                "','"+str(timepoint_date)+"','"+str(timepoint_time)+"');"
+    sql_command = "SELECT MAX(transaction_id) FROM Transaction;"
+    trandactionID = str(int(cursor.do(sql_command)[0][0]) + 1).zfill(3)
+    timepoint_date = datetime.today().strftime("%Y-%m-%d")
+    timepoint_time = datetime.now().strftime("%H:%M:%S")
+    sql_command = "INSERT INTO Transaction VALUES ('" + trandactionID + "','" + str(in_account_id) + "','" + str(
+        out_account_id) + \
+                  "','" + str(in_customer_id) + "','" + str(out_customer_id) + "'," + str(amount) + ",'" + str(
+        currency_type) + \
+                  "','" + str(timepoint_date) + "','" + str(timepoint_time) + "');"
     cursor.do(sql_command)
-    return trandactionID
+    return trandactionID, True
 
 
 def searchTransaction(customer_id, find_type, find_param):
-    if find_type != 'account_id':
-        sql_command="SELECT * FROM Transaction WHERE (in_customer_id='"+customer_id+"' OR out_customer_id='"\
-                    +customer_id+"' )AND "+str(find_type)+"='"+str(find_param)+"';"
-    else:
-        sql_command="SELECT * FROM Transaction WHERE (in_customer_id='"+customer_id+"' OR out_customer_id='"\
-                    +customer_id+"' ) AND (in_account_id='"+str(find_param)+"' OR out_account_id='"+str(find_param)+"');"
+    if find_type in ['timepoint_date', 'transaction_id']:
+        sql_command = "SELECT * FROM Transaction WHERE (in_customer_id='" + customer_id \
+                      + "' OR out_customer_id='" + customer_id \
+                      + "' )AND " + str(find_type) + "='" + str(find_param) + "';"
+    elif find_type == 'account_id':
+        sql_command = "SELECT * FROM Transaction WHERE (in_customer_id='" + customer_id+"' OR out_customer_id='" \
+                      +customer_id+"' ) AND (in_account_id='"+str(find_param)+"' OR out_account_id='"+str(find_param)+"');"
+    elif find_type == 'time_period':
+        sql_command = "SELECT * FROM Transaction WHERE (in_customer_id='" + customer_id \
+                      +"' OR out_customer_id='" + customer_id \
+                      +"') AND (timepoint_date <= '"+str(find_param[1]) \
+                      +"') AND (timepoint_date >= '"+str(find_param[0]) \
+                      +"');"
+        print(sql_command)
     return cursor.do(sql_command)
 
 
-
 cursor = my_cursor()
-
