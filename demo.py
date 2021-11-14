@@ -252,7 +252,7 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
     else:  # credit account
         sql_command = "SELECT total_debt FROM Credit_account WHERE account_id='" + out_account_id + "';"
         debt = cursor.do(sql_command)[0][0]
-        debt += in_amount
+        debt += out_amount
         sql_command = "UPDATE Credit_account SET total_debt=" + str(
             debt) + " WHERE account_id='" + out_account_id + "';"
         cursor.do(sql_command)
@@ -326,7 +326,7 @@ def balanceTrend(customer_id):
                 current_balance += 0
             else:
                 current_balance += int(float(response) * currency_constant[display_currency] / currency_constant[currency])
-    print(current_balance)
+    # print(current_balance)
 
     # calculate backward
     monthly_balance = [current_balance]
@@ -351,3 +351,4 @@ def balanceTrend(customer_id):
 
 
 cursor = my_cursor()
+print(balanceTrend('001'))
