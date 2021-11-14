@@ -351,4 +351,3 @@ def balanceTrend(customer_id):
 
 
 cursor = my_cursor()
-print(balanceTrend('001'))
