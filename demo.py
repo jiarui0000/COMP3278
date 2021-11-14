@@ -270,7 +270,7 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
 
 
 def searchTransaction(customer_id, find_type, find_param):
-    if find_type in ['timepoint_date', 'transaction_id']:
+    if find_type in ['timepoint_date', 'transaction_id', 'amount']:
         sql_command = "SELECT transaction_id, in_account_id, out_account_id, amount, currency_type, timepoint_date FROM Transaction WHERE (in_customer_id='" + customer_id \
                       + "' OR out_customer_id='" + customer_id \
                       + "' )AND " + str(find_type) + "='" + str(find_param) + "';"

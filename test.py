@@ -174,8 +174,8 @@ def init_page_wallet():
     dlg.label_viewinfo.setVisible(True)
     dlg.frame_maketransaction.setVisible(False)
     dlg.pushButton_make.setVisible(False)
-    print("balance:")
-    print(accountBalance(customer_id))
+    # print("balance:")
+    # print(accountBalance(customer_id))
 
 def setPage(page):
     dlg.stackedWidget.setCurrentIndex(page)
@@ -206,6 +206,8 @@ def changepwd():
 
 def init_page_transfer():
     dlg.stackedWidget_2.setCurrentIndex(0)
+    dlg.radioButton.setChecked(False)
+    dlg.radioButton_2.setChecked(False)
     # print("yes")
 
 def confirmchangepwd():
@@ -219,6 +221,7 @@ def confirmchangepwd():
             show_message(title= "Message", message="The old password is incorrect!")
         else:
             show_message(title= "Message", message="Updated password successfully!")
+            
 
 
 def cancelchangepwd():
@@ -301,13 +304,13 @@ def clearData3():
         dlg.tableWidget_recentContect.removeRow(0)
         dlg.tableWidget_recentContect.clearSelection()
 
-def createA():
-    accountid = dlg.lineEdit_accountid.text()
-    param = dlg.lineEdit_param.text()
-    ctype = dlg.comboBox_ctype.currentText()
-    atype = dlg.comboBox_atype.currentText()
-    print(ctype)
-    createAccount(accountid, customer_id, ctype, atype, param)
+# def createA():
+#     accountid = dlg.lineEdit_accountid.text()
+#     param = dlg.lineEdit_param.text()
+#     ctype = dlg.comboBox_ctype.currentText()
+#     atype = dlg.comboBox_atype.currentText()
+#     print(ctype)
+#     createAccount(accountid, customer_id, ctype, atype, param)
     
 def refresh():
     clearData()
@@ -378,14 +381,22 @@ def makeT2():#false的error提示
     # makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type)
     # print((toa, froma, toc, customer_id, int(amount), ttype))
     # print(makeTransaction(toa, froma, toc, customer_id, int(amount), ttype))
-    if (makeTransaction(toa, froma, toc, customer_id, int(amount), ttype)=='', False):
+    if (makeTransaction(toa, froma, toc, customer_id, int(amount), ttype)[1]==False):
         show_message("Error","Transaction failed!")
     else: 
         show_message("Success","Transaction succeeded!")
+        init_page_wallet()
+        
+
 
 def closeT():
+    dlg.lineEdit_From_account.setText("")
+    dlg.lineEdit_To_account.setText("")
+    dlg.lineEdit_To_customer.setText("")
+    dlg.lineEdit_amount.setText("")
     dlg.frame_maketransaction.setVisible(False)
     # 所有text归零
+
 
 def loadT2(find_type, t):
     list=searchTransaction(customer_id, find_type, t)
@@ -434,8 +445,8 @@ dlg.pushButton_cancelpwd.clicked.connect(cancelchangepwd)
 dlg.pushButton_confirmpwd.clicked.connect(confirmchangepwd)
 # dlg.pushButton_history.clicked.connect(getSelectedAccountId())
 #accounts page
-dlg.lineEdit_accountid.setPlaceholderText("Account ID")
-dlg.pushButton_create.clicked.connect(createA)
+# dlg.lineEdit_accountid.setPlaceholderText("Account ID")
+# dlg.pushButton_create.clicked.connect(createA)
 dlg.tableWidget_accounts.itemSelectionChanged.connect(selectionChange)
 dlg.pushButton_make.clicked.connect(makeT)
 dlg.pushButton_cancel.clicked.connect(closeT)
