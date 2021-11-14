@@ -13,7 +13,41 @@ edit = False
 trans = False
 poptype = "logout"
 
+style_side = '''QPushButton{
+	color: rgb(0, 0, 0);
+	background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(198, 213, 234, 255), stop:1 rgba(238, 242, 250, 255));
+	border: 0px solid;
+}
+QPushButton:hover{
+	background-color: rgb(238, 242, 250);
+	border: 0px solid;
+}
+QPushButton#btn1{
+	background-color: rgb(238, 242, 250);
+	border: 0px solid;
+}
 
+'''
+
+style_profile = '''QLineEdit{
+border:0px solid gray;
+border-radius:3px;
+
+}
+QLineEdit#edit1{
+border:2px solid grey;
+border-radius:3px;
+
+}'''
+
+style_profile2 = '''QPushButton{border:0px solid;
+border-radius:5px;
+background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(198, 213, 234, 255), stop:1 rgba(238, 242, 250, 255))
+}
+QPushButton#edit2{border:0px solid;
+border-radius:5px;
+background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(92, 184, 136, 255), stop:1 rgba(238, 242, 250, 255))
+}'''
 #functions
 def show_message(title= "Message", message="text"):
     msg = QMessageBox()
@@ -145,22 +179,26 @@ def init_page_wallet():
 
 def setPage(page):
     dlg.stackedWidget.setCurrentIndex(page)
+    dlg.pushButton_profile.setObjectName('btn')
+    dlg.pushButton_home.setObjectName('btn')
+    dlg.pushButton_wallet.setObjectName('btn')
+    dlg.pushButton_transfer.setObjectName('btn')
     if page == 0:
-        # dlg.pushButton_profile.setProperty("class", "one")
-        # dlg.pushButton_profile.setStyleSheet("background-color: rgb(212, 212, 212);")
         init_page_profile()
+        dlg.pushButton_profile.setObjectName('btn1')
     elif page == 1:
         init_page_home()
-        print("hi")
         dlg.pushButton_home.setObjectName('btn1')
-        # dlg.pushButton_home.setProperty('level', '1')
-        # self.btn1.setObjectName('btn1')
-        # dlg.pushButton_home.setStyleSheet('QPushButton#btn1{color: yellow; font-size: 20px;}')
     elif page == 2:
-        print("hrere")
         init_page_wallet()
+        dlg.pushButton_wallet.setObjectName('btn1')
     elif page==3:
         init_page_transfer()
+        dlg.pushButton_transfer.setObjectName('btn1')
+    dlg.pushButton_profile.setStyleSheet(style_side)
+    dlg.pushButton_home.setStyleSheet(style_side)
+    dlg.pushButton_wallet.setStyleSheet(style_side)
+    dlg.pushButton_transfer.setStyleSheet(style_side)
 
 
 def changepwd():
@@ -198,10 +236,18 @@ def edit_profile():
         dlg.lineEdit_birthday.setReadOnly(False)
         dlg.lineEdit_email.setReadOnly(False)
         dlg.lineEdit_phone.setReadOnly(False)
+
+        dlg.lineEdit_lastname.setObjectName('edit1')
+        dlg.lineEdit_firstname.setObjectName('edit1')
+        dlg.lineEdit_gender.setObjectName('edit1')
+        dlg.lineEdit_birthday.setObjectName('edit1')
+        dlg.lineEdit_email.setObjectName('edit1')
+        dlg.lineEdit_phone.setObjectName('edit1')
         # dlg.lineEdit_id.setReadOnly(False)
         # dlg.lineEdit_certi.setReadOnly(False)
         # dlg.lineEdit_cid.setReadOnly(False)
-        dlg.pushButton_edit_profile.setText("Update")
+        dlg.pushButton_edit_profile.setText("Update Profile")
+        dlg.pushButton_edit_profile.setObjectName('edit2')
         edit = True
     else:
         lastname = dlg.lineEdit_lastname.text()
@@ -218,10 +264,29 @@ def edit_profile():
         user = (lastname, firstname, gender, birthday2, email, phone)
         cursor = my_cursor()
         cursor.edit("UPDATE Customer SET lastname=%s, firstname=%s, gender=%s, birthday=%s , email=%s, phone=%s WHERE customer_id="+customer_id, user)
-
+        dlg.lineEdit_lastname.setReadOnly(True)
+        dlg.lineEdit_firstname.setReadOnly(True)
+        dlg.lineEdit_gender.setReadOnly(True)
+        dlg.lineEdit_birthday.setReadOnly(True)
+        dlg.lineEdit_email.setReadOnly(True)
+        dlg.lineEdit_phone.setReadOnly(True)
         #update database
-        dlg.pushButton_edit_profile.setText("Edit")
+        dlg.pushButton_edit_profile.setText("Edit Profile")
         edit = False
+        dlg.lineEdit_lastname.setObjectName('edit0')
+        dlg.lineEdit_firstname.setObjectName('edit0')
+        dlg.lineEdit_gender.setObjectName('edit0')
+        dlg.lineEdit_birthday.setObjectName('edit0')
+        dlg.lineEdit_email.setObjectName('edit0')
+        dlg.lineEdit_phone.setObjectName('edit0')
+        dlg.pushButton_edit_profile.setObjectName('edit0')
+    dlg.lineEdit_lastname.setStyleSheet(style_profile)
+    dlg.lineEdit_firstname.setStyleSheet(style_profile)
+    dlg.lineEdit_gender.setStyleSheet(style_profile)
+    dlg.lineEdit_birthday.setStyleSheet(style_profile)
+    dlg.lineEdit_email.setStyleSheet(style_profile)
+    dlg.lineEdit_phone.setStyleSheet(style_profile)
+    dlg.pushButton_edit_profile.setStyleSheet(style_profile2)
 
 #accounts page
 def clearData():
