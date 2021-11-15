@@ -15,14 +15,6 @@ CREATE TABLE Customer (
     password VARCHAR(20) NOT NULL
 );
 
-
-CREATE TABLE CustomerHistory(
-    from_customer_id VARCHAR(10) NOT NULL,
-    login_date DATE,
-    login_time VARCHAR(10),
-    FOREIGN KEY (from_customer_id) REFERENCES Customer(customer_id)
-);
-
 CREATE TABLE Account(
     account_id VARCHAR(10) NOT NULL PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,

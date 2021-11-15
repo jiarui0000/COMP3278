@@ -206,6 +206,10 @@ def getType(account_id):
 
 def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type):
     # currency conversion
+    in_account_id=in_account_id.zfill(3)
+    out_account_id = out_account_id.zfill(3)
+    in_customer_id = in_customer_id.zfill(3)
+    out_customer_id = out_customer_id.zfill(3)
     sql_command = "SELECT currency_type FROM Account WHERE account_id='" + in_account_id + "';"
     in_currency_constant = currency_constant[cursor.do(sql_command)[0][0]]
     sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
@@ -216,9 +220,9 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
     # verify
     if not (in_account_id != out_account_id):
         return 'Fail reason: cannot transfer between same account.', False
-    sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
-    if not (currency_type == cursor.do(sql_command)[0][0]):
-        return 'Fail reason: currency type do not match', False
+    #sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
+    #if not (currency_type == cursor.do(sql_command)[0][0]):
+        #return 'Fail reason: currency type do not match', False
     sql_command = "SELECT customer_id FROM Account WHERE account_id='" + in_account_id + "';"
     if not (in_customer_id == cursor.do(sql_command)[0][0]):
         return 'Fail reason: receiver account id and customer id not match', False
@@ -358,6 +362,20 @@ def balanceTrend(customer_id):
         monthly_balance.append(monthly_balance[-1] - monthly_increase[-1])
     monthly_balance = monthly_balance[:-1]
     return month_to_search, monthly_increase, monthly_balance
+
+
+def recentCapitalFlow(account_id):
+    account_id=account_id.zfill(3)
+    sql_command="SELECT in_account_id, out_account_id, amount, currency_type FROM Transaction WHERE " \
+                "((in_account_id='"+account_id+"') OR (out_account_id='"+account_id+"')) LIMIT 5;"
+    response = cursor.do(sql_command)
+    capital_flow=[]
+    for cf in response:
+        if cf[0]==account_id:
+            capital_flow.append((1,cf[2],cf[3])) #1 means inflow
+        else:
+            capital_flow.append((-1,cf[2],cf[3])) #-1 means outflow
+    return capital_flow
 
 
 cursor = my_cursor()

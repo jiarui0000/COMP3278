@@ -9,15 +9,6 @@ INSERT INTO  Customer (customer_id,lastname,firstname,gender,birthday,email,phon
  ('006','Ye','Mao','male','2020-11-01','@gmail.com','12345678','student card','0000011111','password4'),
  ('007','Bai','Qingyu','female','2020-11-01','@gmail.com','12345678','student card','0000011111','password5');
 
- INSERT INTO CustomerHistory (from_customer_id, login_date, login_time) VALUES
- ('001','2021-10-30', '23:59:59'),
- ('002','2021-10-31', '12:40:59'),
- ('003','2021-10-29', '23:59:59'),
- ('004','2021-10-15', '00:59:30'),
- ('005','2021-10-11', '23:40:59'),
- ('006','2021-11-01', '13:59:59'),
- ('007','2021-11-05', '23:59:30');
-
  INSERT INTO Account (account_id, customer_id, create_time, currency_type) VALUES
  ('001','001','1900-10-10','Pound'),
  ('002','001','1910-10-10','Pound'),
