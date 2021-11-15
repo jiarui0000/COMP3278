@@ -134,6 +134,7 @@ def checkGender(customer_id):
     return response[0][0]
 
 
+
 def getSurname(customer_id):
     sql_command = "SELECT lastname FROM Customer WHERE customer_id='" + customer_id + "';"
     response = cursor.do(sql_command)
@@ -291,7 +292,7 @@ def searchTransaction(customer_id, find_type, find_param):
 
 
 def loginHistory(customer_id):
-    sql_command = "SELECT timepoint FROM Login_history WHERE customer_id='" + str(customer_id) + "';"
+    sql_command = "SELECT timepoint FROM Login_history WHERE customer_id='" + str(customer_id) + "' ORDER BY timepoint DESC;"
     response = cursor.do(sql_command)
     return response
 

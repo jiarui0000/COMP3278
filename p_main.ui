@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>960</width>
-    <height>609</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -462,7 +462,7 @@ QPushButton#btn1{
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>icons/transaction.png</normaloff>icons/transaction.png</iconset>
+                 <normaloff>icons/search.png</normaloff>icons/search.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -621,7 +621,7 @@ background-color: rgb(238, 242, 250);</string>
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_profile">
           <property name="styleSheet">
@@ -926,7 +926,7 @@ background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5,
 }
 QPushButton#edit2{border:0px solid;
 border-radius:5px;
-background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(92, 184, 136, 255), stop:1 rgba(238, 242, 250, 255))
+background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(98, 197, 146, 255), stop:1 rgba(238, 242, 250, 255))
 }
 
 </string>
@@ -1078,10 +1078,14 @@ border-radius:3px;
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">QFrame#frame_pwd{border:1px solid gray;
+            <string notr="true">
+QFrame#frame_pwd{border:1px solid gray;
 border-radius:20px;
+background-color:rgb(255, 218, 144);
 
+border-radius:10px;
 }
+
 
 
 </string>
@@ -1100,6 +1104,9 @@ border-radius:20px;
               <width>151</width>
               <height>16</height>
              </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144);</string>
             </property>
             <property name="text">
              <string>Chaneg Password</string>
@@ -1153,6 +1160,9 @@ border-radius:20px;
               <height>16</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144);</string>
+            </property>
             <property name="text">
              <string>Old Password</string>
             </property>
@@ -1165,6 +1175,9 @@ border-radius:20px;
               <width>121</width>
               <height>16</height>
              </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144);</string>
             </property>
             <property name="text">
              <string>New Password</string>
@@ -1179,6 +1192,9 @@ border-radius:20px;
               <height>16</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144);</string>
+            </property>
             <property name="text">
              <string>Confirm password</string>
             </property>
@@ -1192,6 +1208,9 @@ border-radius:20px;
               <height>28</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(98, 197, 146);</string>
+            </property>
             <property name="text">
              <string>Confirm</string>
             </property>
@@ -1204,6 +1223,9 @@ border-radius:20px;
               <width>93</width>
               <height>28</height>
              </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(197, 75, 53);</string>
             </property>
             <property name="text">
              <string>Cancel</string>
@@ -1246,13 +1268,15 @@ border-radius:20px;
               <property name="geometry">
                <rect>
                 <x>440</x>
-                <y>340</y>
+                <y>110</y>
                 <width>301</width>
-                <height>221</height>
+                <height>451</height>
                </rect>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(176, 196, 222, 150);
+               <string notr="true">
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(186, 208, 235, 255), stop:1 rgba(238, 242, 250, 255));
+
 border-radius:10px;</string>
               </property>
               <property name="frameShape">
@@ -1264,14 +1288,14 @@ border-radius:10px;</string>
               <widget class="QLabel" name="label_7">
                <property name="geometry">
                 <rect>
-                 <x>11</x>
-                 <y>11</y>
-                 <width>221</width>
+                 <x>30</x>
+                 <y>10</y>
+                 <width>251</width>
                  <height>22</height>
                 </rect>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">background:transparent</string>
                </property>
                <property name="text">
                 <string>Login Hitory</string>
@@ -1280,23 +1304,58 @@ border-radius:10px;</string>
               <widget class="QTableWidget" name="tableWidget_login">
                <property name="geometry">
                 <rect>
-                 <x>11</x>
+                 <x>10</x>
                  <y>40</y>
-                 <width>219</width>
-                 <height>171</height>
+                 <width>281</width>
+                 <height>391</height>
                 </rect>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>200</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgba(191, 200, 234, 0);</string>
+                <string notr="true">
+
+QHeaderView                   
+{
+    background:transparent;
+    
+
+}
+QHeaderView::section          
+{	             
+    background-color:rgb(204, 217, 247); 
+    border:none;				
+	text-align:center;             
+    min-height:35px;               
+    max-height:35px;               
+    margin-left:0px;              
+    padding-left:0px;
+	border: 0px solid;      
+}
+QTableWidget{
+
+background:rgb(204, 217, 247); 
+border:1px solid #242424;
+gridline-color:#242424;
+selection-color:#242424;
+selection-background-color:rgb(204, 217, 247);
+}
+QTableCornerButton::section {
+background-color:rgb(204, 217, 247);
+}</string>
                </property>
                <property name="lineWidth">
                 <number>0</number>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="cornerButtonEnabled">
+                <bool>false</bool>
                </property>
                <property name="rowCount">
                 <number>0</number>
@@ -1306,22 +1365,27 @@ border-radius:10px;</string>
                  <string>Date</string>
                 </property>
                </column>
+               <column>
+                <property name="text">
+                 <string>Time</string>
+                </property>
+               </column>
               </widget>
              </widget>
              <widget class="QFrame" name="frame_11">
               <property name="geometry">
                <rect>
                 <x>20</x>
-                <y>340</y>
+                <y>350</y>
                 <width>401</width>
-                <height>221</height>
+                <height>211</height>
                </rect>
               </property>
               <property name="styleSheet">
-               <string notr="true">border-radius:10px;
-background-color: rgb(191, 200, 234);
-background-color: rgba(191, 200, 234, 150);
-background-color: rgba(123, 134, 170, 150);</string>
+               <string notr="true">QFrame#frame_11{border-radius:10px;
+
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(186, 208, 235, 255), stop:1 rgba(238, 242, 250, 255));
+}</string>
               </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
@@ -1329,41 +1393,460 @@ background-color: rgba(123, 134, 170, 150);</string>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <widget class="QLabel" name="label_6">
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Frequent Contact</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QTableWidget" name="tableWidget_recentContect">
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>200</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgba(191, 200, 234, 0);</string>
-                 </property>
-                 <column>
+              <widget class="QLabel" name="label_6">
+               <property name="geometry">
+                <rect>
+                 <x>11</x>
+                 <y>11</y>
+                 <width>371</width>
+                 <height>22</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background:transparent</string>
+               </property>
+               <property name="text">
+                <string>Frequent Contact</string>
+               </property>
+              </widget>
+              <widget class="QTableWidget" name="tableWidget_recentContect">
+               <property name="geometry">
+                <rect>
+                 <x>11</x>
+                 <y>50</y>
+                 <width>381</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>200</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">
+
+QHeaderView                   
+{
+    background:transparent;
+    
+
+}
+QHeaderView::section          
+{	             
+    background-color:rgb(204, 217, 247);;         
+    border:none;				
+	text-align:center;             
+    min-height:35px;               
+    max-height:35px;               
+    margin-left:0px;              
+    padding-left:0px;
+	border: 0px solid;      
+}
+QTableWidget{
+
+background:rgb(204, 217, 247);
+border:1px solid #242424;
+gridline-color:#242424;
+selection-color:#242424;
+selection-background-color:rgb(204, 217, 247);
+
+}
+QTableCornerButton::section {
+background-color:rgb(204, 217, 247);
+}</string>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="cornerButtonEnabled">
+                <bool>false</bool>
+               </property>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Customer ID</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Account ID</string>
+                </property>
+               </column>
+              </widget>
+              <widget class="QPushButton" name="pushButton_qt">
+               <property name="geometry">
+                <rect>
+                 <x>260</x>
+                 <y>10</y>
+                 <width>131</width>
+                 <height>28</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(98, 197, 146);</string>
+               </property>
+               <property name="text">
+                <string>Quick transfer</string>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QFrame" name="frame_13">
+              <property name="geometry">
+               <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>401</width>
+                <height>311</height>
+               </rect>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-radius:10px;
+
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(186, 208, 235, 255), stop:1 rgba(238, 242, 250, 255));
+</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QLabel" name="label_28">
+               <property name="geometry">
+                <rect>
+                 <x>11</x>
+                 <y>11</y>
+                 <width>381</width>
+                 <height>22</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Balance</string>
+               </property>
+              </widget>
+              <widget class="QFrame" name="frame_9">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>40</y>
+                 <width>381</width>
+                 <height>261</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background:transparent;</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <widget class="QLabel" name="label_image">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>381</width>
+                  <height>261</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string> </string>
+                </property>
+               </widget>
+              </widget>
+             </widget>
+             <widget class="QLabel" name="label_29">
+              <property name="geometry">
+               <rect>
+                <x>450</x>
+                <y>80</y>
+                <width>101</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Login Time</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_logintime">
+              <property name="geometry">
+               <rect>
+                <x>600</x>
+                <y>80</y>
+                <width>121</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>3</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_30">
+              <property name="geometry">
+               <rect>
+                <x>450</x>
+                <y>50</y>
+                <width>101</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Customer ID</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_loginid">
+              <property name="geometry">
+               <rect>
+                <x>600</x>
+                <y>50</y>
+                <width>131</width>
+                <height>21</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>2</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_31">
+              <property name="geometry">
+               <rect>
+                <x>450</x>
+                <y>20</y>
+                <width>101</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_loginname">
+              <property name="geometry">
+               <rect>
+                <x>600</x>
+                <y>20</y>
+                <width>151</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>1</string>
+              </property>
+             </widget>
+             <widget class="QFrame" name="frame_maketransaction_2">
+              <property name="geometry">
+               <rect>
+                <x>70</x>
+                <y>150</y>
+                <width>631</width>
+                <height>251</height>
+               </rect>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QFrame#frame_maketransaction_2{border:1px solid gray;
+border-radius:20px;
+background-color:rgb(255, 218, 144)
+}</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QPushButton" name="pushButton_cancel_4">
+               <property name="geometry">
+                <rect>
+                 <x>500</x>
+                 <y>210</y>
+                 <width>93</width>
+                 <height>28</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(197, 75, 53);</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="lineEdit_From_account_4">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>80</y>
+                 <width>141</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font:rgb(140, 148, 148)</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string>From_account</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_41">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>50</y>
+                 <width>131</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color:rgb(255, 218, 144)</string>
+               </property>
+               <property name="text">
+                <string>From account:</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_42">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>120</y>
+                 <width>171</width>
+                 <height>21</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color:rgb(255, 218, 144)</string>
+               </property>
+               <property name="text">
+                <string>Detail Information:</string>
+               </property>
+              </widget>
+              <widget class="QFrame" name="frame_32">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>150</y>
+                 <width>571</width>
+                 <height>52</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QFrame#frame_32{background-color:rgb(255, 218, 144)}</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_12">
+                <property name="spacing">
+                 <number>20</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_To_account_4">
                   <property name="text">
-                   <string>Name</string>
+                   <string/>
                   </property>
-                 </column>
-                 <column>
+                  <property name="placeholderText">
+                   <string>To_account</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_To_customer_4">
                   <property name="text">
-                   <string>Account ID</string>
+                   <string/>
                   </property>
-                 </column>
-                </widget>
-               </item>
-              </layout>
+                  <property name="placeholderText">
+                   <string>To_customer</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_amount_4">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>amount</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="comboBox_ttype_4">
+                  <item>
+                   <property name="text">
+                    <string>HKD</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Pound</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QPushButton" name="pushButton_make2_4">
+               <property name="geometry">
+                <rect>
+                 <x>390</x>
+                 <y>210</y>
+                 <width>93</width>
+                 <height>28</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(98, 197, 146);</string>
+               </property>
+               <property name="text">
+                <string>Confirm</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_43">
+               <property name="geometry">
+                <rect>
+                 <x>260</x>
+                 <y>10</y>
+                 <width>161</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color:rgb(255, 218, 144)</string>
+               </property>
+               <property name="text">
+                <string>Make transaction</string>
+               </property>
+              </widget>
              </widget>
             </widget>
            </item>
@@ -1412,7 +1895,12 @@ selection-color:#242424;
 selection-background-color:rgb(198, 213, 234);
 
 }
-</string>
+QTableCornerButton::section {
+background-color:rgb(238, 242, 250);  
+}</string>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
            </property>
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
@@ -1489,21 +1977,30 @@ gridline-color:#242424;
 selection-color:#242424;
 selection-background-color:rgb(198, 213, 234);
 
+}
+QTableCornerButton::section {
+background-color:rgb(238, 242, 250);  
 }</string>
            </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>95</number>
+           </attribute>
            <column>
             <property name="text">
-             <string>Transaction_ID</string>
+             <string>ID</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>In Account ID</string>
+             <string>In Account</string>
             </property>
            </column>
            <column>
             <property name="text">
-             <string>Out Account ID</string>
+             <string>Out Account</string>
             </property>
            </column>
            <column>
@@ -1513,7 +2010,7 @@ selection-background-color:rgb(198, 213, 234);
            </column>
            <column>
             <property name="text">
-             <string>Currency_Type</string>
+             <string>Currency </string>
             </property>
            </column>
            <column>
@@ -1546,7 +2043,9 @@ selection-background-color:rgb(198, 213, 234);
            </property>
            <property name="styleSheet">
             <string notr="true">QFrame#frame_maketransaction{border:1px solid gray;
-border-radius:20px;}</string>
+border-radius:20px;
+background-color:rgb(255, 218, 144)
+}</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -1563,6 +2062,9 @@ border-radius:20px;}</string>
               <height>28</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(197, 75, 53);</string>
+            </property>
             <property name="text">
              <string>Cancel</string>
             </property>
@@ -1575,6 +2077,9 @@ border-radius:20px;}</string>
               <width>141</width>
               <height>31</height>
              </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font:rgb(140, 148, 148)</string>
             </property>
             <property name="text">
              <string/>
@@ -1592,6 +2097,9 @@ border-radius:20px;}</string>
               <height>16</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144)</string>
+            </property>
             <property name="text">
              <string>From account:</string>
             </property>
@@ -1605,6 +2113,9 @@ border-radius:20px;}</string>
               <height>21</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144)</string>
+            </property>
             <property name="text">
              <string>Detail Information:</string>
             </property>
@@ -1617,6 +2128,9 @@ border-radius:20px;}</string>
               <width>571</width>
               <height>52</height>
              </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QFrame#frame_5{background-color:rgb(255, 218, 144)}</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -1695,6 +2209,9 @@ border-radius:20px;}</string>
               <height>28</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(98, 197, 146);</string>
+            </property>
             <property name="text">
              <string>Confirm</string>
             </property>
@@ -1708,6 +2225,9 @@ border-radius:20px;}</string>
               <height>16</height>
              </rect>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 218, 144)</string>
+            </property>
             <property name="text">
              <string>Make transaction</string>
             </property>
@@ -1717,10 +2237,16 @@ border-radius:20px;}</string>
            <property name="geometry">
             <rect>
              <x>470</x>
-             <y>260</y>
-             <width>191</width>
-             <height>28</height>
+             <y>257</y>
+             <width>211</width>
+             <height>31</height>
             </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{border:0px solid;
+border-radius:5px;
+background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(198, 213, 234, 255), stop:1 rgba(238, 242, 250, 255))
+}</string>
            </property>
            <property name="text">
             <string>Make Transaction</string>
@@ -1897,15 +2423,17 @@ border-radius:20px;}</string>
               <widget class="QPushButton" name="pushButton_searchtime">
                <property name="geometry">
                 <rect>
-                 <x>440</x>
-                 <y>110</y>
-                 <width>93</width>
-                 <height>28</height>
+                 <x>410</x>
+                 <y>120</y>
+                 <width>141</width>
+                 <height>31</height>
                 </rect>
                </property>
                <property name="styleSheet">
-                <string notr="true">border:0px;
-background-color: rgb(176, 196, 222);</string>
+                <string notr="true">QPushButton{border:0px solid;
+border-radius:5px;
+background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(198, 213, 234, 255), stop:1 rgba(238, 242, 250, 255))
+}</string>
                </property>
                <property name="text">
                 <string>Search</string>
@@ -1974,15 +2502,17 @@ background-color: rgb(176, 196, 222);</string>
              <widget class="QPushButton" name="pushButton_searchtype">
               <property name="geometry">
                <rect>
-                <x>450</x>
-                <y>120</y>
-                <width>93</width>
-                <height>28</height>
+                <x>420</x>
+                <y>130</y>
+                <width>141</width>
+                <height>31</height>
                </rect>
               </property>
               <property name="styleSheet">
-               <string notr="true">border:0px;
-background-color: rgb(176, 196, 222);</string>
+               <string notr="true">QPushButton{border:0px solid;
+border-radius:5px;
+background-color:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(198, 213, 234, 255), stop:1 rgba(238, 242, 250, 255))
+}</string>
               </property>
               <property name="text">
                <string>Search</string>
@@ -2025,7 +2555,7 @@ background-color: rgb(176, 196, 222);</string>
              <rect>
               <x>10</x>
               <y>310</y>
-              <width>631</width>
+              <width>611</width>
               <height>211</height>
              </rect>
             </property>
@@ -2055,21 +2585,30 @@ gridline-color:#242424;
 selection-color:#242424;
 selection-background-color:rgb(198, 213, 234);
 
+}
+QTableCornerButton::section {
+background-color:rgb(238, 242, 250);  
 }</string>
             </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>97</number>
+            </attribute>
             <column>
              <property name="text">
-              <string>Transaction_ID</string>
+              <string>ID</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>In Account ID</string>
+              <string>In Account</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>Out Account ID</string>
+              <string>Out Account</string>
              </property>
             </column>
             <column>
@@ -2079,7 +2618,7 @@ selection-background-color:rgb(198, 213, 234);
             </column>
             <column>
              <property name="text">
-              <string>Currency_Type</string>
+              <string>Currency</string>
              </property>
             </column>
             <column>

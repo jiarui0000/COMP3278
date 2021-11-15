@@ -4,11 +4,14 @@ from PyQt5.QtWidgets import QMessageBox
 from demo import *
 from Utils import *
 import datetime
+import sys
+from PyQt5.QtGui import *
 
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("p_main.ui")
 ###
 #default value
+accountType = ""
 edit = False
 trans = False
 poptype = "logout"
@@ -100,8 +103,10 @@ def loadContects():
         name = getSurname(id) +", "+ getFirstname(id)
         cell = QtWidgets.QTableWidgetItem(name)
         dlg.tableWidget_recentContect.setItem(row_count, 0, cell)
-        cell = QtWidgets.QTableWidgetItem(str(Contect[0]))
+        cell = QtWidgets.QTableWidgetItem(str(id))
         dlg.tableWidget_recentContect.setItem(row_count, 1, cell)
+        cell = QtWidgets.QTableWidgetItem(str(Contect[0]))
+        dlg.tableWidget_recentContect.setItem(row_count, 2, cell)
     # for column_number, data in enumerate(Contect):
     #     cell = QtWidgets.QTableWidgetItem(str(data))#one cell
     #     dlg.tableWidget_recentContect.setItem(row_count, column_number, cell)
@@ -121,12 +126,16 @@ def loadAccounts():
 def loadLogin():
     list=loginHistory(customer_id)
     print(list)
+    dlg.label_loginname.setText(getSurname(customer_id) + ", "+ getFirstname(customer_id))
+    dlg.label_loginid.setText(customer_id)
+    dlg.label_logintime.setText(str(list[0][0]).split(' ')[1])
     for row_count, history in enumerate(list):
         dlg.tableWidget_login.insertRow(row_count)
-        print(row_count)
-        print(str(history[0]))
-        cell = QtWidgets.QTableWidgetItem(str(history[0]))
+        history2 = str(history[0]).split(' ')
+        cell = QtWidgets.QTableWidgetItem(str(history2[0]))
         dlg.tableWidget_login.setItem(row_count, 0, cell)
+        cell = QtWidgets.QTableWidgetItem(str(history2[1]))
+        dlg.tableWidget_login.setItem(row_count, 1, cell)
 
 def clearData4():
     # print("clear")
@@ -136,14 +145,14 @@ def clearData4():
         dlg.tableWidget_login.clearSelection()
 
 def init_page_home():
+    # print("init!")
+    loadImage()
+    dlg.pushButton_qt.setVisible(False)
+    dlg.frame_maketransaction_2.setVisible(False)
     clearData3()
     loadContects()
     clearData4()
     loadLogin()
-
-
-
-
 
 def init_page_profile():
     dlg.frame_pwd.setVisible(False)
@@ -174,6 +183,8 @@ def init_page_wallet():
     dlg.label_viewinfo.setVisible(True)
     dlg.frame_maketransaction.setVisible(False)
     dlg.pushButton_make.setVisible(False)
+    global accountType
+    accountType = ""
     # print("balance:")
     # print(accountBalance(customer_id))
 
@@ -195,6 +206,7 @@ def setPage(page):
     elif page==3:
         init_page_transfer()
         dlg.pushButton_transfer.setObjectName('btn1')
+    dlg.pushButton_qt.setVisible(False)
     dlg.pushButton_profile.setStyleSheet(style_side)
     dlg.pushButton_home.setStyleSheet(style_side)
     dlg.pushButton_wallet.setStyleSheet(style_side)
@@ -204,10 +216,12 @@ def setPage(page):
 def changepwd():
     dlg.frame_pwd.setVisible(True)
 
+
 def init_page_transfer():
     dlg.stackedWidget_2.setCurrentIndex(0)
     dlg.radioButton.setChecked(False)
     dlg.radioButton_2.setChecked(False)
+    clearData5()
     # print("yes")
 
 def confirmchangepwd():
@@ -222,12 +236,13 @@ def confirmchangepwd():
         else:
             show_message(title= "Message", message="Updated password successfully!")
             
-
+def loadImage():
+    dlg.label_image.setPixmap(QPixmap("balance trend\example.png"))
 
 def cancelchangepwd():
-    dlg.lineEdit_p1.setText = ""
-    dlg.lineEdit_p2.setText = ""
-    dlg.lineEdit_p3.setText = ""
+    dlg.lineEdit_p1.setText("")
+    dlg.lineEdit_p2.setText("")
+    dlg.lineEdit_p3.setText("")
     dlg.frame_pwd.setVisible(False)
 
 def edit_profile():
@@ -256,33 +271,36 @@ def edit_profile():
         lastname = dlg.lineEdit_lastname.text()
         firstname = dlg.lineEdit_firstname.text()
         gender = dlg.lineEdit_gender.text()
-        birthday = dlg.lineEdit_birthday.text().split('-')
+        # birthday = dlg.lineEdit_birthday.text().split('-')
         birthday2 = dlg.lineEdit_birthday.text()
         # for d in birthday:
-        dateobj = datetime.date(int(birthday[0]),int(birthday[1]),int(birthday[2]))
+        # dateobj = datetime.date(int(birthday[0]),int(birthday[1]),int(birthday[2]))
         print()
         email = dlg.lineEdit_email.text()
         phone = dlg.lineEdit_phone.text()
         # if (lastname != "")
-        user = (lastname, firstname, gender, birthday2, email, phone)
-        cursor = my_cursor()
-        cursor.edit("UPDATE Customer SET lastname=%s, firstname=%s, gender=%s, birthday=%s , email=%s, phone=%s WHERE customer_id="+customer_id, user)
-        dlg.lineEdit_lastname.setReadOnly(True)
-        dlg.lineEdit_firstname.setReadOnly(True)
-        dlg.lineEdit_gender.setReadOnly(True)
-        dlg.lineEdit_birthday.setReadOnly(True)
-        dlg.lineEdit_email.setReadOnly(True)
-        dlg.lineEdit_phone.setReadOnly(True)
-        #update database
-        dlg.pushButton_edit_profile.setText("Edit Profile")
-        edit = False
-        dlg.lineEdit_lastname.setObjectName('edit0')
-        dlg.lineEdit_firstname.setObjectName('edit0')
-        dlg.lineEdit_gender.setObjectName('edit0')
-        dlg.lineEdit_birthday.setObjectName('edit0')
-        dlg.lineEdit_email.setObjectName('edit0')
-        dlg.lineEdit_phone.setObjectName('edit0')
-        dlg.pushButton_edit_profile.setObjectName('edit0')
+        if lastname.strip(" ") != "" and firstname.strip(" ") != "" and gender.strip(" ") != "" and birthday2.strip(" ") != "" and email.strip(" ") != "" and phone.strip(" ") != "":
+            user = (lastname, firstname, gender, birthday2, email, phone)
+            cursor = my_cursor()
+            cursor.edit("UPDATE Customer SET lastname=%s, firstname=%s, gender=%s, birthday=%s , email=%s, phone=%s WHERE customer_id="+customer_id, user)
+            dlg.lineEdit_lastname.setReadOnly(True)
+            dlg.lineEdit_firstname.setReadOnly(True)
+            dlg.lineEdit_gender.setReadOnly(True)
+            dlg.lineEdit_birthday.setReadOnly(True)
+            dlg.lineEdit_email.setReadOnly(True)
+            dlg.lineEdit_phone.setReadOnly(True)
+            #update database
+            dlg.pushButton_edit_profile.setText("Edit Profile")
+            edit = False
+            dlg.lineEdit_lastname.setObjectName('edit0')
+            dlg.lineEdit_firstname.setObjectName('edit0')
+            dlg.lineEdit_gender.setObjectName('edit0')
+            dlg.lineEdit_birthday.setObjectName('edit0')
+            dlg.lineEdit_email.setObjectName('edit0')
+            dlg.lineEdit_phone.setObjectName('edit0')
+            dlg.pushButton_edit_profile.setObjectName('edit0')
+        else:
+            show_message("Error", "Please fill in all the blanks!")
     dlg.lineEdit_lastname.setStyleSheet(style_profile)
     dlg.lineEdit_firstname.setStyleSheet(style_profile)
     dlg.lineEdit_gender.setStyleSheet(style_profile)
@@ -326,6 +344,16 @@ def getSelectedRowId():
 def getSelectedAccountId():
     # print(dlg.tableWidget_accounts.item(1,1))
     return dlg.tableWidget_accounts.item(dlg.tableWidget_accounts.currentRow(), 0).text()
+def getSelectedAccountType():
+    return dlg.tableWidget_accounts.item(dlg.tableWidget_accounts.currentRow(), 1).text()
+
+def getSelectedRowId2():
+    return dlg.tableWidget_recentContect.currentRow()
+def getSelectedAccountId2():
+    # print(dlg.tableWidget_accounts.item(1,1))
+    return dlg.tableWidget_recentContect.item(dlg.tableWidget_recentContect.currentRow(), 2).text()
+def getSelectedCustomerId():
+    return dlg.tableWidget_recentContect.item(dlg.tableWidget_recentContect.currentRow(), 1).text()
 
 def loadHistory(account_id):
     list=transactionHistory2(account_id)
@@ -350,12 +378,22 @@ def clearData5():
         dlg.tableWidget_transactions_2.removeRow(0)
         dlg.tableWidget_transactions_2.clearSelection()
 
+def selectionChange2():
+    # print(getSelectedUserId())
+    # selected_row = getSelectedRowId()
+    dlg.pushButton_qt.setVisible(True)
+    # account_id = getSelectedAccountId()
+
+
+ 
+
 def selectionChange():
     # print(getSelectedUserId())
     # selected_row = getSelectedRowId()
     dlg.label_viewinfo.setVisible(False)
     dlg.pushButton_make.setVisible(True)
     account_id = getSelectedAccountId()
+
     # name = dlg.tableWidget.item(selected_row, 1).text()
     # date = dlg.tableWidget.item(selected_row, 2).text()
     # admin = dlg.tableWidget.item(selected_row, 3).text()
@@ -365,11 +403,55 @@ def selectionChange():
     clearData2()
     loadHistory(account_id)
 
+def makeTT():
+    # selected_row = getSelectedRowId()
+    toa = getSelectedAccountId2()
+    toc = getSelectedCustomerId()
+    # name = dlg.tableWidget.item(selected_row, 1).text()
+    dlg.lineEdit_To_account_4.setText(toa)
+    dlg.lineEdit_To_account_4.setReadOnly(True)
+    dlg.lineEdit_To_customer_4.setText(toc)
+    dlg.lineEdit_To_customer_4.setReadOnly(True)
+    dlg.frame_maketransaction_2.setVisible(True)
+# print(cursor.do("SELECT * FROM Customer"))
+def makeTT2():#false的error提示
+    froma = dlg.lineEdit_From_account_4.text()
+    toa = dlg.lineEdit_To_account_4.text()
+    toc = dlg.lineEdit_To_customer_4.text()
+    amount = dlg.lineEdit_amount_4.text()
+    ttype = dlg.comboBox_ttype_4.currentText()
+    # makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type)
+    # print((toa, froma, toc, customer_id, int(amount), ttype))
+    # print(makeTransaction(toa, froma, toc, customer_id, int(amount), ttype))
+    # if accountType == "Investment":
+    #     show_message("Error", "Sorry, you cannot use an investment account to make transactions.")
+    if froma.strip(" ") != "" and toa.strip(" ") != "" and toc.strip(" ") != "" and amount.strip(" ") != "" and ttype.strip(" ") != "":
+        print(str(toa)+ froma+ toc+ customer_id+ amount+ttype)
+        if (makeTransaction(toa, froma, toc, customer_id, int(amount), ttype)[1]==False):
+            show_message("Error","Transaction failed!")
+        else: 
+            show_message("Success","Transaction succeeded!")
+            init_page_wallet()
+    else:
+        show_message("Error", "Please fill in all the blanks!")
+
+
+def closeTT():
+    dlg.lineEdit_From_account_4.setText("")
+    dlg.lineEdit_To_account_4.setText("")
+    dlg.lineEdit_To_customer_4.setText("")
+    dlg.lineEdit_amount_4.setText("")
+    dlg.frame_maketransaction_2.setVisible(False)
+    # 所有text归零
+
 def makeT():
     # selected_row = getSelectedRowId()
     account_id = getSelectedAccountId()
+    global accountType
+    accountType = getSelectedAccountType()
     # name = dlg.tableWidget.item(selected_row, 1).text()
     dlg.lineEdit_From_account.setText(account_id)
+    dlg.lineEdit_From_account.setReadOnly(True)
     dlg.frame_maketransaction.setVisible(True)
 # print(cursor.do("SELECT * FROM Customer"))
 def makeT2():#false的error提示
@@ -381,12 +463,16 @@ def makeT2():#false的error提示
     # makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_id, amount, currency_type)
     # print((toa, froma, toc, customer_id, int(amount), ttype))
     # print(makeTransaction(toa, froma, toc, customer_id, int(amount), ttype))
-    if (makeTransaction(toa, froma, toc, customer_id, int(amount), ttype)[1]==False):
-        show_message("Error","Transaction failed!")
-    else: 
-        show_message("Success","Transaction succeeded!")
-        init_page_wallet()
-        
+    if accountType == "Investment":
+        show_message("Error", "Sorry, you cannot use an investment account to make transactions.")
+    elif froma.strip(" ") != "" and toa.strip(" ") != "" and toc.strip(" ") != "" and amount.strip(" ") != "" and ttype.strip(" ") != "":
+        if (makeTransaction(toa, froma, toc, customer_id, int(amount), ttype)[1]==False):
+            show_message("Error","Transaction failed!")
+        else: 
+            show_message("Success","Transaction succeeded!")
+            init_page_wallet()
+    else:
+        show_message("Error", "Please fill in all the blanks!")
 
 
 def closeT():
@@ -395,12 +481,10 @@ def closeT():
     dlg.lineEdit_To_customer.setText("")
     dlg.lineEdit_amount.setText("")
     dlg.frame_maketransaction.setVisible(False)
-    # 所有text归零
-
 
 def loadT2(find_type, t):
     list=searchTransaction(customer_id, find_type, t)
-    # print(accountList(customer_id))
+    # print(accountList((customer_id))
     # users = helper.select("SELECT * FROM users")
     # print(users)
     for row_count, tt in enumerate(list):
@@ -414,16 +498,23 @@ def search1():
     tot =dlg.lineEdit_tot.text()
     t = (fromt,tot)
     find_type = 'time_period'
-    print(len(tot))
-    clearData5()
-    loadT2(find_type, t)
+    if fromt.strip(" ") != "" and tot.strip(" ") != "" and len(tot)==10 and len(fromt)==10:
+        clearData5()
+        loadT2(find_type, t)
+    else:
+        show_message("Error","Please enter the information in the correct format!")
     # print(searchTransaction(find_type, t))
 def search2():
     find_type = dlg.comboBox_stype.currentText()
     t = dlg.lineEdit_param2.text()
+    if t.strip(" ") != "":
+        clearData5()
+        loadT2(find_type, t)
+    else:
+        show_message("Error","Please fill in all the blanks!")
+def changeSearch(index):
     clearData5()
-    loadT2(find_type, t)
-
+    dlg.stackedWidget_2.setCurrentIndex(index)
 
 
 
@@ -444,6 +535,12 @@ dlg.pushButton_changepwd.clicked.connect(changepwd)
 dlg.pushButton_cancelpwd.clicked.connect(cancelchangepwd)
 dlg.pushButton_confirmpwd.clicked.connect(confirmchangepwd)
 # dlg.pushButton_history.clicked.connect(getSelectedAccountId())
+
+#home page
+dlg.pushButton_qt.clicked.connect(makeTT)
+dlg.pushButton_make2_4.clicked.connect(makeTT2)
+dlg.pushButton_cancel_4.clicked.connect(closeTT)
+dlg.tableWidget_recentContect.itemSelectionChanged.connect(selectionChange2)
 #accounts page
 # dlg.lineEdit_accountid.setPlaceholderText("Account ID")
 # dlg.pushButton_create.clicked.connect(createA)
@@ -452,8 +549,8 @@ dlg.pushButton_make.clicked.connect(makeT)
 dlg.pushButton_cancel.clicked.connect(closeT)
 dlg.pushButton_make2.clicked.connect(makeT2)
 #transaction page
-dlg.radioButton_2.clicked.connect(lambda:dlg.stackedWidget_2.setCurrentIndex(1))
-dlg.radioButton.clicked.connect(lambda:dlg.stackedWidget_2.setCurrentIndex(2))
+dlg.radioButton_2.clicked.connect(lambda:changeSearch(1))
+dlg.radioButton.clicked.connect(lambda:changeSearch(2))
 dlg.pushButton_searchtime.clicked.connect(search1)
 dlg.pushButton_searchtype.clicked.connect(search2)
 #init
