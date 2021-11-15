@@ -7,6 +7,7 @@ import random
 
 currency_constant = {'US Dollar': 1, 'HKD': 7.8, 'Pound': 0.75, 'Yuan': 6.4}
 display_currency = 'HKD'
+category = {'Investment': 'total_value', 'Saving': 'balance', 'Credit': 'total_debt'}
 
 
 def newCustomerID():
@@ -326,7 +327,6 @@ def balanceTrend(customer_id):
         current_month = str(y).zfill(4) + "-" + str(m).zfill(2)
 
     # calculate current balance
-    category = {'Investment': 'total_value', 'Saving': 'balance', 'Credit': 'total_debt'}
     current_balance = 0
     for c in category:
         for currency in currency_constant:
@@ -376,6 +376,78 @@ def recentCapitalFlow(account_id):
         else:
             capital_flow.append((-1,cf[2],cf[3])) #-1 means outflow
     return capital_flow
+
+
+def analyze1(customer_id): # account monthly balance
+    customer_id=customer_id.zfill(3)
+    current_month = datetime.today().strftime("%Y-%m")
+    # get months for searching
+    month_to_search = []
+    for _ in range(13):
+        month_to_search.append(current_month)
+        y = int(current_month[:4])
+        m = int(current_month[5:])
+        if m == 1:
+            y -= 1
+            m = 12
+        else:
+            m -= 1
+        current_month = str(y).zfill(4) + "-" + str(m).zfill(2)
+
+    accounts=[]
+    acc_net_balance=[]
+    a=accountList(customer_id)
+    for account in a:
+        aid,crrtype=account[0],account[2]
+        acctype=getType(aid)
+        accounts.append((aid, acctype, crrtype))
+        sql_command="SELECT "+category[acctype]+" FROM "+acctype+"_account WHERE account_id='"+aid+"';"
+        base=(int(cursor.do(sql_command)[0][0])/currency_constant[crrtype])*currency_constant[display_currency]
+        if acctype=='Credit':
+            base *= -1
+        acc_net_balance.append([int(base)])
+        for m in month_to_search:
+            # inflow
+            sql_command="SELECT amount,currency_type FROM Transaction WHERE (timepoint_date LIKE '"+m+"___') AND " \
+                        "(in_account_id='"+aid+"');"
+            inflow=0
+            for t in cursor.do(sql_command):
+                inflow += (int(t[0])/currency_constant[t[1]])*currency_constant[display_currency]
+            # outflow
+            sql_command="SELECT amount,currency_type FROM Transaction WHERE (timepoint_date LIKE '"+m+"___') AND " \
+                        "(out_account_id='"+aid+"');"
+            outflow=0
+            for t in cursor.do(sql_command):
+                outflow += (int(t[0])/currency_constant[t[1]])*currency_constant[display_currency]
+            base-=(inflow-outflow)
+            acc_net_balance[-1].append(int(base))
+        acc_net_balance[-1]=acc_net_balance[-1][:-1]
+    return month_to_search, accounts, acc_net_balance
+
+
+def analyze2(customer_id):    # account annual net flow
+    customer_id=customer_id.zfill(3)
+    month_to_search, accounts, acc_ncls=analyze1(customer_id)
+    acc_annual_net_flow=[]
+    for ls in acc_ncls:
+        acc_annual_net_flow.append(ls[0]-ls[-1])
+    return month_to_search,accounts,acc_annual_net_flow
+
+
+def analyze3(customer_id):  #current amount in each account type
+    customer_id=customer_id.zfill(3)
+    type_balance={'Investment':0, 'Saving':0, 'Credit':0}
+    for acctype in category:
+        sql_command="SELECT "+category[acctype]+", currency_type FROM "+acctype+"_account WHERE " \
+                     "customer_id='"+customer_id+"';"
+        response=cursor.do(sql_command)
+        for r in response:
+            type_balance[acctype]+=(int(r[0])/currency_constant[r[1]])*currency_constant[display_currency]
+    r1,r2=[],[]
+    for t in type_balance:
+        r1.append(t)
+        r2.append(int(type_balance[t]))
+    return r1,r2
 
 
 cursor = my_cursor()
