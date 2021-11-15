@@ -1450,12 +1450,15 @@ background:rgb(204, 217, 247);
 border:1px solid #242424;
 gridline-color:#242424;
 selection-color:#242424;
-selection-background-color:rgb(204, 217, 247);
+selection-background-color:rgb(198, 213, 234);
 
 }
 QTableCornerButton::section {
 background-color:rgb(204, 217, 247);
 }</string>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -1809,6 +1812,16 @@ background-color:rgb(255, 218, 144)
                   <item>
                    <property name="text">
                     <string>Pound</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>US Dollar</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Yuan</string>
                    </property>
                   </item>
                  </widget>
@@ -2194,6 +2207,16 @@ background-color:rgb(255, 218, 144)
                <item>
                 <property name="text">
                  <string>Pound</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Yuan</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>US Dollar</string>
                 </property>
                </item>
               </widget>
