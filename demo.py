@@ -212,22 +212,25 @@ def makeTransaction(in_account_id, out_account_id, in_customer_id, out_customer_
     out_amount = int(round(amount / currency_constant[currency_type] * out_currency_constant))
 
     # verify
-    valid = True
-    valid = valid and (in_account_id != out_account_id)
+    if not (in_account_id != out_account_id):
+        return 'Fail reason: cannot transfer between same account.', False
     sql_command = "SELECT currency_type FROM Account WHERE account_id='" + out_account_id + "';"
-    valid = valid and (currency_type == cursor.do(sql_command)[0][0])
+    if not (currency_type == cursor.do(sql_command)[0][0]):
+        return 'Fail reason: currency type do not match',False
     sql_command = "SELECT customer_id FROM Account WHERE account_id='" + in_account_id + "';"
-    valid = valid and (in_customer_id == cursor.do(sql_command)[0][0])
+    if not (in_customer_id == cursor.do(sql_command)[0][0]):
+        return 'Fail reason: receiver account id and customer id not match',False
     sql_command = "SELECT customer_id FROM Account WHERE account_id='" + out_account_id + "';"
-    valid = valid and (out_customer_id == cursor.do(sql_command)[0][0])
+    if not (out_customer_id == cursor.do(sql_command)[0][0]):
+        return 'Fail reason: sender account id and customer id not match',False
     in_type = getType(in_account_id)
     out_type = getType(out_account_id)
-    valid = valid and (in_type != 'Investment') and (out_type != 'Investment')
+    if not( (in_type != 'Investment') and (out_type != 'Investment')):
+        return 'Fail reason: transaction cannot make from/to investment account',False
     if out_type == 'Saving':
         sql_command = "SELECT balance FROM Saving_account WHERE account_id='" + out_account_id + "';"
-        valid = valid and (out_amount <= cursor.do(sql_command)[0][0])
-    if not valid:
-        return '', False
+        if not (out_amount <= cursor.do(sql_command)[0][0]):
+            return 'Fail reason: no enough money in saving account',False
 
     # make transaction
     if in_type == 'Saving':
