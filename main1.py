@@ -638,12 +638,13 @@ class Ui_Main(object):
 "border:1px solid #242424;\n"
 "gridline-color:#242424;\n"
 "selection-color:#242424;\n"
-"selection-background-color:rgb(204, 217, 247);\n"
+"selection-background-color:rgb(198, 213, 234);\n"
 "\n"
 "}\n"
 "QTableCornerButton::section {\n"
 "background-color:rgb(204, 217, 247);\n"
 "}")
+        self.tableWidget_recentContect.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_recentContect.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_recentContect.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.tableWidget_recentContect.setCornerButtonEnabled(False)
@@ -750,6 +751,8 @@ class Ui_Main(object):
         self.horizontalLayout_12.addWidget(self.lineEdit_amount_4)
         self.comboBox_ttype_4 = QtWidgets.QComboBox(self.frame_32)
         self.comboBox_ttype_4.setObjectName("comboBox_ttype_4")
+        self.comboBox_ttype_4.addItem("")
+        self.comboBox_ttype_4.addItem("")
         self.comboBox_ttype_4.addItem("")
         self.comboBox_ttype_4.addItem("")
         self.horizontalLayout_12.addWidget(self.comboBox_ttype_4)
@@ -914,6 +917,8 @@ class Ui_Main(object):
         self.horizontalLayout_5.addWidget(self.lineEdit_amount)
         self.comboBox_ttype = QtWidgets.QComboBox(self.frame_5)
         self.comboBox_ttype.setObjectName("comboBox_ttype")
+        self.comboBox_ttype.addItem("")
+        self.comboBox_ttype.addItem("")
         self.comboBox_ttype.addItem("")
         self.comboBox_ttype.addItem("")
         self.horizontalLayout_5.addWidget(self.comboBox_ttype)
@@ -1143,6 +1148,8 @@ class Ui_Main(object):
         self.lineEdit_amount_4.setPlaceholderText(_translate("MainWindow", "amount"))
         self.comboBox_ttype_4.setItemText(0, _translate("MainWindow", "HKD"))
         self.comboBox_ttype_4.setItemText(1, _translate("MainWindow", "Pound"))
+        self.comboBox_ttype_4.setItemText(2, _translate("MainWindow", "US Dollar"))
+        self.comboBox_ttype_4.setItemText(3, _translate("MainWindow", "Yuan"))
         self.pushButton_make2_4.setText(_translate("MainWindow", "Confirm"))
         self.label_43.setText(_translate("MainWindow", "Make transaction"))
         item = self.tableWidget_accounts.horizontalHeaderItem(0)
@@ -1178,6 +1185,8 @@ class Ui_Main(object):
         self.lineEdit_amount.setPlaceholderText(_translate("MainWindow", "amount"))
         self.comboBox_ttype.setItemText(0, _translate("MainWindow", "HKD"))
         self.comboBox_ttype.setItemText(1, _translate("MainWindow", "Pound"))
+        self.comboBox_ttype.setItemText(2, _translate("MainWindow", "Yuan"))
+        self.comboBox_ttype.setItemText(3, _translate("MainWindow", "US Dollar"))
         self.pushButton_make2.setText(_translate("MainWindow", "Confirm"))
         self.label_18.setText(_translate("MainWindow", "Make transaction"))
         self.pushButton_make.setText(_translate("MainWindow", "Make Transaction"))
