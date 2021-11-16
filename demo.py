@@ -43,7 +43,8 @@ def createAccount(account_id, customer_id, currency_type, account_type, account_
     cursor.do(sql_command)
     account_type = account_type.capitalize()
     sql_command = "INSERT INTO " + account_type + "_account VALUES ('"
-    sql_command += account_id+"','"+customer_id+"','"+currency_type+"','"+create_time+"','"+account_params + "');"
+    sql_command += account_id+"','"+customer_id+"','"+currency_type+"','"+create_time+"','"+str(account_params) + "');"
+    print(sql_command)
     try:
         cursor.do(sql_command)
         return True
