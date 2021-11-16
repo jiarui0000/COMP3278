@@ -169,8 +169,8 @@ def accountBalance(account_id):
 
 def recentContect(customer_id):
     sql_command = "SELECT in_account_id, in_customer_id FROM ( \
-                SELECT DISTINCT in_account_id, in_customer_id FROM Transaction WHERE out_customer_id='" \
-                  + customer_id + "') T LIMIT 3;"
+                SELECT DISTINCT in_account_id, in_customer_id, timepoint_date, timepoint_time FROM Transaction WHERE " \
+                  "out_customer_id='" + customer_id + "' ORDER BY timepoint_date DESC, timepoint_time DESC) T LIMIT 3;"
     return cursor.do(sql_command)
 
 
