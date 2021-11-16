@@ -24,12 +24,14 @@ INSERT INTO  Customer (customer_id,lastname,firstname,gender,birthday,email,phon
  ('012','004','2002-03-10','HKD'),
  ('013','005','2005-10-01','US Dollar'),
  ('014','005','2005-10-01','Yuan'),
- ('015','005','2007-11-11','US Dollar');
+ ('015','005','2007-11-11','US Dollar'),
+ ('016','002','2021-11-16','US Dollar');
 
  INSERT INTO Investment_account (account_id, customer_id, currency_type, create_time, total_value) VALUES
  ('002','001','Pound','1910-10-10',1082000),
  ('003','002','Pound','1910-10-10',702000),
- ('008','006','HKD','2000-10-10',7567000);
+ ('008','006','HKD','2000-10-10',7567000),
+ ('016','002','US Dollar','2021-11-16',670000);
 
  INSERT INTO Saving_account (account_id, customer_id, currency_type, create_time, balance) VALUES
  ('001','001','Pound','1900-10-10',4608100),
