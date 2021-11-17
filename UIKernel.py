@@ -5,8 +5,8 @@ from ikyc_login import IKYC_Login
 from ikyc_signup_v2 import IKYC_SignUp_v2
 from UserInfo import UserInfo
 import autoSignIn #Initiating auto sign-in sys.
-import demo #Database functions.
-
+import demo
+from Setup import *
 
 ###IMPORTANT###
 ###The "username" variable in the UI System refers to the user id###
@@ -25,6 +25,7 @@ class UIKernel(QtWidgets.QMainWindow):
         self.regInfo = UserInfo()
         self.loginUI.setupUi(self)
         self.loginUI_connectionInit()
+        self.validate=0
         self.show()
 
     ###########################################################################
@@ -48,7 +49,10 @@ class UIKernel(QtWidgets.QMainWindow):
         if (checkingResult == True):
             self.username = u
             print("UIKernel: Successfully login with user id: " + self.username)
+            self.validate=1
+            self.close()
         elif(checkingResult == False):
+            self.validate=0
             self.loginUI.showErrorPopUpWindow("Your user id or password is incorrect, try again!")
         
 
@@ -70,7 +74,10 @@ class UIKernel(QtWidgets.QMainWindow):
         if (faceRecognitionResult == True):
             self.username = autoSignIn.customer_id
             print("UIKernel: Face recognition successful, user login as: " + self.username)
+            self.validate=1
+            self.close()
         elif (faceRecognitionResult == False):
+            self.validate=0
             self.loginUI.showErrorPopUpWindow("Face ID login failed, try again!")
 
     def loginUI_forgotPwdSequence(self):
@@ -138,12 +145,12 @@ class UIKernel(QtWidgets.QMainWindow):
     def signupUI_registerInfoToDatabase(self, regInfo: UserInfo) -> None:
         newID = demo.newCustomerID()
         print("newID is:", newID)
-        demo.createCustomer(newID, self.regInfo.lastName, self.regInfo.firstName, self.regInfo.gender, self.regInfo.birthday, \
-            self.regInfo.email, self.regInfo.phoneNumber, self.regInfo.certification_type, self.regInfo.id_number, self.regInfo.password)
+        # print([newID, self.regInfo.lastName, self.regInfo.firstName, self.regInfo.gender, self.regInfo.birthday,self.regInfo.email, self.regInfo.phoneNumber, self.regInfo.certification_type, self.regInfo.id_number, self.regInfo.password])
+        demo.createCustomer(newID, self.regInfo.lastName, self.regInfo.firstName, self.regInfo.gender, self.regInfo.birthday,self.regInfo.email, self.regInfo.phoneNumber, self.regInfo.certification_type, self.regInfo.id_number, self.regInfo.password)
+        print(cursor.do('select * from customer'))
         print("UIKernel: Register completed.")
         print("Start Capturing Faces")
         autoSignIn.regFaceID(newID)
-
 
 
 
@@ -152,13 +159,6 @@ class UIKernel(QtWidgets.QMainWindow):
         self.loginUI.setupUi(self)
         self.loginUI_connectionInit()
         self.show()
-
-
-
-
-
-
-
 
 
 
