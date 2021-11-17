@@ -65,7 +65,7 @@ Account Page:
 * View Account Created Date and Recent Transactions are displayed in the account page directly for convenient checking. 
 
 Transactions: 
-* Left hand side displays your recent contacts, their accounts and their profile image. You may click on their profile image to conveniently carry out a transaction with them. 
+* Left hand side displays your recent contacts, their accounts and their profile image. You may click on their profile image to conveniently carry out a transaction with them. If you've carried out transactions with different accounts of the same person, their account will be displayed separately and their profile image may appear multiple times corresponding to each different account. 
 * Right hand side displays the Transaction and Transaction Search Frame. You may make transactions or search transaction history related to you here. 
 
 Analysis: 
