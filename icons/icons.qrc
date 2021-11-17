@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>Gold Cumulative Return.jpg</file>
+    <file>yinhang.png</file>
+  </qresource>
+</RCC>
