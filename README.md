@@ -1,18 +1,17 @@
 # COMP3278-Readme
+*******
 
 
-#Setup Facial Environment: 
+##Setup Facial Environment: 
 * Install MySQL on local machine
 * Create virtual environment using Anaconda by: 
-
+```
 conda create -n face python=3.7
-
 conda actiavate face
-
 pip install -r requirements.txt
+```
 
-
-#Setup GUI Enironment: 
+##Setup GUI Enironment: 
 please first change the passwd variable in Setup.py to your local Mysql DataBase password. 
 The default username is 'root' and authentication method is 'mysql_native_password'. You may change this in Utils.py if it's different. 
 
@@ -20,16 +19,17 @@ Please install all fonts in the ./fonts folder to ensure the font requirements a
 You may select them and open them all by pressing ctrl+O/command+O depending on your system. 
 
 Then run: 
+```
 pip install -r requirements_GUI.txt
 python3 Setup.py
-
+```
 to setup package and database in local machine. 
 
 
-#Run Main Program: 
-
+##Run Main Program: 
+```
 python3 GUI-main.py
-
+```
 You may register your own account by facial recognition system. 
 
 You may also view demo customers by logging in our demo account through the following password: 
@@ -45,7 +45,7 @@ password: password1
 
 
 
-#Functions on each page: 
+##Functions on each page: 
 
 Home: 
 * Click on each account tab to view the full transaction history of each account. (Investment Accounts are designed to be unable to make transactions, since investment account reflects the amount of investment in the stock market/funds.etc, and can not be transferred.)
@@ -74,13 +74,14 @@ Analysis:
 
 
 
-#To remove existing database and reinitialize: 
+##To remove existing database and reinitialize: 
 
-Please delete all files in ./data or execute: 
-
+To remove facial data, please delete all files in ./data or execute: 
+```
 rm -rf data
-
 mkdir data
-
+```
+Then you may remove SQL data through: 
+```
 python3 -c "from Setup import *; remove_all()"
-
+```
