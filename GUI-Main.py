@@ -1223,23 +1223,17 @@ class Main(QMainWindow, Ui_MainWindow):
 
 
 
-# if __name__ == '__main__':
-#     from UIKernel import UIKernel
-#     import sys
-#     app=QtWidgets.QApplication(sys.argv)
-#     UIKernelWindow=UIKernel()
-#     app.exec_()
-#     if UIKernelWindow.validate==1:
-#         window = Main(UIKernelWindow.username)
-#         window.show()
-#         sys.exit(app.exec_())
-#     else:
-#         quit()
-
 if __name__ == '__main__':
+    from UIKernel import UIKernel
     import sys
     app=QtWidgets.QApplication(sys.argv)
-    window = Main('002')
-    window.show()
-    sys.exit(app.exec_())
+    UIKernelWindow=UIKernel()
+    app.exec_()
+    if UIKernelWindow.validate==1:
+        window = Main(UIKernelWindow.username)
+        window.show()
+        sys.exit(app.exec_())
+    else:
+        quit()
+
 
