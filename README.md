@@ -30,6 +30,16 @@ to setup package and database in local machine.
 
 python3 GUI-main.py
 
+You may register your own account by facial recognition system. 
+You may also view demo customers by logging in our demo account through the following password: 
+userID: 002
+password: 123
+userID: 001
+password: 123
+userID: 003
+password: password1
+
+
 #To remove existing database and reinitialize: 
 
 Please delete all files in ./data or execute: 
