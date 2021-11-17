@@ -1,0 +1,10 @@
+PyQt5
+random
+pandas
+numpy
+shutil
+matplotlib.ticker
+matplotlib.pyplot
+gc
+functools
+PIL
