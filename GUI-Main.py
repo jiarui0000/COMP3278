@@ -20,7 +20,8 @@ import pandas as pd
 from functools import partial
 import shutil
 import matplotlib.ticker as mtick
-
+import gc
+import matplotlib.pyplot as plt
 class Ui_MainWindow(object):
     #tool functions
     def __init__(self,customer_id):
@@ -33,12 +34,14 @@ class Ui_MainWindow(object):
         self.customer_id=customer_id
         self.succeedbuilding=True
         self.customer_id=customer_id
-        self.currency_dic = {'Pound': '£', 'HKD': "$", 'Yuan': "¥", 'US Dollar': '$'}
+        self.currency_dic = {'Pound': '£', 'HKD': "HK$", 'Yuan': "¥", 'US Dollar': '$'}
         self.accountlist=accountList(self.customer_id)
         #add a run-once count for later use
         self.run_once=0
         self.run_once_analysis=0
         self.current_time_save = []
+        self.account_upper=3
+        self.account_lower=0
         print('current customer is '+str(customer_id))
         updateHistory(self.customer_id)
 
@@ -116,6 +119,7 @@ class Ui_MainWindow(object):
 
         # add sidebar buttons
         def setup_sidebuttonbackground(index, text):
+            gc.collect()
             btn1 = self.ClickLabel(self.frame)
             btn1.setGeometry(QtCore.QRect(30, 150 + index * 60, 240, 40))
             style = '''
@@ -212,13 +216,19 @@ class Ui_MainWindow(object):
     #     MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
 
     def setup_homepage(self):
+        gc.collect()
         self.analysisframe.hide()
         self.transactframe.hide()
         self.accountframe.hide()
+        self.profileframe.hide()
+        for i in range(len(self.mainframe.children())):
+            try:
+                self.mainframe.children()[i].clear()
+            except:
+                x=1
         # add wallet title and wallet widgets
         wallet_dic = {}
         wallet_df_columns = ['Transaction ID', 'To', 'From', 'Amount', 'Currency Type', 'Time']
-        wallet_frame_list = []
         def set_wallet_frame(index,account_type,account_id):
             wallet = QFrame(self.mainframe)
             wallet.setGeometry(QtCore.QRect(220 + 180 * index, 140, 170, 132))
@@ -232,7 +242,7 @@ class Ui_MainWindow(object):
             acc_type = self.init_text('acc_type', account_type, [10, 5, 150, 80], "font-size:17pt", frame=wallet)
             currency_symbol=self.currency_dic[self.accountlist[index][2]]
             balance_text = currency_symbol + "{:,}".format((int(self.accountlist[index][4])))
-            balance = self.init_text('balance', balance_text, [10, 70, 111, 51], 'font-size:16pt;color:black;', frame=wallet)
+            balance = self.init_text('balance', balance_text, [10, 70, 150, 51], 'font-size:16pt;color:black;', frame=wallet)
             # balance = QLabel(wallet)
             # balance.setGeometry(QtCore.QRect(10, 70, 111, 51))
             # balance.setStyleSheet('font-size:20pt;border:0px,color:black;')
@@ -339,7 +349,6 @@ class Ui_MainWindow(object):
                 self.run_once+=1
             except:
                 self.run_once+=1
-                print('failure in painting balance trend')
         try:
             im = QPixmap("./temp_image/balance_trend/"+str(self.customer_id)+"_balance_trend.jpg")
         except:
@@ -362,13 +371,39 @@ class Ui_MainWindow(object):
         self.line1=self.draw_Vline('line_1', [220, 300, 511],self.mainframe)
         self.line2=self.draw_Hline('line_2',[805,50,680],self.mainframe)
 
-
+    def account_nextpage(self):
+        self.account_upper+=4
+        self.account_lower+=4
+        for i in self.wallet_frame_list:
+            try:
+                for j in i.children():
+                    j.clear()
+            except:
+                x=1
+        self.setup_accountpage()
+    def account_lastpage(self):
+        if self.account_upper>=4:
+            self.account_upper-=4
+            self.account_lower-=4
+        for i in self.wallet_frame_list:
+            try:
+                for j in i.children():
+                    j.clear()
+            except:
+                x=1
+        self.setup_accountpage()
 
     def setup_accountpage(self):
+        gc.collect()
         self.mainframe.hide()
         self.transactframe.hide()
         self.analysisframe.hide()
         self.profileframe.hide()
+        for i in range(len(self.accountframe.children())):
+            try:
+                self.accountframe.children()[i].clear()
+            except:
+                x = 1
         self.accountframe.setGeometry(QtCore.QRect(210, 40, 1161, 771))
         self.accountframe.setAutoFillBackground(False)
         self.accountframe.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -385,7 +420,7 @@ class Ui_MainWindow(object):
         #include wallet frame maximum 5
         def set_wallet_frame(index,account_type,account_id):
             wallet = QFrame(self.accountframe)
-            wallet.setGeometry(QtCore.QRect(220 + 180 * index, 140, 170, 132))
+            wallet.setGeometry(QtCore.QRect(20+220 + 180 * (index%4), 140, 170, 132))
             wallet.setObjectName('wallet')
             style_wallet_frame = '''
                 QFrame {border-radius:7px;background-color:white;border:3px solid rgb(46,169,223);}
@@ -396,7 +431,7 @@ class Ui_MainWindow(object):
             acc_type = self.init_text('acc_type', account_type, [10, 5, 150, 80], "font-size:17pt", frame=wallet)
             currency_symbol=self.currency_dic[self.accountlist[index][2]]
             balance_text = currency_symbol + "{:,}".format((int(self.accountlist[index][4])))
-            balance = self.init_text('balance', balance_text, [10, 70, 111, 51], 'font-size:16pt;color:black;', frame=wallet)
+            balance = self.init_text('balance', balance_text, [10, 70, 160, 51], 'font-size:16pt;color:black;', frame=wallet)
             # balance = QLabel(wallet)
             # balance.setGeometry(QtCore.QRect(10, 70, 111, 51))
             # balance.setStyleSheet('font-size:20pt;border:0px,color:black;')
@@ -404,43 +439,68 @@ class Ui_MainWindow(object):
             return wallet
         wallet_dic={}
         wallet_df_columns=['Transaction ID','To','From','Amount','Currency Type','Time']
-        wallet_frame_list=[]
+        self.wallet_frame_list=[]
+
         for i in range(len(accountList(self.customer_id))):
-            if i<=4:
+            if (i<=self.account_upper)&(i>=self.account_lower):
                 account_id=self.accountlist[i][0]
-                wallet_frame_list.append(set_wallet_frame(i,self.accountlist[i][1],account_id))
+                self.wallet_frame_list.append(set_wallet_frame(i,self.accountlist[i][1],account_id))
                 wallet_df=pd.DataFrame(transactionHistory2(account_id))
                 if len(wallet_df)==0:
                     wallet_df=pd.DataFrame(columns=wallet_df_columns)
                 else:
                      wallet_df.columns=wallet_df_columns
+                wallet_df['Time'] = wallet_df['Time'].apply(lambda x: pd.to_datetime(x, format='%Y-%m-%d'))
+                wallet_df.sort_values('Time', ascending=False, inplace=True)
                 wallet_dic.update({i:wallet_df})
-                wallet_frame_list[i].mousePressEvent=partial(self.frame_popup,wallet_dic[i])
+                self.wallet_frame_list[i%4].mousePressEvent=partial(self.frame_popup,wallet_dic[i])
                 if i!=len(accountList(self.customer_id))-1:
-                    self.draw_Hline('line_3', [220 + 180 * i+173, 300, 400], self.accountframe,width=3)
-                self.init_text('account_init_date','Create Date: \n'+str(self.accountlist[i][3]),[220 + 180 * i+10,140+132+10,140,132],
+                    self.draw_Hline('line_3', [20+220 + 180 * i+173, 300, 400], self.accountframe,width=3)
+                self.init_text('account_init_date','Create Date: \n'+str(self.accountlist[i][3]),[20+220 + 180 * (i%4)+10,140+132+10,140,132],
                                "font-size:17pt;font-family:Avenir;",frame=self.accountframe)
                 if getType(self.accountlist[i][0])!='Investment':
                     self.init_text('account_init_date', 'Recent:' ,
-                                   [220 + 180 * i + 10, 282+50, 140, 132],
+                                   [20+220 + 180 * (i%4) + 10, 282+50, 140, 132],
                                    "font-size:17pt;font-family:Avenir;", frame=self.accountframe)
                 else:
                     self.init_text('account_init_date', 'No Transactions',
-                                   [220 + 180 * i + 10, 282 + 50, 140, 132],
+                                   [20+220 + 180 * (i%4) + 10, 282 + 50, 140, 132],
                                    "font-size:17pt;font-family:Avenir;", frame=self.accountframe)
+
                 for j in range(5):
                     if len(wallet_df)>j:
                         # try:
                         transdate=str(wallet_df['Time'].iloc[j])
-                        amount=self.currency_dic[wallet_df['Currency Type'].iloc[j]]+str(wallet_df['Amount'].iloc[j])
-                        self.init_text('account_init_date', transdate+'\n'+amount,
-                                       [220 + 180 * i + 10, 282+85+j*45, 140, 132],
+                        if wallet_df['From'].iloc[j]==account_id:
+                            amount='+'
+                        else:
+                            amount='-'
+                        amount=amount+self.currency_dic[wallet_df['Currency Type'].iloc[j]]+str(wallet_df['Amount'].iloc[j])
+                        self.init_text('account_init_date', transdate[:10]+'\n'+amount,
+                                       [20+220 + 180 * (i%4) + 10, 282+85+j*45, 140, 132],
                                        "font-size:17pt;font-family:Avenir;", frame=self.accountframe)
                         # except:
                         #     x=1
         wallet_title = self.init_text('wallet_title', 'Account Details', [220, 50, 300, 100], "font-size:30pt",frame=self.accountframe)
-
-
+        arrow_y_offset=170
+        arrow_x_offset=180
+        arrow_length=780
+        rightarrow = self.ClickLabel(self.accountframe)
+        rightarrow.setGeometry(QtCore.QRect(arrow_x_offset+arrow_length, arrow_y_offset, 50, 50))
+        rightarrow.setScaledContents(True)
+        rightarrow.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        im = QPixmap("./icons/right-arrow.png")
+        rightarrow.setPixmap(im)
+        rightarrow.clicked.connect(self.account_nextpage)
+        rightarrow.raise_()
+        leftarrow = self.ClickLabel(self.accountframe)
+        leftarrow.setGeometry(QtCore.QRect(arrow_x_offset, arrow_y_offset, 50, 50))
+        leftarrow.setScaledContents(True)
+        leftarrow.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        im = QPixmap("./icons/left-arrow.png")
+        leftarrow.setPixmap(im)
+        leftarrow.clicked.connect(self.account_lastpage)
+        leftarrow.raise_()
 
         for i in range(len(self.accountframe.children())):
             self.accountframe.children()[i].show()
@@ -493,16 +553,32 @@ class Ui_MainWindow(object):
         linegap = 100
         columngap = 270
         sub_linegap = 25
+        account_list=[item[0] for item in accountList(self.customer_id)]
         for j in range(3):
-            lineedit3 = QLineEdit(self.transact_subframe)
             self.init_text('transact_text', text_list[j][0], [leftgap, initial_height + linegap * j, 200, 30],
                            "font-size:20pt;font-family:Avenir",
                            frame=self.transact_subframe)
             self.init_text('transact_text', text_list[j][1], [leftgap+columngap, initial_height + linegap * j, 200, 30],
                            "font-size:20pt;font-family:Avenir",
                            frame=self.transact_subframe)
-            lineedit3.setGeometry(QtCore.QRect(leftgap, initial_height+sub_linegap + j * linegap, 200, 50))
-            lineedit3.setStyleSheet(lineedit_style)
+            if  text_list[j][0]=='Currency Type':
+                lineedit3 = QComboBox(self.transact_subframe)
+                lineedit3.setGeometry(QtCore.QRect(leftgap, initial_height + sub_linegap + j * linegap, 200, 50))
+                lineedit3.setStyleSheet(lineedit_style + "selection-color: blue")
+                lineedit3.addItems(['HKD', 'US Dollar', 'Pound', 'Yuan'])
+                lineedit3.setInsertPolicy(QComboBox.NoInsert)
+            elif text_list[j][0]=='From account':
+                lineedit3 = QComboBox(self.transact_subframe)
+                lineedit3.setGeometry(QtCore.QRect(leftgap, initial_height + sub_linegap + j * linegap, 200, 50))
+                lineedit3.setStyleSheet(lineedit_style + "selection-color: blue")
+                lineedit3.addItems(account_list)
+                lineedit3.setInsertPolicy(QComboBox.NoInsert)
+            else:
+                lineedit3 = QLineEdit(self.transact_subframe)
+                lineedit3.setGeometry(QtCore.QRect(leftgap, initial_height + sub_linegap + j * linegap, 200, 50))
+                lineedit3.setStyleSheet(lineedit_style)
+
+
             lineedit4 = QLineEdit(self.transact_subframe)
             lineedit4.setGeometry(QtCore.QRect(leftgap+columngap, initial_height +sub_linegap+j * linegap, 200, 50))
             lineedit4.setStyleSheet(lineedit_style)
@@ -517,9 +593,11 @@ class Ui_MainWindow(object):
         self.from_linelist_transaction[0].setText(self.customer_id)
 
         #setup transaction search
-        self.init_text('transact search title', 'Transaction Search', [20, 30, 250, 50], "font-size:30pt;font-family:Aqua Grotesque",
-                       frame=self.transact_subframe)
+
+        # self.init_text('transact search title', 'Transaction Search', [20, 30, 250, 50], "font-size:30pt;font-family:Aqua Grotesque",
+        #                frame=self.transact_subframe)
         lineedit_style = "background-color:white;color=black;border-radius:5px;"
+
         self.from_linelist_transactionsearch = []
         self.to_linelist_transactionsearch = []
         text_list = [['Search Type','Search Value']]
@@ -538,7 +616,7 @@ class Ui_MainWindow(object):
                            frame=self.transact_subframe)
             lineedit5 = QComboBox(self.transact_subframe)
             lineedit5.setGeometry(QtCore.QRect(leftgap, initial_height + sub_linegap + j * linegap, 200, 50))
-            lineedit5.setStyleSheet(lineedit_style)
+            lineedit5.setStyleSheet(lineedit_style+"selection-color: blue")
             lineedit5.addItems(['timepoint_date', 'transaction_id', 'amount','account_id','time_period'])
             lineedit5.setInsertPolicy(QComboBox.NoInsert)
             lineedit6 = QLineEdit(self.transact_subframe)
@@ -547,6 +625,7 @@ class Ui_MainWindow(object):
             lineedit6.setStyleSheet(lineedit_style)
             self.from_linelist_transactionsearch.append(lineedit5)
             self.to_linelist_transactionsearch.append(lineedit6)
+
         transact_lookup_button = self.ClickLabel(self.transact_subframe)
         offset = -20
         transact_lookup_button.setGeometry(
@@ -555,6 +634,7 @@ class Ui_MainWindow(object):
         transact_lookup_button.setStyleSheet(
             "background-color:rgb(88,178,220);border-radius:5px;color:black;qproperty-alignment:AlignCenter;font-weight:bold;font-family:Avenir;font-size:20pt")
         transact_lookup_button.clicked.connect(partial(self.lookup_transaction,self.from_linelist_transactionsearch[0],self.to_linelist_transactionsearch[0]))
+
 
         
 
@@ -567,11 +647,16 @@ class Ui_MainWindow(object):
         count=0
         userphoto_list=[]
         contact_accountlist=[]
+
         for i in contactlist_customer:
             count+=1
             if count<=3:
                 userphoto = self.ClickLabel(self.transactframe)
-                im = QPixmap("./user-photo/"+i+"_photo.png")
+                path="./user-photo/"+i+"_photo.png"
+                if os.path.isfile(path):
+                    im = QPixmap(path)
+                else:
+                    im=QPixmap("./user-photo/unknown_user.png")
                 userphoto.setPixmap(im)
                 userphoto.setGeometry(QtCore.QRect(250, 120 + 220* (count-1), 170, 170))
                 userphoto.setScaledContents(True)
@@ -589,16 +674,28 @@ class Ui_MainWindow(object):
 
         for i in range(len(self.transactframe.children())):
             self.transactframe.children()[i].show()
+        hint = self.init_text('transact_hint', '(for time_period search please input: \n yyyy-mm-dd~yyyy-mm-dd)',
+                              [leftgap, initial_height + sub_linegap + j * linegap + 50, 220, 50],
+                              "font-size:12pt;font-family:Avenir;qproperty-alignment:AlignLeft",
+                              frame=self.transact_subframe)
+        hint.show()
+        hint.raise_()
             
 
 
     def setup_profilepage(self):
+        gc.collect()
         #setup profile frame mainframe
         self.mainframe.hide()
         self.transactframe.hide()
         self.accountframe.hide()
         self.analysisframe.hide()
         self.profileframe.show()
+        for i in range(len(self.profileframe.children())):
+            try:
+                self.profileframe.children()[i].clear()
+            except:
+                x = 1
         self.profileframe.setGeometry(QtCore.QRect(210, 40, 1161, 771))
         self.profileframe.setAutoFillBackground(False)
         self.profileframe.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -640,16 +737,15 @@ class Ui_MainWindow(object):
             differ=30
             gap=80
             lineedit3 = QLineEdit(self.profile_subframe)
-            self.init_text('profile_text', text_list[j][0], [20+differ, 120+ gap * j, 350, 50],
+            self.init_text('profile_text', text_list[j][0], [20+differ, 120+ gap * j, 350, 30],
                            "font-size:20pt;font-family:Avenir;qproperty-alignment:AlignLeft",
                            frame=self.profile_subframe)
-            self.init_text('profile_text', text_list[j][1], [280+differ, 120 + gap * j, 350, 50],
+            self.init_text('profile_text', text_list[j][1], [280+differ, 120 + gap * j, 350, 30],
                            "font-size:20pt;font-family:Avenir;qproperty-alignment:AlignLeft",
                            frame=self.profile_subframe)
             lineedit3.setGeometry(QtCore.QRect(20+differ, 150 + j * gap, 200, 35))
             lineedit3.setStyleSheet(lineedit_style)
-            print(variabledic[text_list[j][0]])
-            print(original_values)
+
             lineedit3.setText(str(original_values[variabledic[text_list[j][0]]].iloc[0]))
             lineedit4 = QLineEdit(self.profile_subframe)
             lineedit4.setGeometry(QtCore.QRect(280+differ, 150 + j * gap, 200, 35))
@@ -669,11 +765,15 @@ class Ui_MainWindow(object):
         userphoto_profilepage.setGeometry(QtCore.QRect(600, 100, 230, 230))
         userphoto_profilepage.setScaledContents(True)
         userphoto_profilepage.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        im = QPixmap("./user-photo/" + self.customer_id + "_photo.png")
+        path="./user-photo/" + self.customer_id + "_photo.png"
+        if os.path.isfile(path):
+            im = QPixmap(path)
+        else:
+            im = QPixmap("./user-photo/unknown_user.png")
         userphoto_profilepage.setPixmap(im)
         userphoto_profilepage.clicked.connect(self.changeprofilephoto)
         userphoto_profilepage.raise_()
-        update_profile_title = self.init_text('update_profile', 'Profile Update', [30, 50, 300, 50],
+        update_profile_title = self.init_text('update_profile', 'Profile Update', [30, 50, 300, 35],
                                                 "font-size:35px; font-family:Aqua Grotesque;", frame=self.profile_subframe)
         profile_button.clicked.connect(partial(self.update_profile,from_linelist,to_linelist,text_list))
 
@@ -687,17 +787,17 @@ class Ui_MainWindow(object):
         self.init_text('profile_text', 'New Password', [280 + differ, 120 + gap * j, 350, 50],
                        "font-size:20pt;font-family:Avenir;qproperty-alignment:AlignLeft",
                        frame=self.profile_subframe)
-        lineedit3 = QLineEdit(self.profile_subframe)
-        lineedit3.setGeometry(QtCore.QRect(20 + differ, 150 + j * gap, 200, 35))
-        lineedit3.setStyleSheet(lineedit_style)
-        lineedit4 = QLineEdit(self.profile_subframe)
-        lineedit4.setGeometry(QtCore.QRect(280 + differ, 150 + j * gap, 200, 35))
-        lineedit4.setStyleSheet(lineedit_style)
+        lineedit_oldpasswd = QLineEdit(self.profile_subframe)
+        lineedit_oldpasswd.setGeometry(QtCore.QRect(20 + differ, 150 + j * gap, 200, 35))
+        lineedit_oldpasswd.setStyleSheet(lineedit_style)
+        lineedit_newpasswd = QLineEdit(self.profile_subframe)
+        lineedit_newpasswd.setGeometry(QtCore.QRect(280 + differ, 150 + j * gap, 200, 35))
+        lineedit_newpasswd.setStyleSheet(lineedit_style)
         password_reset_button = self.ClickLabel(self.profile_subframe)
         password_reset_button.setGeometry(QtCore.QRect(250 + differ+300, 145 + j * gap, 300, 50))
         password_reset_button.setText('Update Password')
         password_reset_button.setStyleSheet("background-color:#65d8b1;border-radius:5px;color:black;qproperty-alignment:AlignCenter;font-weight:bold;font-family:Avenir;font-size:20pt")
-        password_reset_button.clicked.connect(partial(self.reset_password,lineedit3.text(),lineedit4.text()))
+        password_reset_button.clicked.connect(partial(self.reset_password,lineedit_oldpasswd,lineedit_newpasswd))
         for i in range(len(self.profileframe.children())):
             self.profileframe.children()[i].show()
         
@@ -705,6 +805,7 @@ class Ui_MainWindow(object):
 
 
     def setup_analysispage(self):
+        gc.collect()
         self.mainframe.hide()
         self.transactframe.hide()
         self.accountframe.hide()
@@ -728,7 +829,6 @@ class Ui_MainWindow(object):
             df=pd.DataFrame(df_list[2],index=pd.Series(df_list[1]).apply(lambda x:'-'.join(list(x))),columns=df_list[0]).T
             df.index=pd.Series(df.index).apply(lambda x:pd.to_datetime(x,format='%Y-%m'))
             df.sort_index(inplace=True)
-            print(df)
             df = df.pct_change()
             plt.rcParams.update({'font.size': 20})
             fig = plt.figure(figsize=(18, 12), dpi=100)
@@ -776,8 +876,6 @@ class Ui_MainWindow(object):
             hfont = {'fontname': 'Myriad Pro'}
             plt.title('Balance Percentage', **hfont, fontsize=35)
             plt.savefig("./temp_image/balance_trend/" + str(self.customer_id) + "_analysis_3.jpg", dpi=100)
-            print('save executed')
-            plt.close(fig)
     
         # only generate image for a user once
         while (self.run_once_analysis < 1):
@@ -793,7 +891,7 @@ class Ui_MainWindow(object):
             im1 = QPixmap("./temp_image/balance_trend/" + str(self.customer_id) + "_analysis_1.jpg")
             im2 = QPixmap("./temp_image/balance_trend/" + str(self.customer_id) + "_analysis_2.jpg")
             im3 = QPixmap("./temp_image/balance_trend/" + str(self.customer_id) + "_analysis_3.jpg")
-            print('run try success')
+
         except:
             analysis_1_draw(self.customer_id)
             analysis_2_draw(self.customer_id)
@@ -813,7 +911,6 @@ class Ui_MainWindow(object):
         analysis_1_image.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         analysis_2_image = QtWidgets.QLabel(self.analysisframe)
         analysis_2_image.setGeometry(QtCore.QRect(x_length, y_length + figure_ygap, figure_width, figure_height))
-
         analysis_2_image.setScaledContents(True)
         analysis_2_image.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         analysis_3_image = QtWidgets.QLabel(self.analysisframe)
@@ -838,7 +935,11 @@ class Ui_MainWindow(object):
         userphoto_analysis.setGeometry(QtCore.QRect(830, 100, 250, 250))
         userphoto_analysis.setScaledContents(True)
         userphoto_analysis.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        im_userphoto = QPixmap("./user-photo/" + self.customer_id + "_photo.png")
+        path="./user-photo/" + self.customer_id + "_photo.png"
+        if os.path.isfile(path):
+            im_userphoto = QPixmap(path)
+        else:
+            im_userphoto = QPixmap("./user-photo/unknown_user.png")
         userphoto_analysis.setPixmap(im_userphoto)
         userphoto_analysis.clicked.connect(self.setup_profilepage)
 
@@ -854,7 +955,9 @@ class Ui_MainWindow(object):
     def fillinfo(self,a,b):
         self.to_linelist_transaction[0].setText(a)
         self.to_linelist_transaction[1].setText(b)
-    def reset_password(self,oldpasswd,newpasswd):
+    def reset_password(self,oldpasswd_line,newpasswd_line):
+        oldpasswd=oldpasswd_line.text()
+        newpasswd=newpasswd_line.text()
         valid = updatePassword(self.customer_id, oldpasswd, newpasswd)
         dialog = QtWidgets.QDialog()
         dialog.setGeometry(QtCore.QRect(200, 200, 400, 200))
@@ -887,9 +990,20 @@ class Ui_MainWindow(object):
                 else:
                     update_value=to_list[i].text()
                 updateInfo(self.customer_id, variabledic[text_list[i][j]], update_value)
+        dialog = QtWidgets.QDialog()
+        dialog.setGeometry(QtCore.QRect(200, 200, 400, 200))
+        text = QLabel(dialog)
+        text.setGeometry(QtCore.QRect(0, 0, 400, 200))
+        text.setStyleSheet(
+            "font-size:25pt;font-family:Avenir;qproperty-alignment: 'AlignCenter | AlignCenter';qproperty-wordWrap:True")
+        text.setText('Update Completed!')
+        dialog.exec_()
+
     def lookup_transaction(self,lookup_type_list,lookup_value_list):
         lookup_type=lookup_type_list.currentText()
         lookup_value=lookup_value_list.text()
+        if lookup_type=='time_period':
+            lookup_value=lookup_value.split('~')
         try:
             df=pd.DataFrame(searchTransaction(self.customer_id,lookup_type,lookup_value),columns=['Transaction Id','To Account','From Account','Amount','Currency Type','Time'])
             class DataFrameModel(QtCore.QAbstractTableModel):
@@ -1051,12 +1165,12 @@ class Ui_MainWindow(object):
 
     def transaction(self):
         try:
-            transaction_id,valid=makeTransaction(self.to_linelist_transaction[1].text(),self.from_linelist_transaction[1].text(),self.to_linelist_transaction[0].text(),self.from_linelist_transaction[0].text(),
-                            float(self.to_linelist_transaction[2].text()),self.from_linelist_transaction[2].text())
+            transaction_id,valid=makeTransaction(self.to_linelist_transaction[1].text(),self.from_linelist_transaction[1].currentText(),self.to_linelist_transaction[0].text(),self.from_linelist_transaction[0].text(),
+                            float(self.to_linelist_transaction[2].text()),self.from_linelist_transaction[2].currentText())
         except Exception as e:
             valid=False
             transaction_id=str(e)
-            print(transaction_id)
+
             if str(transaction_id)=='could not convert string to float: ':
                 transaction_id='Please check if any blanks are left/if all input type are right'
         dialog = QtWidgets.QDialog()
@@ -1089,7 +1203,7 @@ class Ui_MainWindow(object):
             text.setStyleSheet(
                 "font-size:25pt;font-family:Avenir;qproperty-alignment: 'AlignCenter | AlignCenter';"
                 "qproperty-wordWrap:True")
-            text.setText(str(e))
+            text.setText('Upload Not Completed.\n'+str(e))
             dialog.exec_()
 
 
