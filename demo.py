@@ -4,26 +4,23 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
+from Setup import *
 
 currency_constant = {'US Dollar': 1, 'HKD': 7.8, 'Pound': 0.75, 'Yuan': 6.4}
 display_currency = 'HKD'
 category = {'Investment': 'total_value', 'Saving': 'balance', 'Credit': 'total_debt'}
-
-
 def newCustomerID():
     sql_command = "SELECT MAX(customer_id) FROM Customer;"
     return str(int(cursor.do(sql_command)[0][0]) + 1).zfill(3)
 
-
 def createCustomer(customer_id, lastname, firstname, gender, birthday, email, phone, certification_type, id_number,
                    password):
     variables = locals()
-    sql_command = "INSERT INTO Customer VALUES ('"
-    for i in variables.keys():
-        sql_command = sql_command + str(variables[i]) + "','"
-    sql_command = sql_command[:-2]
-    sql_command = sql_command + ");"
+    sql_command = "INSERT INTO Customer (customer_id,lastname,firstname,gender,birthday,email,phone,certification_type,id_number,password) VALUES ('" \
+                  + customer_id + "','" + lastname + "','" + firstname + "','" + gender + "','"+ birthday + "','"+ email + "','"+ phone + "','"+ certification_type + "','"+ id_number + "','"\
+                  + password + "');"
     cursor.do(sql_command)
+    print('Create Customer'+str(customer_id)+'Successfully')
 
 
 def createAccount(account_id, customer_id, currency_type, account_type, account_params):
@@ -43,14 +40,12 @@ def createAccount(account_id, customer_id, currency_type, account_type, account_
     cursor.do(sql_command)
     account_type = account_type.capitalize()
     sql_command = "INSERT INTO " + account_type + "_account VALUES ('"
-    sql_command += account_id+"','"+customer_id+"','"+currency_type+"','"+create_time+"','"+str(account_params) + "');"
-    print(sql_command)
+    sql_command += account_id+"','"+customer_id+"','"+currency_type+"','"+create_time+"','"+account_params + "');"
     try:
         cursor.do(sql_command)
         return True
     except:
         return False
-
 
 def passwdLogin(customer_id, password):
     sql_command = "SELECT password FROM Customer WHERE customer_id='" + customer_id + "';"
@@ -59,7 +54,6 @@ def passwdLogin(customer_id, password):
         return True
     else:
         return False
-
 
 def updatePassword(customer_id, old_passwd, new_passwd):
     sql_command = "SELECT password FROM Customer WHERE customer_id='" + customer_id + "';"
@@ -170,8 +164,8 @@ def accountBalance(account_id):
 
 def recentContect(customer_id):
     sql_command = "SELECT in_account_id, in_customer_id FROM ( \
-                SELECT DISTINCT in_account_id, in_customer_id, timepoint_date, timepoint_time FROM Transaction WHERE " \
-                  "out_customer_id='" + customer_id + "' ORDER BY timepoint_date DESC, timepoint_time DESC) T LIMIT 3;"
+                SELECT DISTINCT in_account_id, in_customer_id FROM Transaction WHERE out_customer_id='" \
+                  + customer_id + "') T LIMIT 3;"
     return cursor.do(sql_command)
 
 
@@ -451,4 +445,4 @@ def analyze3(customer_id):  #current amount in each account type
     return r1,r2
 
 
-cursor = my_cursor()
+
