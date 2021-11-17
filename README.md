@@ -18,15 +18,19 @@ The default username is 'root' and authentication method is 'mysql_native_passwo
 
 Then run: 
 pip install -r requirements_GUI.txt
+
 python3 Setup.py
 
 #Run Main Program: 
+
 python3 GUI-main.py
 
 #To remove existing database and reinitialize: 
 
 Please delete all files in ./data or execute: 
+
 rm -rf data
+
 mkdir data
 
 python3 -c "from Setup import *; remove_all()"
