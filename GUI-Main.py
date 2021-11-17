@@ -217,10 +217,12 @@ class Ui_MainWindow(object):
 
     def setup_homepage(self):
         gc.collect()
+
         self.analysisframe.hide()
         self.transactframe.hide()
         self.accountframe.hide()
         self.profileframe.hide()
+        self.mainframe.show()
         for i in range(len(self.mainframe.children())):
             try:
                 self.mainframe.children()[i].clear()
@@ -370,6 +372,8 @@ class Ui_MainWindow(object):
 
         self.line1=self.draw_Vline('line_1', [220, 300, 511],self.mainframe)
         self.line2=self.draw_Hline('line_2',[805,50,680],self.mainframe)
+        for i in range(len(self.mainframe.children())):
+            self.mainframe.children()[i].show()
 
     def account_nextpage(self):
         self.account_upper+=4
@@ -1236,4 +1240,10 @@ if __name__ == '__main__':
     else:
         quit()
 
+# if __name__ == '__main__':
+#     import sys
+#     app=QtWidgets.QApplication(sys.argv)
+#     window = Main('002')
+#     window.show()
+#     sys.exit(app.exec_())
 
