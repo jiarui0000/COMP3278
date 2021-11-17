@@ -9,17 +9,16 @@ import train
 import faceCapture
 import Utils
 import sys
-
+from Setup import *
 global customer_id
 
 def autoSignIn():
     global customer_id
     now = time.time()
     login_flag = False
-
     # 1 Create database connection
-    myconn = mysql.connector.connect(host="localhost", user="root", passwd="u3563782", database="COMP3278_G12")
-    cursor = myconn.cursor()
+    # myconn = mysql.connector.connect(host="localhost", user="root", passwd="20211030", database="COMP3278_G12",auth_plugin='mysql_native_password')
+    # cursor = myconn.cursor()
 
 
     #2 Load recognize and read label from model
@@ -69,8 +68,7 @@ def autoSignIn():
 
                 # Find the customer information in the database.
                 select = "SELECT customer_id FROM Customer WHERE customer_id='%s'" % (customer_id)
-                cursor.execute(select)
-                result = cursor.fetchall()
+                result = cursor.do(select)
                 # print(result)
                 data = "error"
                 for x in result:
