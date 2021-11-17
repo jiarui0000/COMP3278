@@ -575,13 +575,12 @@ class Ui_MainWindow(object):
                 lineedit3 = QComboBox(self.transact_subframe)
                 lineedit3.setGeometry(QtCore.QRect(leftgap, initial_height + sub_linegap + j * linegap, 200, 50))
                 lineedit3.setStyleSheet(lineedit_style + "selection-color: blue")
-                lineedit3.addItems(account_list)
+                lineedit3.addItems(account_list[::-1])
                 lineedit3.setInsertPolicy(QComboBox.NoInsert)
             else:
                 lineedit3 = QLineEdit(self.transact_subframe)
                 lineedit3.setGeometry(QtCore.QRect(leftgap, initial_height + sub_linegap + j * linegap, 200, 50))
                 lineedit3.setStyleSheet(lineedit_style)
-
 
             lineedit4 = QLineEdit(self.transact_subframe)
             lineedit4.setGeometry(QtCore.QRect(leftgap+columngap, initial_height +sub_linegap+j * linegap, 200, 50))
