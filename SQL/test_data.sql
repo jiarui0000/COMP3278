@@ -1,14 +1,14 @@
 USE COMP3278_G12;
 
 INSERT INTO  Customer (customer_id,lastname,firstname,gender,birthday,email,phone,certification_type,id_number,password) VALUES
- ('001','Ma','Jack','male','2020-11-01','@gmail.com','12345678','student card','0000011111','iamjack'),
- ('002','Richeal','Rose','female','2020-11-17','@gmail.com','12345678','student card','1111100000','iamjacks'),
- ('003','Yan','Zipeng','male','2000-10-17','@gmail.com','12345678','student card','0000011111','password1'),
- ('004','Zhu','Jiarui','female','2020-11-01','@gmail.com','12345678','student card','0000011111','password2'),
- ('005','Huang','Haoyu','male','2020-11-01','@gmail.com','12345678','student card','0000011111','password3'),
- ('006','Ye','Mao','male','2020-11-01','@gmail.com','12345678','student card','0000011111','password4'),
- ('007','Bai','Qingyu','female','2020-11-01','@gmail.com','12345678','student card','0000011111','password5');
-
+ ('001','Elon','Musk','male','2020-11-01','thrive@connect.hku.hk','12345678','student card','0000011111','123'),
+ ('002','Warren','Buffett','female','2020-11-17','thrive@connect.hku.hk','12345678','student card','1111100000','123'),
+ ('003','Yan','Rose','male','2000-10-17','thrive@connect.hku.hk','12345678','student card','0000011111','password1'),
+ ('004','Zhu','Jack','female','2020-11-01','thrive@connect.hku.hk','12345678','student card','0000011111','password2'),
+ ('005','Wood','Cathie','male','2020-11-01','thrive@connect.hku.hk','12345678','student card','0000011111','password3'),
+ ('006','Xiang','Zhang','male','2020-11-01','thrive@connect.hku.hk','12345678','student card','0000011111','password4'),
+ ('007','Ping','Luo','female','2020-11-01','thrive@connect.hku.hk','12345678','student card','0000011111','password5');
+ 
  INSERT INTO Account (account_id, customer_id, create_time, currency_type) VALUES
  ('001','001','1900-10-10','Pound'),
  ('002','001','1910-10-10','Pound'),
