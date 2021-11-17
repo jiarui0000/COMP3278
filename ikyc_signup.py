@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 
-class IKYC_SignUp(object):
+class IKYC_Login(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(960, 600)
@@ -27,7 +27,7 @@ class IKYC_SignUp(object):
         self.label_right_pic = QtWidgets.QLabel(self.centralwidget)
         self.label_right_pic.setGeometry(QtCore.QRect(260, 0, 700, 600))
         self.label_right_pic.setText("")
-        self.label_right_pic.setPixmap(QtGui.QPixmap("GUI_Login_Page_Pic/signup_right_background.jpg"))
+        self.label_right_pic.setPixmap(QtGui.QPixmap("GUI_Login_Page_Pic/right_background.png"))
         self.label_right_pic.setScaledContents(True)
         self.label_right_pic.setObjectName("label_right_pic")
 
@@ -79,24 +79,34 @@ class IKYC_SignUp(object):
         self.label_password.setFont(font)
         self.label_password.setObjectName("label_password")
 
-        self.commandlink_signUpButton = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.commandlink_signUpButton.setGeometry(QtCore.QRect(190, 365, 320, 51))
+        self.commandlink_loginbutton = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandlink_loginbutton.setGeometry(QtCore.QRect(150, 380, 91, 51))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(11)
-        self.commandlink_signUpButton.setFont(font)
-        self.commandlink_signUpButton.setIconSize(QtCore.QSize(30, 30))
-        self.commandlink_signUpButton.setObjectName("commandlink_signUpButton")
-        
+        self.commandlink_loginbutton.setFont(font)
+        self.commandlink_loginbutton.setIconSize(QtCore.QSize(30, 30))
+        self.commandlink_loginbutton.setObjectName("commandlink_loginbutton")
+        #self.commandlink_loginbutton.clicked.connect(self.loginButtonClicked)
 
-        self.commandlink_backButton = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.commandlink_backButton.setGeometry(QtCore.QRect(20, 530, 70, 45))
+        self.commandlink_loginWithFaceID = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandlink_loginWithFaceID.setGeometry(QtCore.QRect(360, 380, 201, 51))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(11)
-        self.commandlink_backButton.setFont(font)
-        self.commandlink_backButton.setIconSize(QtCore.QSize(0, 0))
-        self.commandlink_backButton.setObjectName("commandlink_backButton")
+        self.commandlink_loginWithFaceID.setFont(font)
+        self.commandlink_loginWithFaceID.setIconSize(QtCore.QSize(30, 30))
+        self.commandlink_loginWithFaceID.setObjectName("commandlink_loginWithFaceID")
+        #self.commandlink_loginWithFaceID.clicked.connect(self.loginWithFaceIDClicked)
+
+        self.commandlink_signUp = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandlink_signUp.setGeometry(QtCore.QRect(20, 530, 231, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        self.commandlink_signUp.setFont(font)
+        self.commandlink_signUp.setIconSize(QtCore.QSize(30, 30))
+        self.commandlink_signUp.setObjectName("commandlink_signUp")
 
         self.lineedit_username = QtWidgets.QLineEdit(self.centralwidget)
         self.lineedit_username.setGeometry(QtCore.QRect(260, 260, 251, 21))
@@ -113,6 +123,18 @@ class IKYC_SignUp(object):
         self.lineedit_password.setObjectName("lineedit_password")
         self.lineedit_password.setEchoMode(QtWidgets.QLineEdit.Password) #Mask the password.
 
+
+        #Forgot password functions
+        self.commandlink_forgotPwd = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandlink_forgotPwd.setGeometry(QtCore.QRect(360, 350, 231, 51))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        self.commandlink_forgotPwd.setFont(font)
+        self.commandlink_forgotPwd.setIconSize(QtCore.QSize(30, 30))
+        self.commandlink_forgotPwd.setObjectName("commandlink_signUp")
+
+
         self.label_background.raise_()
         self.label_right_pic.raise_()
         self.login_frame_label.raise_()
@@ -120,10 +142,12 @@ class IKYC_SignUp(object):
         self.label_loginText.raise_()
         self.label_username.raise_()
         self.label_password.raise_()
-        self.commandlink_signUpButton.raise_()
-        self.commandlink_backButton.raise_()
+        self.commandlink_loginbutton.raise_()
+        self.commandlink_loginWithFaceID.raise_()
+        self.commandlink_signUp.raise_()
         self.lineedit_username.raise_()
         self.lineedit_password.raise_()
+        self.commandlink_forgotPwd.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -132,32 +156,19 @@ class IKYC_SignUp(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "iKYC Login"))
-        self.label_loginText.setText(_translate("MainWindow", "Sign up for iKYC!"))
+        self.label_loginText.setText(_translate("MainWindow", "Welcome to the iKYC system!"))
+        #self.label_loginText.adjustSize()
         self.label_username.setText(_translate("MainWindow", "CustomerID"))
+        #self.label_username.adjustSize()
         self.label_password.setText(_translate("MainWindow", "Password"))
-        self.commandlink_signUpButton.setText(_translate("MainWindow", "Sign up and start face registering"))
-        self.commandlink_backButton.setText(_translate("MainWindow", "Back"))
+        #self.label_password.adjustSize()
+        self.commandlink_loginbutton.setText(_translate("MainWindow", "Login"))
+        self.commandlink_loginWithFaceID.setText(_translate("MainWindow", "Login with FaceID"))
+        self.commandlink_signUp.setText(_translate("MainWindow", "Create a new account!"))
+        self.commandlink_forgotPwd.setText(_translate("MainWindow", "Forgot?"))
+        self.commandlink_forgotPwd.adjustSize()
+        #self.commandlink_signUp.adjustSize()
     
-
-
-    def loginButtonClicked(self):
-        username = self.linedit_username.text()
-        password = self.lineedit_password.text()
-        print("Captured username: " + username)
-        print("Captured password: " + password)
-        self.checkUsernamePasswordCorrectness(username, password)
-    
-
-    def loginWithFaceIDClicked(self):
-        print("iKYC login GUI: Attempting to login through FaceID...\n")
-        #Function call for calling OpenCV should be written here
-
-
-    def checkUsernamePasswordCorrectness(self, username:str, password:str) -> bool:
-        #Dummy test here.
-        if(username == "errtest" and password == "1"):
-            self.showErrorPopUpWindow()
-
 
     def showErrorPopUpWindow(self, messageText: str):
         popUp = QMessageBox()
@@ -168,6 +179,14 @@ class IKYC_SignUp(object):
         popUp.setStandardButtons(QMessageBox.Ok)
         popUp.exec_()
 
+    def showInfoPopUpWindow(self, messageText: str):
+        popUp = QMessageBox()
+        popUp.setWindowTitle("Info")
+        popUp.setText(messageText)
+        popUp.show()
+        popUp.setIcon(QMessageBox.Information)
+        popUp.setStandardButtons(QMessageBox.Ok)
+        popUp.exec_()
 
     def showFaceRecognizingWindow(self):
         self.faceRecogPopUp = QMessageBox()
@@ -187,11 +206,12 @@ class IKYC_SignUp(object):
 
 
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = IKYC_SignUp()
+    ui = IKYC_Login()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
