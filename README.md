@@ -44,6 +44,36 @@ userID: 003
 password: password1
 
 
+
+#Functions on each page: 
+
+Home: 
+* Click on each account tab to view the full transaction history of each account. (Investment Accounts are designed to be unable to make transactions, since investment account reflects the amount of investment in the stock market/funds.etc, and can not be transferred.)
+* View Total Balance Trend of all of your account. (different currencies are changed to HKD)
+* View your latest login history in the right hand side of the interface. 
+* Customized Greeting based on time. 
+
+Profile Personalization: 
+* Click on the image on home page to proceed to profile page, where you can update your info and password. 
+* Upload your personalized image by clicking on the profile image on your profile page. Acceptable types are jpg, jpeg and png. 
+
+
+Account Page: 
+* Click on each account tab to view the full transaction history of each account. (Investment Accounts are unable to make transactions, as mentioned above)
+* Click on the right/left arrow to navigate the full list of accounts(only if you have more than 4 accounts)
+* Each Accounts are designed to carry one type of balance only. 
+* View Account Created Date and Recent Transactions are displayed in the account page directly for convenient checking. 
+
+Transactions: 
+* Left hand side displays your recent contacts, their accounts and their profile image. You may click on their profile image to conveniently carry out a transaction with them. 
+* Right hand side displays the Transaction and Transaction Search Frame. You may make transactions or search transaction history related to you here. 
+
+Analysis: 
+* On Analysis page you may view a deep analysis of your balance and transactions, including monthly change of each account, annual net flow of each account, and balance weight of each account in yout total asset. 
+
+
+
+
 #To remove existing database and reinitialize: 
 
 Please delete all files in ./data or execute: 
