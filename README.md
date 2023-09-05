@@ -2,7 +2,7 @@
 *******
 
 
-##Setup Facial Environment: 
+## Setup Facial Environment: 
 * Install MySQL on local machine
 * Create virtual environment using Anaconda by: 
 ```
@@ -26,7 +26,7 @@ python3 Setup.py
 to setup package and database in local machine. 
 
 
-##Run Main Program: 
+## Run Main Program: 
 ```
 python3 GUI-main.py
 ```
@@ -45,7 +45,7 @@ password: password1
 
 
 
-##Functions on each page: 
+## Functions on each page: 
 
 Home: 
 * Click on each account tab to view the full transaction history of each account. (Investment Accounts are designed to be unable to make transactions, since investment account reflects the amount of investment in the stock market/funds.etc, and can not be transferred.)
@@ -74,7 +74,7 @@ Analysis:
 
 
 
-##To remove existing database and reinitialize: 
+## To remove existing database and reinitialize: 
 
 To remove facial data, please delete all files in ./data or execute: 
 ```
